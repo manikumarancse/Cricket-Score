@@ -78,14 +78,20 @@ function initializePlayers(numPlayers) {
           battingRuns: 0,
           fours:0,
           sixes:0,
-          strikeRate: 0,
+          get strikeRate(){
+            let sr= parseFloat((this.battingRuns / this.ballsBatted)*100).toFixed(2);
+            return isNaN(sr) ? parseFloat("0.00") : sr;
+        },
         },
     bowling: {
           wicket: 0,
           over:0,
           maiden: 0,
           bowlRuns: 0,
-          economy: 0,
+          get economy(){
+            let eco= parseFloat(this.bowlRuns / this.over).toFixed(2);
+            return isNaN(eco) ? parseFloat("0.00") :eco;
+        },
         }
     }); 
 }
