@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScoreCard</title>
+    <link rel="stylesheet" href="./scoreCard.css">
+</head>
+<body>
+    <div id="main">
+    <h1 id="teamName">Team 1</h1>
+    <div class="grid-table" id="Batting">
+        <div class="th Batsman">Batting</div>
+        <div class="th run">Runs</div>
+        <div class="th balls">Balls</div>
+        <div class="th four">4s</div>
+        <div class="th six">6s</div>
+        <div class="th strike-rate">Strike Rate</div>
+    </div>
+        <div class="bat-det">
+        <div class="Extras">
+            <div>Extra:</div>
+            <div>23</div>
+        </div>
+        <div class="Extras">
+            <div>Runs:</div>
+            <div>126</div>
+        </div>
+        <div class="Extras">
+            <div>Yet to bat:</div>
+            <div></div>
+        </div>
+            <div><ul id="yet">
+                <li>Sarfaraz Khan</li>
+                <li>Ravindra Jadeja</li>
+                <li>Dhruv Jurel</li>
+                <li>Dhruv Jurel</li>
+                <li>Dhruv Jurel</li>
+            </ul></div>
+        </div>
+    <div class="grid-table" id="Bowling">
+        <div class="th bowler">Bowling</div>
+        <div class="th over">Overs</div>
+        <div class="th maiden">Maiden</div>
+        <div class="th runs">Runs</div>
+        <div class="th wickets">Wickets</div>
+        <div class="th economy">Economy</div>
+</div>
+</div>
+<script>
+    const batting=document.getElementById("Batting");
+    const bowling=document.getElementById("Bowling");
+    let teamdata=localStorage.getItem("team1")
+    let td=JSON.parse(teamdata)
+    console.log(td);
+    batDetails();
+    bowlDetails();
+    function batDetails(){
+        td.player.forEach((data)=>{
+            // console.log(data)
+            if(data.isbatting){
+                console.log("hi")
+            }
+            else{
+                let name =document.createElement('div');
+                name.classList.add('batsman-name','td');
+                name.innerText=data.playerName;
+                batting.appendChild(name);
+                
+                let run =document.createElement('div');
+                run.classList.add('batsman-run','td');
+                run.innerText=data.batting.battingRuns;
+                batting.appendChild(run);
+
+                let balls =document.createElement('div');
+                balls.classList.add('batsman-balls','td');
+                balls.innerText=data.batting.ballsBatted;
+                batting.appendChild(balls);
+
+
+                let four =document.createElement('div');
+                four.classList.add('batsman-four','td');
+                four.innerText=data.batting.fours;
+                batting.appendChild(four);
+
+                let six =document.createElement('div');
+                six.classList.add('batsman-six','td');
+                six.innerText=data.batting.sixes;
+                batting.appendChild(six);
+
+                let strike =document.createElement('div');
+                strike.classList.add('batsman-strike','td');
+                strike.innerText=data.batting.strikeRate;
+                batting.appendChild(strike);
+
+            }
+        })}
+
+        function bowlDetails(){
+            td.player.forEach((data)=>{
+            // console.log(data)
+            if(data.isBowling){
+                console.log("hi")
+            }
+            else{
+                let name =document.createElement('div');
+                name.classList.add('bowler-name','td');
+                name.innerText=data.playerName;
+                bowling.appendChild(name);
+                
+                let over =document.createElement('div');
+                over.classList.add('bowler-over','td');
+                over.innerText=data.bowling.over;
+                bowling.appendChild(over);
+
+                let maiden =document.createElement('div');
+                maiden.classList.add('bowler-maiden','td');
+                maiden.innerText=data.bowling.maiden;
+                bowling.appendChild(maiden);
+
+
+                let runs =document.createElement('div');
+                runs.classList.add('bowler-runs','td');
+                runs.innerText=data.bowling.bowlRuns;
+                bowling.appendChild(runs);
+
+                let wicket =document.createElement('div');
+                wicket.classList.add('bowler-wicket','td');
+                wicket.innerText=data.bowling.wicket;
+                bowling.appendChild(wicket);
+
+                let economy =document.createElement('div');
+                economy.classList.add('bowler-economy','td');
+                economy.innerText=data.bowling.economy;
+                bowling.appendChild(economy);
+
+            }
+        })
+        }
+</script>
+</body>
+</html>
