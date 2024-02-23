@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Score App</title>
+    <style>
+        /* Styles for the body */
+        body {
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #8B0000; /* Maroon background */
+            color: white;
+            text-align: center;
+        }
+        /* Styles for the main container */
+        .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            position: relative;
+        }
+        /* Styles for the header */
+        header {
+            background-color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        /* Styles for the header h1 */
+        header h1 {
+            color: #8B0000; /* Maroon color */
+            font-size: 21px;
+        }
+        /* Styles for the main container */
+        .container {
+            background: #ffffff; /* White background */
+            width: 70%; /* Adjusted width */
+            max-width: 400px; /* Added max-width */
+            padding: 50px;
+            position: relative; /* Removed absolute positioning */
+            margin-top: 20px; /* Added margin-top */
+            box-shadow: 15px 30px 35px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            -webkit-perspective: 300px;
+            perspective: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        /* Styles for the coin */
+        .coin {
+            height: 150px;
+            width: 150px;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+            animation: none; /* Removed animation */
+        }
+        /* Styles for the coin image */
+        .coin img {
+            width: 145px;
+        }
+        /* Styles for heads and tails */
+        .heads, .tails {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+        .tails {
+            transform: rotateX(180deg);
+        }
+        @keyframes spin-tails{
+             0%{
+                 transform: rotateX(0);
+                }
+            100%{
+                 transform: rotateX(1980deg);
+                 }   
+        }
+        @keyframes spin-heads{
+          0%{
+                transform: rotateX(0);
+            }
+        100%{
+                  transform: rotateX(2160deg);
+            }
+        }
+        /* Styles for buttons */
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 15px;
+        }
+        button {
+            width: 120px;
+            padding: 10px 0;
+            border: 2.5px solid #424ae0; /* Blue border */
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #flip-button {
+            background-color: #424ae0; /* Blue background */
+            color: #fff; /* White text color */
+        }
+        #flip-button:disabled {
+            background-color: #e1e0ee; /* Light gray background */
+            border-color: #e1e0e1;
+            color: #101020; /* Dark gray text color */
+        }
+        /* Styles for the result */
+        .result {
+            margin-top: 20px;
+        }
+        #tossResult {
+            font-size: 25px;
+        }
+        /* Styles for the batting and bowling buttons */
+        .b1 {
+            display: none;
+            margin-top: 20px; /* Added margin-top */
+        }
+        .b1 button {
+            margin: 0.5rem;
+            background-color: #424ae0; /* Blue background */
+            color: #fff; /* White text color */
+        }
+        @media only screen and (min-width: 600px) {
+            .container {
+                width: 60%; /* Adjusted width for larger screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Cricket Score APP</h1>
+    </header>
+    
+    <div class="main">
+        <div class="top">
+            <!-- Input for team selection -->
+            <h2>Enter the team name which wants heads in toss:</h2>
+            <select  id="teamNameInput" >
+                <option id="t1"></option>
+                <option id="t2" value=""></option>
+            </select>
+        </div>
+       
+       
+        <div class="container">
+            <!-- Coin container -->
+            <div class="coin">
+                <div class="heads">
+                    <!-- Image for heads -->
+                    <img src="heads.svg" alt="HEAD" width="145px">
+                </div>
+                <div class="tails">
+                    <!-- Image for tails -->
+                    <img src="tails.svg" alt="TAILS" width="145px">
+                </div>
+            </div>
+            <!-- Button for flipping the coin -->
+            <div class="buttons">
+                <button id="flip-button">Flip Coin</button>
+            </div>
+        </div>
+
+        <!-- Result section for displaying the toss result -->
+        <div class="result">
+            <h1 id="tossResult"></h1>
+        </div>
+
+        <!-- Buttons for batting and bowling -->
+        <div class="buttons b1">
+            <button id="Batting">BATTING</button>
+            <button id="Bowling">BOWLING</button>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript code for handling the functionality
+        let tossResult = document.getElementById("tossResult");
+        let flipBtn = document.querySelector("#flip-button");
+        let b1 = document.querySelector(".b1");
+        let t1 = document.querySelector("#t1");
+        let t2 = document.querySelector("#t2");
+
+        // Retrieving data from localStorage
+        let Loc = JSON.parse(localStorage.getItem('matchData'));
+        console.log(Loc)
+        let Tm1 = JSON.parse(localStorage.getItem('team1'));
+        console.log(Loc)
+        let Tm2 = JSON.parse(localStorage.getItem('team2'));
+        console.log(Loc)
+        t1.value = Loc.t1Name;
+        t1.innerText = Loc.t1Name;
+        t2.value = Loc.t2Name;
+        t2.innerText = Loc.t2Name;
+        let tossButtonClicked = false; // Flag to track if the flip coin button is clicked
+    let batBowButtonClicked = false; // Flag to track if the batting or bowling button is clicked
+
+        let selectedTeam;
+
+        flipBtn.addEventListener("click", () => {
+        if (!tossButtonClicked) { // Check if flip coin button is not clicked
+            tossResult.textContent = "";
+            b1.style.display = "none";
+            let i = Math.floor(Math.random() * 2);
+            let coin = document.querySelector(".coin");
+            coin.style.animation = "none";
+            let teamName = document.getElementById("teamNameInput").value;
+
+            if (i) {
+                setTimeout(function () {
+                    coin.style.animation = "spin-heads 3s forwards";
+                }, 100);
+                setTimeout(function () {
+                    tossResult.textContent = "Toss won by " + teamName + ". It's Your Choice!";
+                    b1.style.display = "block";
+                    if (teamName === t1.value) {
+                        selectedTeam = t1.value;
+                    } else {
+                        selectedTeam = t2.value;
+                    }
+                }, 3100);
+            } else {
+                setTimeout(function () {
+                    coin.style.animation = "spin-tails 3s forwards";
+                }, 100);
+                setTimeout(function () {
+                    if (teamName === t1.value) {
+                        selectedTeam = t2.value;
+                    } else {
+                        selectedTeam = t1.value;
+                    }
+                    tossResult.textContent = "Toss won by " + selectedTeam + ". It's Therir choice !";
+                    b1.style.display = "block";
+                }, 3000);
+            }
+
+            // Disable the flip coin button after it's clicked
+            flipBtn.disabled = true;
+            tossButtonClicked = true;
+        }
+    });
+
+    // Event listener for the batting button
+    document.getElementById("Batting").addEventListener("click", function () {
+        if (!batBowButtonClicked) { // Check if batting or bowling button is not clicked
+            let matchData = JSON.parse(localStorage.getItem('matchData'));
+            if (selectedTeam === matchData.t1Name) {
+                Tm1.innings = 1;
+                Tm2.innings = 2;
+                alert( Tm1.teamName +" Chosed to Bat ")
+            } else {
+                Tm2.innings = 1;
+                Tm1.innings = 2;
+                alert( Tm2.teamName +" Chosed to Bat ")
+            }
+            localStorage.setItem('team1', JSON.stringify(Tm1));
+            localStorage.setItem('team2', JSON.stringify(Tm2));
+
+            // Disable both batting and bowling buttons after one is clicked
+            document.getElementById("Batting").disabled = true;
+            document.getElementById("Bowling").disabled = true;
+            batBowButtonClicked = true;
+        }
+    });
+
+    // Event listener for the bowling button
+    document.getElementById("Bowling").addEventListener("click", function () {
+        if (!batBowButtonClicked) { // Check if batting or bowling button is not clicked
+            let matchData = JSON.parse(localStorage.getItem('matchData'));
+            if (selectedTeam === matchData.t1Name) {
+                Tm2.innings = 1;
+                Tm1.innings = 2;
+                alert( Tm1.teamName +" Chosed to Bowling ")
+            } else {
+                Tm1.innings = 1;
+                Tm2.innings = 2;
+                alert( Tm2.teamName +" Chosed to Bowling ")
+            }
+            localStorage.setItem('team1', JSON.stringify(Tm1));
+            localStorage.setItem('team2', JSON.stringify(Tm2));
+
+            // Disable both batting and bowling buttons after one is clicked
+            document.getElementById("Batting").disabled = true;
+            document.getElementById("Bowling").disabled = true;
+            batBowButtonClicked = true;
+        }
+    });
+
+    // Event listener for the team select dropdowns to prevent re-selection
+    document.getElementById("teamNameInput").addEventListener("change", function () {
+        document.getElementById("teamNameInput").disabled = true;
+    });
+    </script>
+</body>
+</html>
