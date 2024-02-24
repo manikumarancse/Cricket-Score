@@ -1,0 +1,119 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+a{
+    text-decoration: none;
+}
+input{
+    border:2px solid rgb(146, 16, 27);
+    height: 35px;
+}
+#appname{
+    font-size: 25px;
+    text-align: center;
+    margin: 30px;
+    margin-bottom: 20px;
+}
+#catalogue{    
+    background-color:#8B0000;
+    /* width: 100%; */
+    text-align: center;
+    color:white;
+    padding: 10px;
+    font-size: 14px;
+    margin: auto 5% ;
+}
+.teamdetail{
+    display: grid;
+    grid-template-columns: 65% 20%;
+    width: 100%;
+    margin-top: 60px;
+    text-align: center;
+}
+.teamName { 
+    width: 100%;
+    /* border:2px solid rgb(146, 16, 27); */
+    padding: 5%;
+}
+.teamName label{
+    font-size: 19px;
+    font-weight: 900;
+    
+}
+.team1Name{
+    display: grid;
+    grid-template-columns: 13% 50% 15%;
+    column-gap: 10px;
+    margin-bottom: 5%;
+}
+.team2Name{
+    display: grid;
+    grid-template-columns: 13% 50% 15%;
+    column-gap: 10px;
+}
+
+.gotots{
+    cursor: pointer;
+    padding: 7px;
+    font-size: 15px;
+    background-color: whitesmoke;
+    color: #8B0000;
+    width: auto;
+    border-radius: 8px;
+    margin: 2% 40%;
+    border:none;
+    box-shadow: 2px 1px 7px 1px ;
+}
+#gototss{
+    display: flex;
+    justify-content: space-around;
+    cursor: pointer;
+    padding: 7px;
+    font-size: 15px;
+    background-color: whitesmoke;
+    color: #8B0000;
+    border-radius: 8px;
+    margin-top: 15%;
+    border:none;
+    box-shadow: 2px 1px 7px 1px ;
+}
+#gotots:hover{
+    opacity: 0.7;
+}
+.numofovers{
+   font-weight: 900;  
+   text-align: center;
+}
+#totalOvers{
+    height: 35px;
+    width:15%;
+}
+
+@media (max-width:430px){
+    .teamdetail{
+        font-size:13px;
+    }
+    .teamName label{
+        display:flex ;
+        justify-content: center;
+        align-items: center;
+        font-size: 11px;
+        font-weight: 900;
+    }
+    .gotots{
+        margin: 2% 10%;
+    }
+}
+.usr{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+}
+@media(min-width:650px){
+.teamdetail>div{
+    padding-right: 40%;
+    
+}}
