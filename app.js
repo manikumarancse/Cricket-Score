@@ -165,37 +165,34 @@ const collectBtn = document.getElementById('collectBtn');
 const goToss = document.getElementById('goToss');
 
 collectBtn.addEventListener('click', function () {
-  const inputs2 = document.querySelectorAll('#team2Input input');
   const inputs1 = document.querySelectorAll('#team1Input input');
-  inputs2.forEach(function (input) {
-    team2PlayerNames.push(input.value);
-  });
-  inputs1.forEach(function (input) {
-    team1PlayerNames.push(input.value);
-  });
+  const inputs2 = document.querySelectorAll('#team2Input input');
+  team1PlayerNames = Array.from(inputs1).map(input => input.value);
+  team2PlayerNames = Array.from(inputs2).map(input => input.value);
+
   console.log('Team 1 Player Names:', team1PlayerNames);
   console.log('Team 2 Player Names:', team2PlayerNames);
+
   collectBtn.style.display = 'none';
-  goToss.style.display = 'block';
+  // goToss.style.display = 'block';
 
+  // Retrieve teamOne and teamTwo from local storage
+  const teamOne = JSON.parse(localStorage.getItem('team1'));
+  const teamTwo = JSON.parse(localStorage.getItem('team2'));
 
-  let i = 0;
-  teamOne.player.forEach(element => {
-    console.log(element.playerName);
-    element.playerName = team1PlayerNames[i];
-    console.log(team1PlayerNames);
-    i++;
-  })
-  let j = 0;
-  teamTwo.player.forEach(element => {
-    console.log(element.playerName);
-    element.playerName = team2PlayerNames[j];
-    console.log(team1PlayerNames[j]);
-    j++;
-  })
+  // Update player names in teamOne and teamTwo objects
+  teamOne.player.forEach((ele, i) => {
+    ele.playerName = team1PlayerNames[i];
+  });
 
-  localStorage.setItem('team1',JSON.stringify(teamOne));
-  localStorage.setItem('team2',JSON.stringify(teamTwo));
+  teamTwo.player.forEach((ele, j) => {
+    ele.playerName = team2PlayerNames[j];
+  });
 
+  // Store the modified teamOne and teamTwo objects back into local storage
+  localStorage.setItem('team1', JSON.stringify(teamOne));
+  localStorage.setItem('team2', JSON.stringify(teamTwo));
 });
+
+// ..
 

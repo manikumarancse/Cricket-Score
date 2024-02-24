@@ -19,7 +19,8 @@
     <div class="teamdetail">
       <h4>Team Name</h4>
       <div>
-      <h4>No of Players</h4></div>
+        <h4>No of Players</h4>
+      </div>
     </div>
     <div class="teamName">
       <div class="team1Name">
@@ -30,36 +31,35 @@
       <div class="team2Name">
         <label for="team2Name">Team 2 </label>
         <input type="text" id="team2Name" required>
-        <input type="number" id="numPlayerss" required>
+        <input type="number" id="numPlayerss" required> <!-- Corrected ID -->
       </div>
-      
+
     </div>
     <div class="numofovers">
       <label>No of Overs </label>
       <input type="number" id="totalovers" required placeholder="Enter Overs">
     </div>
   </div>
-  
-  
+
   <button id="startBtn" class="gotots" onclick="startMatch()">startMatch</button>
+ 
 
-
-  <button id="generateBtn" class="gotots" onclick="generateInputs()"> Enter Team 1 Player Names</button>
+  <button id="generateBtn" class="gotots" onclick="generateInputs()" style="margin-top: 10px;"> Enter Team 1 Player Names</button>
 
   <div class="input-group" id="team1Input">
     <!-- Player names for Team 1 will be entered here -->
   </div>
   <div class="input-group" id="team2Input" style="display: none;">
     <label for="team2Name">Team 2 Player Names:</label>
-    <!-- Player names for Team 2 will be entered here -->
+    <!-- Player names for Team 2 will be entered here  -->
   </div>
   <button id="generateBtn2" class="gotots" onclick="generateInputs2()" style="display: none;">Enter Team 2 Player Names</button>
   <button id="collectBtn" class="gotots" style="display: none;">collectBtn</button>
 
 
-  <button id="goToss" class="gotots" style="display: none;">Go Toss</button>
+  <!-- <button id="goToss" class="gotots" style="display: none;">Go Toss</button>  -->
 
-  <script src= "app.js"></script>
+  <script src="app.js"></script>
 </body>
-</html>
 
+</html>
