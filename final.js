@@ -1,21 +1,34 @@
 var team1Data = JSON.parse(localStorage.getItem('team1'));
 var team2Data = JSON.parse(localStorage.getItem('team2'));
+var matchData = JSON.parse(localStorage.getItem('matchData'));
+
+console.log(team1Data);
+
 var Team1 = team1Data.teamName;
 var Team2 = team2Data.teamName;
 var runsT1 = team1Data.totalScore;
 var runsT2 = team2Data.totalScore;
 var T1inningover =false;
 var T2inningover=false;
-var overs1 = team1Data.totalOvers;
-var overs2 = team2Data.totalOvers;
-var wicketsT1 = team1Data.totalWickets;
-var wicketsT2 = team2Data.totalWickets;
+var overs1 = /* team1Data.completedOvers */20 ;
+var overs2 = /* team2Data.completedOvers */18 ;
+var wicketsT1 = /* team1Data.totalWickets */4 ;
+var wicketsT2 = /* team2Data.totalWickets */ 10;
+var totalOvers = /* matchData.totalOvers */20;
+var noOfPlayers = /* matchData.noOfPlayers */ 11;
 
 
-
-
-
-
+  
+  
+  if (overs1 === totalOvers || wicketsT1 === noOfPlayers - 1) {
+    T1inningover = true;
+  }
+  
+  if (overs2 === totalOvers || wicketsT2 === noOfPlayers - 1) {
+    T2inningover = true;
+  }
+  
+  console.log(T1inningover, T2inningover);
 
 
 function checkWinner() {

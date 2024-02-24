@@ -73,7 +73,7 @@ function initializePlayers(numPlayers) {
     playerName: 'Player ' + i,
     isBatting:false,
     isBowling:false,
-    batting: {
+    batting:[ {
           ballsBatted: 0,
           battingRuns: 0,
           fours:0,
@@ -82,8 +82,8 @@ function initializePlayers(numPlayers) {
             let sr= parseFloat((this.battingRuns / this.ballsBatted)*100).toFixed(2);
             return isNaN(sr) ? parseFloat("0.00") : sr;
         },
-        },
-    bowling: {
+        }],
+    bowling: [{
           wicket: 0,
           over:0,
           maiden: 0,
@@ -92,7 +92,7 @@ function initializePlayers(numPlayers) {
             let eco= parseFloat(this.bowlRuns / this.over).toFixed(2);
             return isNaN(eco) ? parseFloat("0.00") :eco;
         },
-        }
+        }]
     }); 
 }
 return player;
