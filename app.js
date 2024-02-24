@@ -296,3 +296,107 @@ function initializePlayers(numPlayers) {
 return player;
 }
   
+let team1PlayerNames = [];
+console.log(team1PlayerNames);
+let team2PlayerNames = [];
+console.log(team2PlayerNames);
+
+// gettig local storage
+const teamOne = JSON.parse(localStorage.getItem('team1'))
+const teamTwo = JSON.parse(localStorage.getItem('team2'))
+
+
+function generateInputs() {
+  const numPlayers = document.getElementById('numPlayers').value;
+  const team1Input = document.getElementById('team1Input');
+  const generateBtn = document.getElementById('generateBtn');
+  const generateBtn2 = document.getElementById('generateBtn2');
+  team1Input.innerHTML = ''; // Clear previous inputs
+
+  for (let i = 1; i <= numPlayers; i++) {
+    const input = document.createElement('input');
+    input.type = 'text';
+    if (i == 1) {
+      input.name = `team1_player_${i} (Captain)`;
+      input.placeholder = `Player ${i} (Captain)`;
+    } else if (i == 2) {
+      input.name = `team1_player_${i} (Wicketkeeper)`;
+      input.placeholder = `Player ${i}(Wicketkeeper)`;
+    } else {
+      input.name = `team1_player_${i}`;
+      input.placeholder = `Player ${i}`;
+    }
+    team1Input.appendChild(input);
+  }
+
+  generateBtn.style.display = 'none';
+  team1Input.style.display = 'block';
+  generateBtn2.style.display = 'block';
+}
+
+
+function generateInputs2() {
+  const numPlayers = document.getElementById('numPlayers').value;
+  const team2Input = document.getElementById('team2Input');
+  team2Input.innerHTML = ''; // Clear previous inputs
+
+  for (let i = 1; i <= numPlayers; i++) {
+    const input = document.createElement('input');
+    input.type = 'text';
+    if (i === 1) {
+      input.name = `team2_player_${i} (Captain)`;
+      input.placeholder = `Player ${i} (Captain)`;
+
+    } else if (i === 2) {
+      input.name = `team2_player_${i} (Wicketkeeper)`;
+      input.placeholder = `Player ${i} (Wicketkeeper)`;
+    } else {
+      input.name = `team2_player_${i}`;
+      input.placeholder = `Player ${i}`;
+    }
+
+    team2Input.appendChild(input);
+  }
+
+  generateBtn2.style.display = 'none';
+  team2Input.style.display = 'block';
+  collectBtn.style.display = 'block';
+}
+
+
+// Assuming you have assigned an ID to the button that triggers this action
+const collectBtn = document.getElementById('collectBtn');
+const goToss = document.getElementById('goToss');
+
+collectBtn.addEventListener('click', function () {
+  const inputs1 = document.querySelectorAll('#team1Input input');
+  const inputs2 = document.querySelectorAll('#team2Input input');
+  team1PlayerNames = Array.from(inputs1).map(input => input.value);
+  team2PlayerNames = Array.from(inputs2).map(input => input.value);
+
+  console.log('Team 1 Player Names:', team1PlayerNames);
+  console.log('Team 2 Player Names:', team2PlayerNames);
+
+  collectBtn.style.display = 'none';
+  // goToss.style.display = 'block';
+
+  // Retrieve teamOne and teamTwo from local storage
+  const teamOne = JSON.parse(localStorage.getItem('team1'));
+  const teamTwo = JSON.parse(localStorage.getItem('team2'));
+
+  // Update player names in teamOne and teamTwo objects
+  teamOne.player.forEach((ele, i) => {
+    ele.playerName = team1PlayerNames[i];
+  });
+
+  teamTwo.player.forEach((ele, j) => {
+    ele.playerName = team2PlayerNames[j];
+  });
+
+  // Store the modified teamOne and teamTwo objects back into local storage
+  localStorage.setItem('team1', JSON.stringify(teamOne));
+  localStorage.setItem('team2', JSON.stringify(teamTwo));
+});
+
+// ..
+
