@@ -14,18 +14,117 @@
     box-sizing: border-box;
     font-family: "Roboto", sans-serif;
     scroll-behavior: smooth;
+    list-style: none;
 }
 
-body{
-    padding: 1rem;
-    max-width: 1000px;
-    margin: 0 auto;
+/* body{
+    
+} */
+
+/* pop up box */
+.pop-up-box {
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    backdrop-filter: blur(5px);
+    background: rgba(255, 255, 255, 0.1);
+    visibility: hidden;
+    transition: 0.5s ease;
+    transition-property: visibility;
+}
+
+.pop-up, .pop-up1{
+    z-index: 9999;
+    position: fixed;
+    width: 20%;
+    background-color: var(--white);
+    border-radius: 10px 10px 3px 3px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transform: scale(0);
+    transition: transform 0.5s ease; /* Added transition property */
+    transition-property: transform; /* Specified transition property */
+}
+.active {
+    transform: scale(1); /* Transition from scale(0) to scale(1) */
+}
+
+.pop-up-name {
+    background-color: var(--bg-color);
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    position: relative;
+    text-align: center;
+}
+
+.pop-up-name h3 {
+    color: var(--white);
+    font-size: 1.5rem;
+    padding: 10px 0;
+}
+
+.pop-up-container {
+    text-align: center;
+    background-color: var(--white);
+    color: #000;
+    border-radius: 0 0 3px 3px;
+    padding: 10px 0;
+    font-size: 1.2rem;
+}
+.pop-up1 .pop-up-container{
+    text-align: left;
+    padding: 10px;
+}
+.pop-up-container input{
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+    padding: .25rem;
+    font-size: 1.2rem;
+    width: 20%;
+    text-align: center;
+    margin-bottom: .5rem;
+}
+.pop-up-container .btn  button{ 
+    padding: .5rem .75rem;
+    border-radius: 13px;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+
+.close {
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    color: #ffffff;
+    background-color: transparent;
+    opacity: 0.5;
+    font-size: 15px;
+    border: none;
+}
+
+.close:hover {
+    opacity: 1;
+}
+
+@media (min-width: 200px) and (max-width: 500px){
+.pop-up, .pop-up1{
+    width: 75%;
+}
 }
 
 
 /* main container grid 3 rows */
 .main-container-grid{
-    width: 100%;
+    padding: 1rem;
+    max-width: 1000px;
+    margin: 0 auto;
     /* padding: 2rem; */
     height: 100vh;
     display: grid;
