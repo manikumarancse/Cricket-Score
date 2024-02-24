@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- style sheet -->
+    <link rel="stylesheet" href="./scoreInput.css">
+    <title>ScoreCard</title>
+
+    <!-- Cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- pop up box -->
+    <div class="pop-up-box">
+        <div class="pop-up1 Instructions-Alert">
+            <div class="pop-up-name">
+                <h3>Instructions</h3>
+                <button class="close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="pop-up-container">
+                <ul>
+                    <li>No Ball - NB</li>
+                    <li>Wide Ball- WD</li>
+                    <li>Wicket - W</li>
+                    <li>Dot Ball - use (0)</li>
+                </ul>
+            </div>
+        </div>
+        <div class="pop-up">
+            <div class="pop-up-name">
+                <h3 id="popup-title"></h3>
+                <button class="close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="pop-up-container">
+                <span>Runs + <input type="number" id="popup-runs"></span>
+                <div class="btn">
+                    <button class="popup-enter-btn">Enter</button>
+                </div>
+            </div>
+        </div>
+    </div>    
+    
+    <!-- Main Container Grid -->
+    <div class="main-container-grid">
+        <div class="score-container">
+            <div class="live-score">
+                <div class="team-name">
+                    <span id="teamName">CSK</span>
+                </div>
+                <div class="score-wicket"><span>200/1</span></div>
+                <div class="extras"><span id="extras">Extras: 10</span></div>
+            </div>
+        </div>
+        <div class="players-section">
+            <div class="batsman-score">
+                <div class="grid-table">
+                    <div class="th batter">Batter</div>
+                    <div class="th runs">R</div>
+                    <div class="th balls">B</div>
+                    <div class="th fours">4s</div>
+                    <div class="th sixs">6s</div>
+                    <div class="th strike-rate">SR</div>
+                    <div class="td"><span id="batsman1-name"></span></div>
+                    <div class="td batsman1-runs"><span id="batsman1-runs"></span></div>
+                    <div class="td batsman1-balls"><span id="batsman1-balls"></span></div>
+                    <div class="td batsman1-fours"><span id="batsman1-fours"></span></div>
+                    <div class="td batsman1-sixs"><span id="batsman1-sixs"></span></div>
+                    <div class="td batsman1-strike-rate"><span id="batsman1-strike-rate"></span></div>
+                    <div class="td batsman2-name"><span id="batsman2-name"></span></div>
+                    <div class="td batsman2-runs"><span id="batsman2-runs"></span></div>
+                    <div class="td batsman2-balls"><span id="batsman2-balls"></span></div>
+                    <div class="td batsman2-fours"><span id="batsman2-fours"></span></div>
+                    <div class="td batsman2-sixs"><span id="batsman2-sixs"></span></div>
+                    <div class="td batsman2-strike-rate"><span id="batsman2-strike-rate"></span></div>
+                </div>
+            </div>
+            <div class="bowler-runs">
+                <div class="grid-table">
+                    <div class="th bowler">Bowler</div>
+                    <div class="th over">O</div>
+                    <div class="th maiden">M</div>
+                    <div class="th runs">R</div>
+                    <div class="th wickets">W</div>
+                    <div class="th economy">ECO</div>
+                    <div class="td"><span id="bowler-name"></span></div>
+                    <div class="td"><span id="bowler-over"></span></div>
+                    <div class="td"><span id="bowler-maiden"></span></div>
+                    <div class="td"><span id="bowler-runs"></span></div>
+                    <div class="td"><span id="bowler-wicket"></span></div>
+                    <div class="td"><span id="bowler-economy"></span></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="overs">
+            <div class="display-over">
+                <div class="over-overview">
+                    <div class="over-count">
+                        <span id="over">OVER 1</span>
+                    </div>
+                    <div class="runs">
+                        <span id="runs">RUNS 0-0</span>
+                    </div>
+                </div>
+                <div class="over-input-display" id="over-input-display">
+                    <!-- <span class="ball">6NB</span>
+                    <span class="ball">WB</span>
+                    <span class="ball">W</span>
+                    <span class="ball">4s</span>
+                    <span class="ball">6s</span>
+                    <span class="ball">3</span>
+                    <span class="ball">1</span>
+                    <span class="ball">2</span> -->
+                </div>
+            </div>
+            <div class="runsInput">
+                <div class="input-keyboard">
+                    <div class="first-input-key-container">
+                        <div class="keys dot" data-dot="0">0</div>
+                        <div class="keys one" data-one>1</div>
+                        <div class="keys two" data-two>2</div>
+                        <div class="keys three" data-three>3</div>
+                        <div class="keys four" data-four>4</div>
+                        <div class="keys six" data-six>6</div>
+                        <div class="keys wide" data-wide>WD</div>
+                        <div class="keys no-ball" data-noball>No-Ball</div>
+                        <div class="keys bye" data-bye>Bye</div>
+                    </div>
+                    <div class="second-input-key-container">
+                        <div class="keys undo" data-undo>Undo</div>
+                        <div class="keys other" data-other>5,7</div>
+                        <div class="keys out" data-out>out</div>
+                        <div class="keys leg-bye" data-legbye>LB</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script src="./scoreInput.js"></script>
+</body>
+</html>

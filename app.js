@@ -68,6 +68,7 @@ function initializePlayers(numPlayers) {
     playerId:id + i,
     playerName: 'Player ' + i,
     isBatting:false,
+    batsmanOut:false,
     isBowling:false,
     batting: {
           ballsBatted: 0,
