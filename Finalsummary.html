@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Summary </title>
+    <style>
+        :root{
+    --white:#fff;
+    --bg-color:#8B0000; 
+    --button-color-normal: #ddd; /* Default button color */
+    --button-color-active: #ccc; /* Active button color */
+}
+    *{
+    margin: 0;
+    padding: 0;
+}
+        body{
+            display: flex;
+            /* align-items: center; */
+            justify-content: center;
+        }
+        .container{
+            
+           
+
+            background-color: #8B0000;
+        }
+        .header{
+            text-align: center;
+            color: #fff;
+            font-weight: 600;
+        }
+        #main{
+            max-width: 940px;
+            background-color: aliceblue;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            margin: 15px;
+            flex-wrap: wrap;
+
+        }
+        #teamName{
+            text-align: center;
+        }
+        .grid-table{
+    display: grid;
+    grid-template-rows: repeat(3, min-content);
+    grid-template-columns: 2fr repeat(5, 0.3fr);
+    text-align: left;
+    margin:5px 1.5%;
+    border-collapse: collapse;
+}
+.th{
+    background-color: var(--bg-color);
+    color: var(--white);
+    padding: .5rem;
+    border: var(--bg-color) 1px solid;
+    font-size: 17px;
+}
+.td{
+    padding: .5rem;
+    border: var(--bg-color) 1px solid;
+}
+.head-btn{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 1rem;
+    
+    
+}
+.teambtn{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem;
+}
+.teambtn button{
+    font-size: 20px;
+    border: 1px solid #3B82F6;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: #3b83f680; /* Default button background color */
+    font-weight: 600;
+}
+.teambtn button.active {
+    background-color: #3B82F6; /* Active button background color */
+}
+.head-btn button{
+    font-size: 20px;
+    border: 1px solid #3B82F6;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: #3b83f680; /* Default button background color */
+    font-weight: 600;
+}
+.head-btn button.active {
+    background-color: #3B82F6; /* Active button background color */
+}
+.td:nth-of-type(2n){
+    background-color: #a0202049;
+}
+#Bowling{
+    display: grid;
+    grid-template-rows: repeat(3, min-content);
+    grid-template-columns: 2fr repeat(5, 0.2fr);
+    text-align: left;
+    margin:5px 1.5%;
+}
+#Bowling .th{
+    font-size: 12px;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>SUMMARY</h1>
+        </div>
+        <div id="main">
+            
+            <div class="teambtn">
+                <button id="team-1" onclick="showTeam1()" class="active">TEAM 1</button>
+                <button id="team-2" onclick="showTeam2()">TEAM 2</button>
+            </div>
+            <h1 id="teamName">Team 1</h1>
+            <div class="head-btn">
+                <button id="btn-bat" onclick="showBatting()" class="active">Batting</button>
+                <button id="btn-bowl" onclick="showBowling()"> Bowling</button>
+            </div>
+            <div class="grid-table" id="Batting">
+                <div class="th Batsman">Batting</div>
+                <div class="th run">Runs</div>
+                <div class="th balls">Balls</div>
+                <div class="th four">4s</div>
+                <div class="th six">6s</div>
+                <div class="th strike-rate">Strike Rate</div>
+            </div>
+            <div class="grid-table" id="Bowling" style="display: none;">
+                <div class="th bowler">Bowling</div>
+                <div class="th over">Overs</div>
+                <div class="th maiden">Maiden</div>
+                <div class="th runs">Runs</div>
+                <div class="th wickets">Wickets</div>
+                <div class="th economy">Economy</div>
+            </div>
+        </div>
+
+    </div>
+    
+    <script>
+        const batting=document.getElementById("Batting");
+        const bowling=document.getElementById("Bowling");
+        const team1Button = document.getElementById("team-1");
+        const team2Button = document.getElementById("team-2");
+        const teamName = document.getElementById("teamName");
+        let teamdata;
+        let td;
+        teamdata=localStorage.getItem("team1")
+             td=JSON.parse(teamdata)
+             batDetails();
+             bowlDetails();
+             teamName.innerText=td.teamName;
+
+
+    // let teamdata1=localStorage.getItem("team1")
+    // let td2=JSON.parse(teamdata)
+    // console.log(td);
+    function clearTable() {
+        // Clear existing data in batting and bowling tables
+        batting.innerHTML = `<div class="th Batsman">Batting</div>
+                <div class="th run">Runs</div>
+                <div class="th balls">Balls</div>
+                <div class="th four">4s</div>
+                <div class="th six">6s</div>
+                <div class="th strike-rate">Strike Rate</div>`;
+        bowling.innerHTML = `<div class="th bowler">Bowling</div>
+                <div class="th over">Overs</div>
+                <div class="th maiden">Maiden</div>
+                <div class="th runs">Runs</div>
+                <div class="th wickets">Wickets</div>
+                <div class="th economy">Economy</div>`;
+    }
+    
+    function showTeam1() {
+            clearTable();
+            team1Button.classList.add("active");
+            team2Button.classList.remove("active");
+             teamdata=localStorage.getItem("team1")
+             td=JSON.parse(teamdata)
+             batDetails();
+             bowlDetails();
+             teamName.innerText=td.teamName;
+
+
+            // Here you can update the data shown based on Team 1's data
+            // For demonstration purposes, let's assume you have the data for Team 1 in the localStorage
+            // You can retrieve and display the data similarly to how batDetails() and bowlDetails() functions work
+        }
+
+        function showTeam2() {
+            clearTable();
+            
+            team2Button.classList.add("active");
+            team1Button.classList.remove("active");
+            teamdata=localStorage.getItem("team2")
+            td=JSON.parse(teamdata)
+            batDetails();
+           bowlDetails();
+           teamName.innerText=td.teamName;
+
+            // Here you can update the data shown based on Team 2's data
+            // For demonstration purposes, let's assume you have the data for Team 2 in the localStorage
+            // You can retrieve and display the data similarly to how batDetails() and bowlDetails() functions work
+        }
+
+        function showBatting() {
+            document.getElementById("Batting").style.display = "grid";
+            document.getElementById("Bowling").style.display = "none";
+            document.getElementById("btn-bat").classList.add("active");
+            document.getElementById("btn-bowl").classList.remove("active");
+           
+        }
+
+        function showBowling() {
+            document.getElementById("Bowling").style.display = "grid";
+            document.getElementById("Batting").style.display = "none";
+            document.getElementById("btn-bowl").classList.add("active");
+            document.getElementById("btn-bat").classList.remove("active");
+            
+        }
+        function batDetails(){
+        td.player.forEach((data)=>{
+            // console.log(data)
+            if(data.isbatting){
+                console.log("hi")
+            }
+            else{
+                let name =document.createElement('div');
+                name.classList.add('batsman-name','td');
+                name.innerText=data.playerName;
+                batting.appendChild(name);
+                
+                let run =document.createElement('div');
+                run.classList.add('batsman-run','td');
+                run.innerText=data.batting.battingRuns;
+                batting.appendChild(run);
+
+                let balls =document.createElement('div');
+                balls.classList.add('batsman-balls','td');
+                balls.innerText=data.batting.ballsBatted;
+                batting.appendChild(balls);
+
+
+                let four =document.createElement('div');
+                four.classList.add('batsman-four','td');
+                four.innerText=data.batting.fours;
+                batting.appendChild(four);
+
+                let six =document.createElement('div');
+                six.classList.add('batsman-six','td');
+                six.innerText=data.batting.sixes;
+                batting.appendChild(six);
+
+                let strike =document.createElement('div');
+                strike.classList.add('batsman-strike','td');
+                strike.innerText=data.batting.strikeRate;
+                batting.appendChild(strike);
+
+            }
+        })}
+        function bowlDetails(){
+            td.player.forEach((data)=>{
+            // console.log(data)
+            if(data.isBowling){
+                console.log("hi")
+            }
+            else{
+                let name =document.createElement('div');
+                name.classList.add('bowler-name','td');
+                name.innerText=data.playerName;
+                bowling.appendChild(name);
+                
+                let over =document.createElement('div');
+                over.classList.add('bowler-over','td');
+                over.innerText=data.bowling.over;
+                bowling.appendChild(over);
+
+                let maiden =document.createElement('div');
+                maiden.classList.add('bowler-maiden','td');
+                maiden.innerText=data.bowling.maiden;
+                bowling.appendChild(maiden);
+
+
+                let runs =document.createElement('div');
+                runs.classList.add('bowler-runs','td');
+                runs.innerText=data.bowling.bowlRuns;
+                bowling.appendChild(runs);
+
+                let wicket =document.createElement('div');
+                wicket.classList.add('bowler-wicket','td');
+                wicket.innerText=data.bowling.wicket;
+                bowling.appendChild(wicket);
+
+                let economy =document.createElement('div');
+                economy.classList.add('bowler-economy','td');
+                economy.innerText=data.bowling.economy;
+                bowling.appendChild(economy);
+
+            }
+        })
+        }
+
+    </script>
+</body>
+</html>
