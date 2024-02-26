@@ -1,6 +1,7 @@
 // ball count
 let ballCount = 6;
 let over =0;
+let eachOverRuns = 0;
 let totalScore = 0;
 let battingTeam;
 let bowlingTeam;
@@ -10,6 +11,9 @@ console.log(team1.player);
 console.log(team2);
 
 
+document.getElementById('instructions').addEventListener('click', ()=>{
+    showPopup();
+})
 // pop up
 function showPopup(className='pop-up1') {
     // console.log("Classname "+className);
@@ -33,7 +37,6 @@ function showPopup(className='pop-up1') {
     })
 });
 }
-showPopup();
 
 // Seesion id
 const batsmanId1 = sessionStorage.getItem('strikerEnd')-1;  
@@ -48,8 +51,30 @@ let secondBatsmanId = sessionStorage.getItem('secondBatsmanId') || batsmanId2;
 sessionStorage.setItem('currentBatsmanId', currentBatsmanId);
 sessionStorage.setItem('secondBatsmanId', secondBatsmanId);
 
-// Display current batsman and bowler
+const displayOver = document.getElementById('over');
+const displayRun = document.getElementById('runs');
+const displayTeamName = document.getElementById('teamName');
+const displayScore = document.getElementById('score');
+const displayExtras = document.getElementById('extras'); 
 
+function display() {
+    let result = checkBattingTeam();
+    let team = result.team;
+
+    let extra= 0;
+    // team.extra.forEach(element => {
+    //     extra+=element;
+    // });
+    displayTeamName.innerText = `${team.teamName}`;
+    displayScore.innerText = `${team.totalScore}`;
+    displayExtras.innerText = `${extra}`;
+
+    displayOver.innerText = `${team.completedOvers}`;
+    displayRun.innerText = `${eachOverRuns}`;
+}
+
+
+// Display current batsman and bowler
 const batsman1Name = document.getElementById('batsman1-name');
 const batsman1Runs = document.getElementById('batsman1-runs');
 const batsman1Balls = document.getElementById('batsman1-balls');
@@ -209,8 +234,8 @@ document.addEventListener('click', e=>{
                 break;
             case 'out':
                 displayBall('W');
+                batsmanOut();
                 overCount();
-                batsmanOut(currentBatsmanId);
                 break;
         }
 })
@@ -277,6 +302,7 @@ function addBowlerRuns(run){
 }
 
 function addScore(score){
+    eachOverRuns+=score;
     let result = checkBattingTeam();
     let team = result.team;
     team.totalScore += score;
@@ -286,16 +312,24 @@ function addScore(score){
 
 // decrease the ballCount and increase the Over balls. last call isCheckover function
 function overCount(){
+    display();
+    let result = checkBattingTeam();
+    let team = result.team; 
+
     ballCount--;
+    over = team.completedOvers;
     over += .1;
     over = over.toFixed(1);
     over = parseFloat(over);
 
-    let result = checkBattingTeam();
-    let team = result.team;
+    
     team.completedOvers = over;
     localStorage.setItem(`team${result.number}`, JSON.stringify(team));
     isCheckOver();
+
+    let result2 = checkBowlingTeam();
+    displaybowler(result2.team);
+    displayBatsman(result.team);
 }
 
 function checkBattingTeam(){
@@ -317,23 +351,53 @@ function isCheckOver(){
     if(ballCount==0){
         let result = checkBattingTeam();
         let team = result.team;
+
         over = nextOver();
         team.completedOvers = over;
         localStorage.setItem(`team${result.number}`, JSON.stringify(team));
         // console.log(team1)
         console.log(over);
         ballCount=6;
-
+        eachOverRuns=0;
+        swapPlayers();
         overRuns = 0;
         console.log("Over over "+overRuns);
 
-        setTimeout(() => {
-            resetDisplayOver();
-        }, 3000);
+        if (checkIfLastBallWicket()) {
+            sessionStorage.setItem('selectNewBatsmanAndBowler', 'true'); // Set flag to select both batsman and bowler
+        } else {
+            setTimeout(() => {
+                resetDisplayOver();
+            }, 3000);
+            callNextPlayer('select-bowler'); // Select next bowler
+        }
         
     }
 }
 
+function checkIfLastBallWicket() {
+    // Check if the current batsman is out
+    let currentBatsmanId = sessionStorage.getItem('currentBatsmanId');
+    let team = checkBattingTeam().team;
+    let currentBatsman = team.player[currentBatsmanId];
+    console.log("Swaping "+currentBatsmanId);
+    if (currentBatsman.batsmanOut && ballCount === 1) {
+        // If the current batsman is out and it's the last ball of the over
+        return true; // Last ball resulted in a wicket
+    } else {
+        return false; // Last ball did not result in a wicket
+    }
+}
+
+function callNextPlayer(call){
+    let selectNewBatsmanAndBowler = sessionStorage.getItem('selectNewBatsmanAndBowler');
+    if (selectNewBatsmanAndBowler === 'true') {
+        sessionStorage.removeItem('selectNewBatsmanAndBowler');
+        window.location.href = `./selectPlayers.html?call=select-batsman-bowler`;
+    } else {
+        window.location.href = `./selectPlayers.html?call=${call}`;
+    }
+}
 // increment over EX: 1.6 to 2.0
 function nextOver(){
     return Math.round(over);
@@ -355,11 +419,11 @@ function swapPlayers(){
 }
 
 // Batsman out and wicket added to bowler's account.
-function batsmanOut(id){
+function batsmanOut(){
     // change localStorage batsmanOut to true, so again can't play. 
     let battingTeam = checkBattingTeam();
     let batTeam = battingTeam.team;
-    batTeam.player[id].batsmanOut = true;
+    batTeam.player[currentBatsmanId].batsmanOut = true;
     localStorage.setItem(`team${battingTeam.number}`, JSON.stringify(batTeam));
 
     // wicket added to bowler's account.
@@ -367,6 +431,18 @@ function batsmanOut(id){
     let bowlTeam = bowlingTeam.team;
     bowlTeam.player[bowlerId].bowling.wicket += 1; 
     localStorage.setItem(`team${bowlingTeam.number}`, JSON.stringify(bowlTeam));
+
+    if (ballCount === 1) {
+        sessionStorage.removeItem('currentBatsmanId');
+        sessionStorage.setItem('selectNewBatsmanAndBowler', 'true'); // Set flag to select both batsman and bowler
+        console.log("last ball"+ ballCount);
+    } else {
+        callNextPlayer('select-striker-end');
+        sessionStorage.removeItem('currentBatsmanId');
+        // setTimeout(() => {
+        //     callNextPlayer('select-striker-end'); 
+        // }, 1000);
+    }
 }
 
 
@@ -441,17 +517,22 @@ function handleRuns(runs , runType) {
     if(runType=='Wide'){
         team.extra.wide += (1+runs);
         addBatsmanRuns(runs+1);
+        eachOverRuns+=runs+1;
     }else if(runType=='Noball'){
         team.extra.noBall += (1+runs);
-        addBatsmanRuns(runs+1); 
+        addBatsmanRuns(runs+1);
+        eachOverRuns+=runs+1; 
     }else if(runType=='Bye'){
         team.extra.byes += runs;
         addBatsmanRuns(runs); 
+        eachOverRuns+=runs;
     }else if(runType=='Legbye'){
         team.extra.legByes += runs; 
+        eachOverRuns+=runs;
         addBatsmanRuns(runs); 
     }else{
         addBatsmanRuns(runs);
+        eachOverRuns+=runs;
     }
 
     
@@ -463,3 +544,5 @@ function hidePopup() {
     document.querySelector('.pop-up-box').style.visibility = 'hidden';
     document.querySelector('.pop-up').classList.remove('active');
 }
+
+display();
