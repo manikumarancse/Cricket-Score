@@ -17,6 +17,7 @@ function startMatch() {
     totalScore: 0,
     totalWickets:0,
     completedOvers: 0,
+    halfInnings: false,
     extra: {
         byes:0, 
         legByes:0, 
@@ -35,6 +36,7 @@ function startMatch() {
     totalScore: 0,
     totalWickets:0,
     completedOvers: 0,
+    halfInnings: false,
     extra: {
          byes:0, 
          legByes:0, 

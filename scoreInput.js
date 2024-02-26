@@ -360,17 +360,18 @@ function isCheckOver(){
         overRuns = 0;
         console.log("Over over "+overRuns);
 
-        inningsOver();
+        if(!inningsOver()){
 
-        if (checkIfLastBallWicket()) {
-            sessionStorage.setItem('selectNewBatsmanAndBowler', 'true'); // Set flag to select both batsman and bowler
-        } else {
-            setTimeout(() => {
-                resetDisplayOver();
-            }, 3000);
-            callNextPlayer('select-bowler'); // Select next bowler
+
+            if (checkIfLastBallWicket()) {
+                sessionStorage.setItem('selectNewBatsmanAndBowler', 'true'); // Set flag to select both batsman and bowler
+            } else {
+                setTimeout(() => {
+                    resetDisplayOver();
+                }, 3000);
+                callNextPlayer('select-bowler'); // Select next bowler
+            }
         }
-        
     }
 }
 
@@ -433,8 +434,8 @@ function batsmanOut(){
     bowlTeam.player[bowlerId].bowling.wicket += 1; 
     localStorage.setItem(`team${bowlingTeam.number}`, JSON.stringify(bowlTeam));
 
-    inningsOver();
-
+    if(!inningsOver()){
+    console.log("next page");
     if (ballCount === 1) {
         sessionStorage.removeItem('currentBatsmanId');
         sessionStorage.setItem('selectNewBatsmanAndBowler', 'true'); // Set flag to select both batsman and bowler
@@ -446,6 +447,7 @@ function batsmanOut(){
         //     callNextPlayer('select-striker-end'); 
         // }, 1000);
     }
+}
 }
 
 
@@ -518,19 +520,24 @@ function handleRuns(runs , runType) {
     let team = result.team;
     
     if(runType=='Wide'){
+        displayBall(`${runs==0?'':runs}WD`);
         team.extra.wide += (1+runs);
         addBatsmanRuns(runs+1);
     }else if(runType=='Noball'){
+        displayBall(`${runs==0?'':runs}NB`);
         team.extra.noBall += (1+runs);
         addBatsmanRuns(runs+1);
     }else if(runType=='Bye'){
+        displayBall(`${runs==0?'':runs}B`);
         team.extra.byes += runs;
         addBatsmanRuns(runs); 
     }else if(runType=='Legbye'){
+        displayBall(`${runs==0?'':runs}B`);
         team.extra.legByes += runs; 
         addBatsmanRuns(runs); 
     }else{
         addBatsmanRuns(runs);
+        displayBall(runs);
     }
 
     
@@ -548,10 +555,21 @@ var matchData = JSON.parse(localStorage.getItem('matchData'));
 
 function inningsOver(){
     let result = checkBattingTeam();
+    let result2 = checkBowlingTeam();
     let team = result.team
+    let team2 = result2.team
     if((team.totalWickets==matchData.noOfPlayers-1)|| (team.completedOvers==matchData.totalOvers)){
         alert("Match over");
+        team.halfInnings = true;
+        team.innings = 2;
+        team2.innings = 1;
+
+        localStorage.setItem(`team${result.number}`, JSON.stringify(team));  
+        localStorage.setItem(`team${result2.number}`, JSON.stringify(team2));  
+
+        return true;
     }
+    return false;
 }
 
 display();
