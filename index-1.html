@@ -30,9 +30,14 @@
             text-align: center;
         }
         /* Styles for the header h1 */
-        header h1 {
+        header h1{
             color: #8B0000; /* Maroon color */
-            font-size: 21px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         /* Styles for the main container */
         .container {
@@ -122,12 +127,23 @@
         /* Styles for the batting and bowling buttons */
         .b1 {
             display: none;
+            flex-direction: column;
             margin-top: 20px; /* Added margin-top */
         }
         .b1 button {
             margin: 0.5rem;
             background-color: #424ae0; /* Blue background */
             color: #fff; /* White text color */
+        }
+        #Batting, #Bowling{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #teamNameInput{
+            width: 15%;
+            
+
         }
         @media only screen and (min-width: 600px) {
             .container {
@@ -138,7 +154,7 @@
 </head>
 <body>
     <header>
-        <h1>Cricket Score APP</h1>
+        <h1> <img src="./batting2.jpg" alt="" width="40px">  Cricket Score APP  <img src="./bowling.jpg" alt="" width="30px"></h1>
     </header>
     
     <div class="main">
@@ -177,8 +193,8 @@
 
         <!-- Buttons for batting and bowling -->
         <div class="buttons b1">
-            <button id="Batting">BATTING</button>
-            <button id="Bowling">BOWLING</button>
+            <button id="Batting">BATTING <img src="./batting3.jpg" alt="" width="25px"></button>
+            <button id="Bowling">BOWLING  <img src="./bowling1.jpg" alt="" width="25px"></button>
         </div>
     </div>
 
@@ -207,6 +223,7 @@
         let selectedTeam;
 
         flipBtn.addEventListener("click", () => {
+            document.getElementById("teamNameInput").disabled = true;
         if (!tossButtonClicked) { // Check if flip coin button is not clicked
             tossResult.textContent = "";
             b1.style.display = "none";
@@ -221,7 +238,7 @@
                 }, 100);
                 setTimeout(function () {
                     tossResult.textContent = "Toss won by " + teamName + ". It's Your Choice!";
-                    b1.style.display = "block";
+                    b1.style.display = "flex";
                     if (teamName === t1.value) {
                         selectedTeam = t1.value;
                     } else {
@@ -256,11 +273,13 @@
             if (selectedTeam === matchData.t1Name) {
                 Tm1.innings = 1;
                 Tm2.innings = 2;
-                alert( Tm1.teamName +" Chosed to Bat ")
+                alert( Tm1.teamName +" Chosed to Bat ");
+                window.location.href = "selectPlayers.html";
             } else {
                 Tm2.innings = 1;
                 Tm1.innings = 2;
-                alert( Tm2.teamName +" Chosed to Bat ")
+                alert( Tm2.teamName +" Chosed to Bat ");
+                window.location.href = "selectPlayers.html";
             }
             localStorage.setItem('team1', JSON.stringify(Tm1));
             localStorage.setItem('team2', JSON.stringify(Tm2));
@@ -279,11 +298,13 @@
             if (selectedTeam === matchData.t1Name) {
                 Tm2.innings = 1;
                 Tm1.innings = 2;
-                alert( Tm1.teamName +" Chosed to Bowling ")
+                alert( Tm1.teamName +" Chosed to Bowling ");
+                window.location.href = "selectPlayers.html";
             } else {
                 Tm1.innings = 1;
                 Tm2.innings = 2;
-                alert( Tm2.teamName +" Chosed to Bowling ")
+                alert( Tm2.teamName +" Chosed to Bowling ");
+                window.location.href = "selectPlayers.html";
             }
             localStorage.setItem('team1', JSON.stringify(Tm1));
             localStorage.setItem('team2', JSON.stringify(Tm2));
@@ -296,9 +317,9 @@
     });
 
     // Event listener for the team select dropdowns to prevent re-selection
-    document.getElementById("teamNameInput").addEventListener("change", function () {
-        document.getElementById("teamNameInput").disabled = true;
-    });
+    // document.getElementById("teamNameInput").addEventListener("change", function () {
+    //     document.getElementById("teamNameInput").disabled = true;
+    // });
     </script>
 </body>
 </html>
