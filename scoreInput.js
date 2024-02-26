@@ -435,6 +435,7 @@ function batsmanOut(){
     localStorage.setItem(`team${bowlingTeam.number}`, JSON.stringify(bowlTeam));
 
     if(!inningsOver()){
+
     console.log("next page");
     if (ballCount === 1) {
         sessionStorage.removeItem('currentBatsmanId');
@@ -573,3 +574,4 @@ function inningsOver(){
 }
 
 display();
+// comment
