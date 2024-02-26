@@ -35,7 +35,7 @@
     backdrop-filter: blur(5px);
     background: rgba(255, 255, 255, 0.1);
     visibility: hidden;
-    transition: 0.5s ease;
+    transition: 0.2s ease;
     transition-property: visibility;
 }
 
@@ -47,7 +47,7 @@
     border-radius: 10px 10px 3px 3px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     transform: scale(0);
-    transition: transform 0.5s ease; /* Added transition property */
+    transition: transform 0.3s ease; /* Added transition property */
     transition-property: transform; /* Specified transition property */
 }
 .active {
