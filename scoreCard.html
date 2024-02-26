@@ -90,7 +90,7 @@
 
                 let strike =document.createElement('div');
                 strike.classList.add('batsman-strike','td');
-                let sr=(((data.batting.battingRuns+67)/(data.batting.ballsBatted+80))*100).toFixed(2);
+                let sr=(((data.batting.battingRuns)/(data.batting.ballsBatted))*100).toFixed(2);
                 strike.innerText=((isNaN(sr))? 0: sr);
                 batting.appendChild(strike);
             }

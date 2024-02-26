@@ -4,26 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- style sheet -->
-    <link rel="stylesheet" href="./gameInput.css">
+    <!-- <link rel="stylesheet" href="./gameInput.css"> -->
     <title>Select</title>
     <style>
-    .main-container{
-    max-width: 940px;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    margin: 15px auto;
-    flex-wrap: wrap;
-}
-.player-select-btn{
-    width: 80vh;
-    background-color: yellowgreen;
-    align-items: center;
-}
-#strikerEnd,#nonStrikerEnd{
-    display: block;
-    width: 50%;
-}
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .main-container{
+            width: 840px;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-items: center;
+            background-color: maroon;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        #strikerEnd, #nonStrikerEnd,#selectBowler,#selectNextNonStriker,#selectNextBowler{
+            min-width:280px;
+            max-width: 700px;
+            height: 40px;
+        }
+        .player-select-btn{
+            width: 280px;
+            margin: 40px;
+        }
+        .player-select-btn h3{
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        #start{
+            width: 280px;
+            height: 40px;
+            font-size: 16px;
+        }
+        select option{
+            background-color: #8b000078;
+            color: rgb(27, 27, 43);
+            font-size: 15px;
+        }
     </style>
 </head>
 <body>
@@ -31,26 +54,43 @@
     <!-- main grid container -->
     <div class="main-container">
         <div class="select-batsman">
-            <div class="player-select-btn select-strike-end">
+            <div class="player-select-btn select-strike-end" id="select-striker-end">
+                <h3>Select Strike Batsman</h3>
                 <select id="strikerEnd">
-                    <option value="">Select Player</option>
+                    <option value="">Select Player striker</option>
                 </select>
             </div>
-            <div class="player-select-btn select-non-strike-end">
+            <div class="player-select-btn select-non-strike-end" id="select-non-striker-end">
+                <h3>Select Non-Strike Batsman</h3>
                 <select id="nonStrikerEnd">
-                    <option value="">Select Player</option>
+                    <option value="">Select Player non striker</option>
                 </select>
             </div>
         </div>
-        <div class="select-bowler">
+        <div class="select-bowler" id="select-bowler">
             <div class="player-select-btn bowler">
+                <h3>Select Bowler</h3>
                 <select id="selectBowler">
-                    <option value="">Select Player</option>
+                    <option value="">Select Player bowler</option>
+                </select>
+            </div>
+        </div>
+        <div class="select-batsman-bowler" id="select-batsman-bowler">
+            <div class="player-select-btn batsman-bowler">
+                <h3>Select Bowler</h3>
+                <select id="selectNextBowler">
+                    <option value="">Select Player bowler</option>
+                </select>
+                <h3>Select Non Striker Player</h3>
+                <select id="selectNextNonStriker">
+                    <option value="">Select Player non striker</option>
                 </select>
             </div>
         </div>
 
-        <a href="./scoreInput.html">Scorecard</a>
+        <!-- <a href="./scoreInput.html">Scorecard</a> -->
+
+        <button id="start">Start Game</button>
     </div>
 
     <!-- script -->
