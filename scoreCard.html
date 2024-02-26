@@ -54,7 +54,7 @@
     Extras();
     Runs();
     yetToBat();
-
+    toss();
     function batDetails(){
         td.player.forEach((data)=>{
             // console.log(data)
@@ -158,7 +158,6 @@
                 }
             })
         }
-        toss();
         function toss(){
             const toss=document.getElementById("toss");
             toss.innerHTML=(td.innings==1) ? `${td.teamName} won the toss and choose to bat`: `${td.teamName} won the toss and choose to bowl`;
