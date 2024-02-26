@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- style sheet -->
+    <!-- <link rel="stylesheet" href="./gameInput.css"> -->
+    <title>Select</title>
+</head>
+<body>
+
+    <!-- main grid container -->
+    <div class="main-container">
+        <div class="select-batsman">
+            <div class="player-select-btn select-strike-end" id="select-striker-end">
+                <select id="strikerEnd">
+                    <option value="">Select Player striker</option>
+                </select>
+            </div>
+            <div class="player-select-btn select-non-strike-end" id="select-non-striker-end">
+                <select id="nonStrikerEnd">
+                    <option value="">Select Player non striker</option>
+                </select>
+            </div>
+        </div>
+        <div class="select-bowler" id="select-bowler">
+            <div class="player-select-btn bowler">
+                <select id="selectBowler">
+                    <option value="">Select Player bowler</option>
+                </select>
+            </div>
+        </div>
+        <div class="select-batsman-bowler" id="select-batsman-bowler">
+            <div class="player-select-btn batsman-bowler">
+                <select id="selectNextBowler">
+                    <option value="">Select Player bowler</option>
+                </select>
+                <select id="selectNextNonStriker">
+                    <option value="">Select Player non striker</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- <a href="./scoreInput.html">Scorecard</a> -->
+
+        <button id="start">Start Game</button>
+    </div>
+
+    <!-- script -->
+    <script src="./selectPlayers.js" defer></script>
+</body>
+</html>
