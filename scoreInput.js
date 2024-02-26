@@ -61,13 +61,13 @@ function display() {
     let result = checkBattingTeam();
     let team = result.team;
 
-    let extra= 0;
+    // let extra= 0;
     // team.extra.forEach(element => {
     //     extra+=element;
     // });
     displayTeamName.innerText = `${team.teamName}`;
     displayScore.innerText = `${team.totalScore}`;
-    displayExtras.innerText = `${extra}`;
+    displayExtras.innerText = `${(team.extra.byes)+(team.extra.legByes)+(team.extra.wide)+(team.extra.noBall)}`;
 
     displayOver.innerText = `${team.completedOvers}`;
     displayRun.innerText = `${eachOverRuns}`;
