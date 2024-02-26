@@ -6,19 +6,30 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="./final.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+
 </head>
 <body>
+    <div class="pop-up-box"></div>
 
-    <div class="pop-up Winner-Alert">
-        <div class="pop-up-name">
-            <h3>Result</h3>
-            <button class="close"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="instructions Middle">
-            <h3 class="winning-team-name"></h3>
-            <p class="Team-name"><img src="./Icon.jpg" alt="" class="winning-image"></p>
+        <div class="pop-up Winner-Alert">
+            <div class="pop-up-name">
+                <h3>Result</h3>
+                <button class="close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="instructions Middle">
+                <h3 class="winning-team-name"></h3>
+                <p class="Team-name"><img src="./Icon.jpg" alt="" class="winning-image"></p>
+            </div>
         </div>
     </div>
+
+    <button onclick="checkWinner()">Check Winner</button>
+
     
     <script src="./final.js"></script>
 </body>
