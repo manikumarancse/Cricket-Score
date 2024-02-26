@@ -66,7 +66,7 @@ function display() {
     //     extra+=element;
     // });
     displayTeamName.innerText = `${team.teamName}`;
-    displayScore.innerText = `${team.totalScore}`;
+    displayScore.innerText = `${team.totalScore}/${team.totalWickets}`;
     displayExtras.innerText = `${(team.extra.byes)+(team.extra.legByes)+(team.extra.wide)+(team.extra.noBall)}`;
 
     displayOver.innerText = `${team.completedOvers}`;
