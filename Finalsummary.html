@@ -16,12 +16,14 @@
     padding: 0;
 }
         body{
+            
             display: flex;
             /* align-items: center; */
             justify-content: center;
         }
         .container{
-            
+            width: 100%;
+           
            
 
             background-color: #8B0000;
@@ -30,13 +32,18 @@
             text-align: center;
             color: #fff;
             font-weight: 600;
+            
+        }
+        .header h1{
+            padding: 1rem;
         }
         #main{
-            max-width: 940px;
+           
             background-color: aliceblue;
             display: flex;
             flex-direction: column;
             align-items: stretch;
+            justify-content: center;
             margin: 15px;
             flex-wrap: wrap;
 
@@ -88,6 +95,13 @@
 .teambtn button.active {
     background-color: #3B82F6; /* Active button background color */
 }
+#teamName{
+    padding: 0;
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #8B0000;
+}
 .head-btn button{
     font-size: 20px;
     border: 1px solid #3B82F6;
@@ -112,12 +126,60 @@
 #Bowling .th{
     font-size: 12px;
 }
+#close{
+            position: absolute; /* Position the close button absolutely */
+            top: 0; /* Align to the top */
+            left: 0; /* Align to the left */
+            padding: 1rem; /* Add some padding for better visibility */
+            color: #fff; /* Set the color */
+            text-decoration: none; /* Remove default underline */
+            font-size: 1rem; /* Set the font size */
+            cursor: pointer; /* Change cursor to pointer on hover */
+   }
+
+#btn-bowl, #btn-bat{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+}
+
+@media only screen and (max-width: 354px) {
+    .container {
+        /* Remove width declaration */
+        width: auto;
+        background-color: #8B0000;
+    }
+    .teambtn button{
+    font-size: 15px;
+    border: 1px solid #3B82F6;
+    padding: 3px 7px;
+    border-radius: 10px;
+    background-color: #3b83f680; /* Default button background color */
+    font-weight: 600;
+}
+.head-btn button{
+    font-size: 15px;
+    border: 1px solid #3B82F6;
+    padding: 3px 7px;
+    border-radius: 10px;
+    background-color: #3b83f680; /* Default button background color */
+    font-weight: 600;
+}
+#Bowling .th{
+    font-size: 10px;
+}
+#Batting .th{
+    font-size: 15px;
+}
+}
+
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>SUMMARY</h1>
+            <a href="" id="close">X</a>
         </div>
         <div id="main">
             
@@ -127,8 +189,8 @@
             </div>
             <h1 id="teamName">Team 1</h1>
             <div class="head-btn">
-                <button id="btn-bat" onclick="showBatting()" class="active">Batting</button>
-                <button id="btn-bowl" onclick="showBowling()"> Bowling</button>
+                <button id="btn-bat" onclick="showBatting()" class="active">Batting <img src="./batting3.jpg" alt="" width="25px"></button>
+                <button id="btn-bowl" onclick="showBowling()"> Bowling <img src="./bowling1.jpg" alt="" width="25px"></button>
             </div>
             <div class="grid-table" id="Batting">
                 <div class="th Batsman">Batting</div>
@@ -136,7 +198,7 @@
                 <div class="th balls">Balls</div>
                 <div class="th four">4s</div>
                 <div class="th six">6s</div>
-                <div class="th strike-rate">Strike Rate</div>
+                <div class="th strike-rate">S/R</div>
             </div>
             <div class="grid-table" id="Bowling" style="display: none;">
                 <div class="th bowler">Bowling</div>
@@ -144,7 +206,7 @@
                 <div class="th maiden">Maiden</div>
                 <div class="th runs">Runs</div>
                 <div class="th wickets">Wickets</div>
-                <div class="th economy">Economy</div>
+                <div class="th economy">Ec</div>
             </div>
         </div>
 
@@ -162,7 +224,7 @@
              td=JSON.parse(teamdata)
              batDetails();
              bowlDetails();
-             teamName.innerText=td.teamName;
+             teamName.innerText=`${td.teamName.toUpperCase()} (${td.totalScore} / ${td.totalWickets}) `;
 
 
     // let teamdata1=localStorage.getItem("team1")
@@ -192,7 +254,7 @@
              td=JSON.parse(teamdata)
              batDetails();
              bowlDetails();
-             teamName.innerText=td.teamName;
+             teamName.innerText=`${td.teamName.toUpperCase()} (${td.totalScore} / ${td.totalWickets}) `;
 
 
             // Here you can update the data shown based on Team 1's data
@@ -209,7 +271,7 @@
             td=JSON.parse(teamdata)
             batDetails();
            bowlDetails();
-           teamName.innerText=td.teamName;
+           teamName.innerText=`${td.teamName.toUpperCase()} (${td.totalScore} / ${td.totalWickets}) `;
 
             // Here you can update the data shown based on Team 2's data
             // For demonstration purposes, let's assume you have the data for Team 2 in the localStorage
