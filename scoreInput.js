@@ -560,7 +560,7 @@ function inningsOver(){
     let team = result.team
     let team2 = result2.team
     if((team.totalWickets==matchData.noOfPlayers-1)|| (team.completedOvers==matchData.totalOvers)){
-        alert("Match over");
+        /* alert("Match over"); */
         team.halfInnings = true;
         team.innings = 2;
         team2.innings = 1;
@@ -568,10 +568,27 @@ function inningsOver(){
         localStorage.setItem(`team${result.number}`, JSON.stringify(team));  
         localStorage.setItem(`team${result2.number}`, JSON.stringify(team2));  
 
+        innings_popup(team2.teamName,team.totalScore);
+
         return true;
     }
     return false;
 }
 
+
+// Innings alert
+function innings_popup(name, runs) {
+    document.querySelector('.Team-name').innerText = name + " Needs " + (runs + 1) + " Runs In " + matchData.totalOvers * 6 + " Balls"
+    document.querySelector('.pop-up-box').style.visibility = 'visible'
+    document.querySelector('.Innings-Alert').classList.add('active');
+   /*  document.querySelectorAll('.close')[4].addEventListener('click', function () {
+        document.querySelector('.Innings-Alert').classList.remove('active');
+        document.querySelector('.pop-up-box').style.visibility = 'hidden'
+    })*/
+    document.getElementById("nextInnings").addEventListener("click",() => {
+        window.location.href="selectPlayers.html"
+        sessionStorage.clear();
+    })
+} 
+
 display();
-// comment
