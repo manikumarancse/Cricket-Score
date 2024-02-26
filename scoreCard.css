@@ -37,7 +37,7 @@
 .bat-det{
     display: flex;
     flex-direction: column;
-    margin:5px 1.5%;
+    margin: 1.5%;
     font-size: 20px;
     padding: 2px;
     border:#8B0000 1px solid
@@ -57,4 +57,9 @@
 }
 .td:nth-of-type(2n){
     background-color: #a0202049;
+}
+
+#toss{
+    text-align: center;
+    padding: .5rem;
 }

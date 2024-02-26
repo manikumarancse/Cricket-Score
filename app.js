@@ -17,6 +17,7 @@ function startMatch() {
     totalScore: 0,
     totalWickets:0,
     completedOvers: 0,
+    halfInnings: false,
     extra: {
         byes:0, 
         legByes:0, 
@@ -35,6 +36,7 @@ function startMatch() {
     totalScore: 0,
     totalWickets:0,
     completedOvers: 0,
+    halfInnings: false,
     extra: {
          byes:0, 
          legByes:0, 
@@ -76,7 +78,8 @@ function initializePlayers(numPlayers) {
           fours:0,
           sixes:0,
           get strikeRate(){
-            return parseFloat((this.battingRuns / this.ballsBatted)*100).toFixed(2);
+            let sr= parseFloat((this.battingRuns / this.ballsBatted)*100).toFixed(2);
+            return isNaN(sr) ? parseFloat("0.00") : sr;
         },
         },
     bowling: {
@@ -85,7 +88,8 @@ function initializePlayers(numPlayers) {
           maiden: 0,
           bowlRuns: 0,
           get economy(){
-            return parseFloat(this.bowlRuns / this.over).toFixed(2);
+            let eco= parseFloat(this.bowlRuns / this.over).toFixed(2);
+            return isNaN(eco) ? parseFloat("0.00") : eco;
         },
         }
     }); 
