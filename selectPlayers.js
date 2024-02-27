@@ -36,7 +36,6 @@ if(classNameId==null){
     nonStrikerEndContainer.style.display = "none";
     batsmanAndBowlerContainer.style.display = "none";
     initial();
-    displayBatsman();
     displayBowler();
 }else if(classNameId==strikerEndContainer.id){
     bowlerContainer.style.display = "none";
@@ -45,7 +44,6 @@ if(classNameId==null){
     batsmanAndBowlerContainer.style.display = "none";
     initial();
     displayBatsman();
-    displayBowler();
 }else if(classNameId==nonStrikerEndContainer.id){
     bowlerContainer.style.display = "none";
     strikerEndContainer.style.display = "none";
@@ -53,7 +51,6 @@ if(classNameId==null){
     batsmanAndBowlerContainer.style.display = "none";
     initial();
     displayBatsman();
-    displayBowler();
 }else if(classNameId==batsmanAndBowlerContainer.id){
     bowlerContainer.style.display = "none";
     strikerEndContainer.style.display = "none";
@@ -117,7 +114,8 @@ batTeam.player.forEach(element => {
 
         strikerEnd.addEventListener('change', (event) => { // Change 'click' to 'change'
             const selectedPlayerId = event.target.value;
-            sessionStorage.setItem('strikerEnd', selectedPlayerId);
+            // sessionStorage.setItem('strikerEnd', selectedPlayerId);
+            sessionStorage.setItem('currentBatsmanId', selectedPlayerId-1);
             console.log(selectedPlayerId); 
         });
     }
@@ -132,7 +130,8 @@ batTeam.player.forEach(element => {
 
         nonStrikerEnd.addEventListener('change', (event) => { // Change 'click' to 'change'
             const selectedPlayerId = event.target.value;
-            sessionStorage.setItem('nonStrikerEnd', selectedPlayerId);
+            // sessionStorage.setItem('nonStrikerEnd', selectedPlayerId);
+            sessionStorage.setItem('secondBatsmanId', selectedPlayerId-1);
             console.log(selectedPlayerId); 
         });
     }
@@ -145,6 +144,7 @@ function displayBowler(){
     let bowlTeam = result2.team;
     bowlTeam.player.forEach(element => {
         if(element.playerId!=sessionStorage.getItem('bowler')){
+            sessionStorage.removeItem('bowler')
             const option = document.createElement('option');
             option.innerText = `${element.playerName}`;
             option.value = element.playerId;
@@ -161,13 +161,16 @@ function displayBowler(){
 
 
 startBtn.addEventListener('click', ()=>{
-    const batsman1 = sessionStorage.getItem('strikerEnd');
-    const batsman2 = sessionStorage.getItem('nonStrikerEnd');
+    const batsman1 = sessionStorage.getItem('currentBatsmanId');
+    const batsman2 = sessionStorage.getItem('secondBatsmanId');
     const bowler = sessionStorage.getItem('bowler');
-
+    console.log(bowler)
     if(batsman1==batsman2){
         alert("you cann't select two batsman same player");
-    }else{
+    }else if(batsman1=="" || batsman2==""|| bowler=="" || bowler==null){
+        alert("select the player in required fields");
+    }
+    else{
         window.location.href = "scoreInput.html";
     }
 });
@@ -189,7 +192,8 @@ function displayBatsmanAndBowler(){
 
             selectNextNonStriker.addEventListener('change', (event) => { // Change 'click' to 'change'
                 const selectedPlayerId = event.target.value;
-                sessionStorage.setItem('nonStrikerEnd', selectedPlayerId);
+                // sessionStorage.setItem('nonStrikerEnd', selectedPlayerId);
+                sessionStorage.setItem('secondBatsmanId', selectedPlayerId-1);
                 console.log(selectedPlayerId); 
             });
         }
