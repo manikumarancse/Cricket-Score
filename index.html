@@ -1,65 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cricket Score Tracker</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <div class="head">
+  <div id="head">
     <h1 id="appname">Cricket Score Tracker</h1>
     <p id="catalogue">Give your team names and player names in the specified area</p>
-  </div>
 
-  <div class="usrteaminp">
-
-    <div class="teamdetail">
-      <h4>Team Name</h4>
-      <div>
-        <h4>No of Players</h4>
-      </div>
-    </div>
+  <div class="teamdetail">
+      <h2>Match Detail Form</h2>
+    <!-- Getting match info through input field -->
     <div class="teamName">
       <div class="team1Name">
         <label for="team1Name">Team 1 </label>
-        <input type="text" id="team1Name" required>
-        <input type="number" id="numPlayers" required>
-      </div>
+        <input type="text" id="team1Name"  placeholder="Enter team 1 Name here.." required="true">
+        </div>
       <div class="team2Name">
         <label for="team2Name">Team 2 </label>
-        <input type="text" id="team2Name" required>
-        <input type="number" id="numPlayerss" required> <!-- Corrected ID -->
+        <input type="text" id="team2Name"  placeholder="Enter team 2 Name here.." required="true">
       </div>
-
+      <div class="nums"></div>
+    <div class="numofplayers">
+      <label>No of Players in Each Team</label>
+      <input type="number" id="numPlayers"  placeholder="No of Players in Each Team" required="true">
+     
     </div>
     <div class="numofovers">
       <label>No of Overs </label>
-      <input type="number" id="totalovers" required placeholder="Enter Overs">
+      <input type="number" id="totalovers"  placeholder="Enter Overs" required="true">
     </div>
+</div>
+</div>
+  <button id="startBtn" class="gotots" onclick="startMatch() ">Give Cricketers Name</button>
+</div>
+<!-- Popup to get player names through input field generation. -->
+  <div class="popteam" id="popteam" >
+    <p class="close" id="closeBtn">&times;</p>
+    <div class="playerName">
+    <div class="input-group1" id="team1Input">
+      <!-- Player names for Team 1 will be entered here  -->
+    </div>
+    <div class="input-group2" id="team2Input" style="display: none;">
+     <!-- Player names for Team 2 will be entered here   -->
+    </div>
+    <button id="generateBtn2" class="gotots" onclick="generateInputs2()" style="display: none;">Enter Team 2 Player Names</button>
+  </div>
+  <button id="collectBtn" class="gotots" style="display: none;">Collect </button>
+  
+  <!-- After collect player name navigate to toss section -->
+  <a  id="goToss" href="./index-1.html"  class="gotots" style="display: none;" >Go Toss</a>
   </div>
 
-  <button id="startBtn" class="gotots" onclick="startMatch()">startMatch</button>
- 
-
-  <button id="generateBtn" class="gotots" onclick="generateInputs()" style="margin-top: 10px;"> Enter Team 1 Player Names</button>
-
-  <div class="input-group" id="team1Input">
-    <!-- Player names for Team 1 will be entered here -->
-  </div>
-  <div class="input-group" id="team2Input" style="display: none;">
-    <label for="team2Name">Team 2 Player Names:</label>
-    <!-- Player names for Team 2 will be entered here  -->
-  </div>
-  <button id="generateBtn2" class="gotots" onclick="generateInputs2()" style="display: none;">Enter Team 2 Player Names</button>
-  <button id="collectBtn" class="gotots" style="display: none;">collectBtn</button>
-
-
-  <!-- <button id="goToss" class="gotots" style="display: none;">Go Toss</button>  -->
-
-  <script src="app.js"></script>
+   <script src="app.js"></script> 
 </body>
 
 </html>
