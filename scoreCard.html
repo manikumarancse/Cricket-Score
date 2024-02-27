@@ -5,18 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ScoreCard</title>
     <link rel="stylesheet" href="./scoreCard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
     <div id="main">
+    <div id="top">
     <h1 id="teamName">Team 1</h1>
+    <i class="fa-solid fa-rectangle-xmark fa-2x" id="close"></i>
+    </div>
     <!--This part is used to display the Batting details-->
     <div class="grid-table" id="Batting">
-        <div class="th Batsman">Batting</div>
-        <div class="th run">Runs</div>
-        <div class="th balls">Balls</div>
-        <div class="th four">4s</div>
-        <div class="th six">6s</div>
-        <div class="th strike-rate">Strike Rate</div>
+        <div class="th Batsman">Batsman</div>
+        <div class="th run" title="Runs">R</div>
+        <div class="th balls" title="Balls">B</div>
+        <div class="th four" title="four">4s</div>
+        <div class="th six" title="six">6s</div>
+        <div class="th strike-rate" title="strike-rate">S/R</div>
     </div>
         <div class="bat-det">
         <div class="Extras">
@@ -36,51 +40,98 @@
         </div>
     <!--This part is used to display the Bowling details-->
     <div class="grid-table" id="Bowling">
-        <div class="th bowler">Bowling</div>
-        <div class="th over">Overs</div>
-        <div class="th maiden">Maiden</div>
-        <div class="th runs">Runs</div>
-        <div class="th wickets">Wickets</div>
-        <div class="th economy">Economy</div>
+        <div class="th bowler">Bowler</div>
+        <div class="th over" title="over">O</div>
+        <div class="th maiden" title="maiden">M</div>
+        <div class="th runs" title="runs">R</div>
+        <div class="th wickets" title="wickets">W</div>
+        <div class="th economy" title="economy">Eco</div>
 </div>
 <!--here we display toss details-->
 <h2 id="toss"></h2>
 </div>
 <script>
-    setTimeout(() => (document.location.reload()), 3000);
     const batting=document.getElementById("Batting");
     const bowling=document.getElementById("Bowling");
-    let teamdata1=localStorage.getItem("team1")
-    let t1,t2;
-    let td=JSON.parse(teamdata1)
-    if(td.innings === 1){
-        let a=localStorage.getItem("team1");
-        t1=JSON.parse(a)
-        let b=localStorage.getItem("team2");
-        t2=JSON.parse(b)
+    const teamname=document.getElementById("teamName");
+    let battingTeam;
+    let bowlingTeam;
+    
+    let team1=JSON.parse(localStorage.getItem("team1"))
+    let team2=JSON.parse(localStorage.getItem("team2"))
+    
+    if(team1.innings===1){
+    battingTeam=team1.teamName;
+    console.log("Team1 batting");
+    }else{
+    battingTeam=team2.teamName;
+    console.log("Team2 batting");
     }
-    else{
-        let a=localStorage.getItem("team1");
-        t2=JSON.parse(a)
-        let b=localStorage.getItem("team2");
-        t1=JSON.parse(b)
+    if(team1.innings===2){
+    bowlingTeam=team1.teamName;
+    console.log("Team1 bowling");
+    }else{
+    bowlingTeam=team2.teamName;
+    console.log("Team2 bowling");
     }
-    console.log(t1);
+
+    function checkBattingTeam(){
+    if(battingTeam==team1.teamName)
+        return { team: team1, number: 1 };
+    if(battingTeam==team2.teamName)
+        return { team: team2, number: 2 };
+    }
+
+    function checkBowlingTeam(){
+        if(bowlingTeam==team1.teamName)
+            return { team: team1, number: 1 };
+        if(bowlingTeam==team2.teamName)
+            return { team: team2, number: 2 };
+    }
+    // let t1,t2;
+    // if(teamdata1.innings === 1){
+    //     t1 = JSON.parse(localStorage.getItem("team1"));
+    //     t2 = JSON.parse(localStorage.getItem("team2"))
+    // }else{
+    //     t1 = JSON.parse(localStorage.getItem("team2"));
+    //     t2 = JSON.parse(localStorage.getItem("team1"))
+    // }
+    // let td=JSON.parse(teamdata1)
+    // if(td.innings === 1){
+    //     let a=localStorage.getItem("team1");
+    //     t1=JSON.parse(a)
+    //     let b=localStorage.getItem("team2");
+    //     t2=JSON.parse(b)
+    // }
+    // else{
+    //     let a=localStorage.getItem("team1");
+    //     t2=JSON.parse(a)
+    //     let b=localStorage.getItem("team2");
+    //     t1=JSON.parse(b)
+    // }
+        let result = checkBattingTeam();
+        let bat = result.team;
+
+        let result2 = checkBowlingTeam();
+        let bowl = result2.team;
+
+    teamname.innerText=bat.teamName;
+    // console.log(t1);
     batDetails();
     bowlDetails();
-    Extras();
+    // Extras();
     Runs();
     yetToBat();
-    toss();
+    // toss();
     function batDetails(){
         //here we check for the batsman played and display his details
-        t1.player.forEach((data)=>{
+        bat.player.forEach((data)=>{
             // console.log(data)
             if(data.isBatting){
                 console.log("hi")
                 let name =document.createElement('div');
                 name.classList.add('batsman-name','td');
-                name.innerText=(!data.batsmanOut) ? data.playerName : `${data.playerName+"*"}` ;
+                name.innerText=(data.batsmanOut) ? data.playerName : `${data.playerName+"*"}` ;
                 batting.appendChild(name);
                 
                 let run =document.createElement('div');
@@ -108,16 +159,19 @@
                 strike.classList.add('batsman-strike','td');
                 let sr=(((data.batting.battingRuns)/(data.batting.ballsBatted))*100).toFixed(2);
                 strike.innerText=((isNaN(sr))? 0: sr);
+                data.batting.strikeRate=parseFloat(strike.innerText);
                 batting.appendChild(strike);
             }
             else{
                 console.log("hi")
             }
-        })}
+        })
+        localStorage.setItem(`team${result.number}`, JSON.stringify(bat)); 
+    }
 
         function bowlDetails(){
             //here we check for the bowler bowled over and display his details
-            t2.player.forEach((data)=>{
+            bowl.player.forEach((data)=>{
             // console.log(data)
             if(!data.isBowling){
                 console.log("hi")
@@ -153,26 +207,33 @@
                 economy.classList.add('bowler-economy','td');
                 let eco= ((data.bowling.bowlRuns)/ ((data.bowling.over === 0) ? 0 :(data.bowling.over))).toFixed(2);
                 economy.innerText=(isNaN(eco) || eco === 'Infinity' ) ? parseFloat("0.00") : eco;
+                console.log(eco);
+                console.log(economy.innerText);
+                data.bowling.economy=parseFloat(economy.innerText);
+                
+                // console.log(data.bowling.economy)
+                // console.log(data)
                 bowling.appendChild(economy);
 
             }
         })
+        localStorage.setItem(`team${result2.number}`, JSON.stringify(bowl)); 
         }
-        function Extras(){
-            const extra=document.getElementById("extra")
-            let totalExtra=t1.extra.noBall+t1.extra.wide+t1.extra.byes+t1.extra.legByes;
-            extra.innerText=`${totalExtra}   (NB ${t1.extra.noBall}, W ${t1.extra.wide}, B ${t1.extra.byes}, LB ${t1.extra.legByes}) `;
-        }
+        // function Extras(){
+        //     const extra=document.getElementById("extra")
+        //     let totalExtra=t1.extra.noBall+t1.extra.wide+t1.extra.byes+t1.extra.legByes;
+        //     extra.innerText=`${totalExtra}   (NB ${t1.extra.noBall}, W ${t1.extra.wide}, B ${t1.extra.byes}, LB ${t1.extra.legByes}) `;
+        // }
         function Runs(){
             const run=document.getElementById("runs")
-            run.innerText=t1.totalScore;
+            run.innerText=bat.totalScore;
         }
 
         function yetToBat(){
             //here we display the next players to be played
             const yet=document.getElementById("yet");
-            td.player.forEach((data)=>{
-                console.log(td.player)
+            bat.player.forEach((data)=>{
+                // console.log(td.player)
                 if(!data.isBatting){
                     let player=document.createElement("li")
                     player.innerText=data.playerName;
@@ -180,10 +241,10 @@
                 }
             })
         }
-        function toss(){
-            const toss=document.getElementById("toss");
-            toss.innerHTML=(td.innings==1) ? `${td.teamName} won the toss and choose to bat`: `${td.teamName} won the toss and choose to bowl`;
-        }
+        // function toss(){
+        //     const toss=document.getElementById("toss");
+        //     toss.innerHTML=(td.innings==1) ? `${td.teamName} won the toss and choose to bat`: `${td.teamName} won the toss and choose to bowl`;
+        // }
 </script>
 </body>
 </html>
