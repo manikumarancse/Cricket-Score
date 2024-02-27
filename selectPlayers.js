@@ -164,7 +164,7 @@ startBtn.addEventListener('click', ()=>{
     const batsman1 = sessionStorage.getItem('strikerEnd');
     const batsman2 = sessionStorage.getItem('nonStrikerEnd');
     const bowler = sessionStorage.getItem('bowler');
-
+    console.log(bowler)
     if(batsman1==batsman2){
         alert("you cann't select two batsman same player");
     }else if(batsman1=="" || batsman2==""|| bowler==""){
