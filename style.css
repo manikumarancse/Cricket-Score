@@ -1,119 +1,216 @@
+/* Basic styling added */
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
 }
-a{
+a {
     text-decoration: none;
 }
-input{
-    border:2px solid rgb(146, 16, 27);
+
+input {
+    border: 2px solid rgb(146, 16, 27);
+    border-radius: 3px;
     height: 35px;
+    font-family: 'Courier';
+    font-weight: 900;
+    background-color: beige;
+    padding-left: 10px;
+    font-family: 'Courier';
 }
-#appname{
+
+#appname {
     font-size: 25px;
+    font-family: sans-serif;
     text-align: center;
     margin: 30px;
     margin-bottom: 20px;
 }
-#catalogue{    
-    background-color:#8B0000;
-    /* width: 100%; */
+
+#catalogue {
+    background-color: #8B0000;
+    border-radius: 4px;
     text-align: center;
-    color:white;
+    color: white;
     padding: 10px;
     font-size: 14px;
-    margin: auto 5% ;
-}
-.teamdetail{
-    display: grid;
-    grid-template-columns: 65% 20%;
-    width: 100%;
-    margin-top: 60px;
-    text-align: center;
-}
-.teamName { 
-    width: 100%;
-    /* border:2px solid rgb(146, 16, 27); */
-    padding: 5%;
-}
-.teamName label{
-    font-size: 19px;
-    font-weight: 900;
-    
-}
-.team1Name{
-    display: grid;
-    grid-template-columns: 13% 50% 15%;
-    column-gap: 10px;
-    margin-bottom: 5%;
-}
-.team2Name{
-    display: grid;
-    grid-template-columns: 13% 50% 15%;
-    column-gap: 10px;
+    font-weight: 550;
+    margin: auto 5%;
 }
 
-.gotots{
-    cursor: pointer;
-    padding: 7px;
+.teamdetail {
+    margin-top: 30px;
+}
+
+.teamdetail h2 {
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.teamName {
+    font-size: 17px;
+    font-weight: 900;
+    margin: 2em auto;
+}
+
+.team1Name,.team2Name {
+    display: grid;
+    grid-template-columns: 25% 60%;
+    margin-bottom: 4%;
+    justify-content: center;
+    align-items: center;
+}
+
+.numofplayers,
+.numofovers {
     font-size: 15px;
+    display: grid;
+    grid-template-columns: 40% 30%;
+    margin-bottom: 2%;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 7.5%;
+}
+
+.gotots {
+    cursor: pointer;
+    padding: 8px;
+    font-size: 14px;
     background-color: whitesmoke;
     color: #8B0000;
-    width: auto;
     border-radius: 8px;
-    margin: 2% 40%;
-    border:none;
-    box-shadow: 2px 1px 7px 1px ;
+    border: none;
+    box-shadow: 2px 1px 7px 1px;
+    width: fit-content;
+    margin: auto 20%;
+    transition: background-color .3s;
 }
-#gototss{
-    display: flex;
-    justify-content: space-around;
-    cursor: pointer;
-    padding: 7px;
-    font-size: 15px;
-    background-color: whitesmoke;
-    color: #8B0000;
-    border-radius: 8px;
-    margin-top: 15%;
-    border:none;
-    box-shadow: 2px 1px 7px 1px ;
+
+.gotots:hover {
+    background-color: #781a12;
+    color: beige;
+    opacity: 1;
+
 }
-#gotots:hover{
+.gotots:active {
     opacity: 0.7;
 }
-.numofovers{
-   font-weight: 900;  
-   text-align: center;
+input:focus {
+    border: 2.4px solid orange;
+    border-radius: 7px;
+    outline: none;
 }
-#totalOvers{
-    height: 35px;
-    width:15%;
-}
-
-@media (max-width:430px){
-    .teamdetail{
-        font-size:13px;
-    }
-    .teamName label{
-        display:flex ;
-        justify-content: center;
-        align-items: center;
-        font-size: 11px;
-        font-weight: 900;
-    }
-    .gotots{
-        margin: 2% 10%;
-    }
-}
-.usr{
-    display: flex;
+/* styles add for popup container for getting players name */
+.popteam {
+    position: absolute;
+    top: 135px;
+    left: 5%;
     justify-content: center;
-    align-items: flex-end;
-
+    align-items: center;
+    width: 90%;
+    min-height: 95%;
+    height: fit-content;
+    padding: 10px;
+    background: whitesmoke;
+    border-radius: 8px;
+    box-shadow: 1px 2px 2px 3px rgba(0, 0, 0, 0.42);
+    display: none;
 }
-@media(min-width:650px){
-.teamdetail>div{
-    padding-right: 40%;
+.popteam .close {
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    width: 15px;
+    height: 17px;
+    text-align: center;
+    background-color: rgb(223, 46, 15);
+    color: honeydew;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.popteam.active {
+    display: block;
+}
+
+#team1Input,#team2Input {
+    padding: 5%;
+    margin-bottom: 25px;
+}
+#team1Input input,#team2Input input {
+    display: grid;
+    grid-template-columns: 100%;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+
+/* media query for input field and button at center for all the screen size */
+@media(max-width:399px) {
+    .gotots {
+        margin: auto 29%;
+    }
+    #collectBtn,#goToss{
+        margin:auto 39%;
+    }
+}
+@media (min-width:400px) {
+    .gotots {
+        margin: auto 30%;
+    }
+    #collectBtn,#goToss{
+        margin:auto 42%;
+    }
+}
+@media(min-width:446px) {
+
+    .numofplayers,
+    .numofovers {
+        font-size: 14px;
+        padding-left: 7.5%;
+    }
+    .gotots {
+        margin: auto 32%;
+    }
+}
+@media (min-width:585px) {
+    .gotots {
+        margin: auto 35%;
+    }
+}
+@media(min-width:620px) {
+    .playerName {
+        display: grid;
+        padding: 5%;
+        grid-template-columns: 50% 50%;
+        column-gap: 20px;
+    }
+    #collectBtn,#goToss{
+        margin:auto 47%;
+    }
     
-}}
+}
+@media(min-width:720px) {
+    .team1Name,.team2Name {
+        display: grid;
+        grid-template-columns: 10% 45%;
+    }
+    .numofplayers,.numofovers {
+        font-size: 16px;
+        display: grid;
+        grid-template-columns: 20% 30%;
+        padding-left: 22%;
+    }
+    .gotots {
+        margin: auto 38%;
+    }
+}
+@media(min-width:900px) {
+    .gotots {
+        /* margin: auto 44%;
+         */
+         display: flex;
+         justify-content: flex-start;
+         align-items: center;
+    }
+}
