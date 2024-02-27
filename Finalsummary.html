@@ -94,7 +94,8 @@
 }
 .teambtn button.active {
     background: #8B0000;
-    color: #fff; /* Active button background color */
+    color: #fff;
+     /* Active button background color */
 }
 /* .teambtn:hover{
     color: #8B0000;
@@ -133,7 +134,8 @@
 }
 .head-btn button.active {
     background: #8B0000;
-    color: #fff; /* Active button background color */
+    color: #fff; 
+    box-shadow: 0 0 15px #3B82F6;/* Active button background color */
 }
 .td:nth-of-type(2n){
     background-color: #a0202049;
@@ -259,7 +261,7 @@
                 <div class="th maiden">Maiden</div>
                 <div class="th runs">Runs</div>
                 <div class="th wickets">Wickets</div>
-                <div class="th economy">Ec</div>
+                <div class="th economy">Eco</div>
             </div>
         </div>
 
@@ -290,13 +292,13 @@
                 <div class="th balls">Balls</div>
                 <div class="th four">4s</div>
                 <div class="th six">6s</div>
-                <div class="th strike-rate">Strike Rate</div>`;
+                <div class="th strike-rate">S/R</div>`;
         bowling.innerHTML = `<div class="th bowler">Bowling</div>
                 <div class="th over">Overs</div>
                 <div class="th maiden">Maiden</div>
                 <div class="th runs">Runs</div>
                 <div class="th wickets">Wickets</div>
-                <div class="th economy">Economy</div>`;
+                <div class="th economy">Eco</div>`;
     }
     
     function showTeam1() {
@@ -319,7 +321,11 @@
             team2Button.classList.add("active");
             team1Button.classList.remove("active");
             teamdata=localStorage.getItem("team2")
-            td=JSON.parse(teamdata)
+            
+            
+            teamdata=localStorage.getItem("team2")
+             td=JSON.parse(teamdata)
+            
             batDetails();
            bowlDetails();
            teamName.innerText=`${td.teamName.toUpperCase()} (${td.totalScore} / ${td.totalWickets}) `;
@@ -345,11 +351,7 @@
         function batDetails(){
         td.player.forEach((data)=>{
             // console.log(data)
-            if(data.isbatting){
-                console.log("hi")
-            }
-            else{
-                let name =document.createElement('div');
+            let name =document.createElement('div');
                 name.classList.add('batsman-name','td');
                 name.innerText=data.playerName;
                 batting.appendChild(name);
@@ -379,17 +381,11 @@
                 strike.classList.add('batsman-strike','td');
                 strike.innerText=data.batting.strikeRate;
                 batting.appendChild(strike);
-
-            }
         })}
         function bowlDetails(){
             td.player.forEach((data)=>{
             // console.log(data)
-            if(!data.isBowling){
-                console.log("hi")
-            }
-            else{
-                let name =document.createElement('div');
+            let name =document.createElement('div');
                 name.classList.add('bowler-name','td');
                 name.innerText=data.playerName;
                 bowling.appendChild(name);
@@ -419,8 +415,6 @@
                 economy.classList.add('bowler-economy','td');
                 economy.innerText=data.bowling.economy;
                 bowling.appendChild(economy);
-
-            }
         })
         }
 

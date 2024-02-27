@@ -31,10 +31,11 @@
         <div class="pop-up">
             <div class="pop-up-name">
                 <h3 id="popup-title"></h3>
-                <button class="close"><i class="fa-solid fa-xmark"></i></button>
+                <!-- <button class="close"><i class="fa-solid fa-xmark"></i></button> -->
             </div>
             <div class="pop-up-container">
-                <span>Runs + <input type="number" id="popup-runs"></span>
+                <span>Runs + <input type="number" id="popup-runs" pattern="\d{1,2}" maxlength="2"></span>
+                <div id="invalid" style="color: red; display: none;">Invalid runs entered.</div>
                 <div class="btn">
                     <button class="popup-enter-btn">Enter</button>
                 </div>
@@ -50,7 +51,7 @@
             </div>
         </div>
         <div class="pop-up3 Winner-Alert">
-            <div class="pop-up-name">
+            <div class="pop-up-name1">
                 <h3>Result</h3>
             </div>
             <div class="instructions Middle">
@@ -68,7 +69,7 @@
                 <div class="team-name">
                     <span id="teamName">CSK</span>
                 </div>
-                <div class="score-wicket"><span id="score">200/1</span></div>
+                <div class="score-wicket"><span id="score"></span></div>
                 <div class="extras">Extras: <span id="extras"></span></div>
             </div>
         </div>
@@ -159,7 +160,7 @@
 
         <div class="buttons">
             <button id="instructions">Instructions</button>
-            <button id="scorecard">ScoreCard</button>
+            <button id="scorecard" onclick="window.location.href='scoreCard.html'">ScoreCard</button>
         </div>
     </div>
 
