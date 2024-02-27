@@ -39,7 +39,7 @@
     transition-property: visibility;
 }
 
-.pop-up, .pop-up1{
+.pop-up, .pop-up1,.pop-up2{
     z-index: 9999;
     position: fixed;
     width: 20%;
@@ -181,7 +181,7 @@
 .grid-table{
     display: grid;
     grid-template-rows: repeat(3, min-content);
-    grid-template-columns: 2fr repeat(5, .5fr);
+    grid-template-columns: 2fr repeat(4, .5fr);
     text-align: left;
 }
 
