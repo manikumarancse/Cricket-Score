@@ -1,0 +1,291 @@
+/* Import google Roboto font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+/* Varibales */
+:root {
+    --bg-color: #8B0000;
+    --white: #ffF;
+}
+
+/* Remove all default style */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+    scroll-behavior: smooth;
+    list-style: none;
+}
+
+/* body{
+    
+} */
+
+/* pop up box */
+.pop-up-box {
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    backdrop-filter: blur(5px);
+    background: rgba(255, 255, 255, 0.1);
+    visibility: hidden;
+    transition: 0.2s ease;
+    transition-property: visibility;
+}
+
+.pop-up, .pop-up1,.pop-up2{
+    z-index: 9999;
+    position: fixed;
+    width: 20%;
+    background-color: var(--white);
+    border-radius: 10px 10px 3px 3px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transform: scale(0);
+    transition: transform 0.3s ease; /* Added transition property */
+    transition-property: transform; /* Specified transition property */
+}
+.active {
+    transform: scale(1); /* Transition from scale(0) to scale(1) */
+}
+
+.pop-up-name {
+    background-color: var(--bg-color);
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    position: relative;
+    text-align: center;
+}
+
+.pop-up-name h3 {
+    color: var(--white);
+    font-size: 1.5rem;
+    padding: 10px 0;
+}
+
+.pop-up-container {
+    text-align: center;
+    background-color: var(--white);
+    color: #000;
+    border-radius: 0 0 3px 3px;
+    padding: 10px 0;
+    font-size: 1.2rem;
+}
+.pop-up1 .pop-up-container{
+    text-align: left;
+    padding: 10px;
+}
+.pop-up-container input{
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+    padding: .25rem;
+    font-size: 1.2rem;
+    width: 20%;
+    text-align: center;
+    margin-bottom: .5rem;
+}
+.pop-up-container .btn  button{ 
+    padding: .5rem .75rem;
+    border-radius: 13px;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+
+.close {
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    color: #ffffff;
+    background-color: transparent;
+    opacity: 0.5;
+    font-size: 15px;
+    border: none;
+}
+
+.close:hover {
+    opacity: 1;
+}
+
+@media (min-width: 200px) and (max-width: 500px){
+.pop-up, .pop-up1{
+    width: 75%;
+}
+}
+
+
+/* main container grid 3 rows */
+.main-container-grid{
+    padding: 1rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    /* padding: 2rem; */
+    height: 100vh;
+    display: grid;
+    grid-template-rows: repeat(3, min-content);
+    grid-template-columns: 1fr;
+    gap: 20px;
+    text-align: center;
+}
+
+.main-container-grid .score-container{
+    grid-row: 1 / span 1;
+    padding: .5rem;
+    border: 1px solid black;
+}
+
+.main-container-grid .players-section{
+    grid-row: 2 / span 1;
+    padding: .5rem;
+    border: 1px solid black;
+}
+.main-container-grid .overs{
+    grid-row: 3 / span 1;
+    padding: .5rem;
+    border: 1px solid black;
+}
+
+.batsman .batsman-score{
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    gap: 20px;
+}
+
+/* Live Score updates */
+.live-score{
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 20% 55% 25%;
+    align-items: center;
+}
+.live-score .team-name, .live-score .score-wicket{
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.players-section{
+    display: grid;
+    grid-template-rows: min-content;
+    gap: 10px;
+}
+
+/* grid table style */
+.grid-table{
+    display: grid;
+    grid-template-rows: repeat(3, min-content);
+    grid-template-columns: 2fr repeat(4, .5fr);
+    text-align: left;
+}
+
+.th{
+    background-color: var(--bg-color);
+    color: var(--white);
+    padding: .5rem;
+    border: var(--bg-color) 1px solid;
+}
+.td{
+    padding: .5rem;
+}
+
+.overs{
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+}
+
+.overs .display-over{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: .5fr 1fr;
+}
+.overs .display-over .over-overview{
+    margin: 0 .5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+}
+
+.overs .display-over .over-overview .over-count{
+    text-align: left;
+}
+.overs .display-over .over-overview .runs{
+    text-align: right;
+}
+
+.ball{
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: var(--bg-color);
+    color: var(--white);
+    font-weight: 600;
+    text-align: center;
+    margin: auto .1rem;
+    line-height: 40px;
+    border-radius: 50%;
+    margin-bottom: .5rem;
+}
+
+/* input keyboard grid */
+.keys{
+    cursor: pointer;
+    background-color: #e3e3e3;
+    color: #000;
+    font-weight: 500;
+    padding: .5rem;
+    /* height: 50px;
+    line-height: 50px; */
+    border: #cfcfcf 1px solid;
+}
+.keys:active{
+    background-color: #b2b2b2;
+}
+
+.input-keyboard{
+    display: grid;
+    grid-template-columns: 80% 20%;
+    grid-template-rows: 1fr;
+}
+.first-input-key-container{
+    grid-column: 1/span 1;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+.second-input-key-container{
+    grid-column: 2/span 1;
+}
+
+
+/* ----------------------------START---------------------------- */
+/* --------------------selectPlayers.html---------------------- */
+.main-container{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, 1fr);
+}
+.select-batsman{
+    grid-column: 1 / span 1;
+    grid-row: 1/span 1;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    text-align: center;
+    padding: .25rem;
+}
+.player-select-btn{
+    width: 150px;
+    height: 150px;
+}
+
+/* --------------------selectPlayers.html---------------------- */
+/* ----------------------------END---------------------------- */

@@ -64,14 +64,20 @@ function startMatch() {
       noOfPlayers: numPlayers,
       totalOvers: totalOvers
     }
-    // Initialize team1data 
+    const overBalls = {
+    over: [],
+    ballCount: 6,
+}
+localStorage.setItem('over', JSON.stringify(overBalls));
+  // Initialize team1data 
     const team1Data = {
       teamName: team1Name,
       toss: false,
       totalScore: 0,
       totalWickets: 0,
       completedOvers: 0,
-      extra: {
+      halfInnings: false,
+    extra: {
         byes: 0,
         legByes: 0,
         wide: 0,
@@ -91,7 +97,8 @@ function startMatch() {
       totalScore: 0,
       totalWickets: 0,
       completedOvers: 0,
-      extra: {
+      halfInnings: false,
+    extra: {
         byes: 0,
         legByes: 0,
         wide: 0,
@@ -116,29 +123,30 @@ function initializePlayers(numPlayers) {
   const player = [];
   let id = 0;
   for (let i = 1; i <= numPlayers; i++) {
-    player.push({
-      playerId: id + i,
-      playerName: 'Player ' + i,
-      isBatting: false,
-      isBowling: false,
-      batting: {
-        ballsBatted: 0,
-        battingRuns: 0,
-        fours: 0,
-        sixes: 0,
-        get strikeRate() {
-          let sr = parseFloat((this.battingRuns / this.ballsBatted) * 100).toFixed(2);
-          return isNaN(sr) ? parseFloat("0.00") : sr;
-        }
-      },
-      bowling: {
-        wicket: 0,
-        over: 0,
-        maiden: 0,
-        bowlRuns: 0,
-        get economy() {
-          let eco = parseFloat(this.bowlRuns / this.over).toFixed(2);
-          return isNaN(eco) ? parseFloat("0.00") : eco;
+  player.push({
+    playerId:id + i,
+    playerName: 'Player ' + i,
+    isBatting:false,
+    batsmanOut:false,
+    isBowling:false,
+    batting: {
+          ballsBatted: 0,
+          battingRuns: 0,
+          fours:0,
+          sixes:0,
+          get strikeRate(){
+            let sr= parseFloat((this.battingRuns / this.ballsBatted)*100).toFixed(2);
+            return isNaN(sr) ? parseFloat("0.00") : sr;
+        },
+        },
+    bowling: {
+          wicket: 0,
+          over:0,
+          maiden: 0,
+          bowlRuns: 0,
+          get economy(){
+            let eco= parseFloat(this.bowlRuns / this.over).toFixed(2);
+            return isNaN(eco) ? parseFloat("0.00") : eco;
         },
       }
     });
