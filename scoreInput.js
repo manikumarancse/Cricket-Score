@@ -4,6 +4,7 @@ let over =0;
 let totalScore = 0;
 let battingTeam;
 let bowlingTeam;
+let a;
 const team1 =  JSON.parse(localStorage.getItem('team1'));
 const team2 =  JSON.parse(localStorage.getItem('team2'));
 const overBalls = JSON.parse(localStorage.getItem('over'));
@@ -73,6 +74,11 @@ function display() {
 
     displayOver.innerText = `${team.completedOvers}`;
     // displayRun.innerText = `${eachOverRuns}`;
+
+    let result2 = checkBowlingTeam();
+    let team2 = result2.team;
+    displayBatsman(team);
+    displaybowler(team2);
 }
 
 
@@ -270,8 +276,16 @@ function addBatsmanRuns(run,boundaries=false){
     let result = checkBattingTeam();
     let team = result.team;
 
-    team.player[currentBatsmanId].batting.ballsBatted += 1;
-    team.player[currentBatsmanId].batting.battingRuns += run;
+    console.log(a);
+    if(a=='Wide' || a=='Noball'){
+        console.log(a);
+    }else{
+        team.player[currentBatsmanId].batting.ballsBatted += 1;
+        team.player[currentBatsmanId].batting.battingRuns += run;
+
+    }
+
+    
 
     if((run===4 || run===6) && boundaries){
         if(run===4){
@@ -522,6 +536,7 @@ document.querySelector('.popup-enter-btn').addEventListener('click', () => {
     
     // This is for check Maiden over
     let extras = document.querySelector('#popup-title').textContent;
+    a= extras;
     console.log(extras);
     // if bowler bowls wide ball or no ball, the maiden over will not credit the bowler's over.
     if(extras == 'Wide' || extras == 'Noball'){
@@ -565,26 +580,35 @@ function handleRuns(runs , runType) {
     if(runType=='Wide'){
         displayBall(`${runs==0?'':runs}WD`);
         team.extra.wide += (1+runs);
-        addBatsmanRuns(runs+1);
+        addScore(runs+1);
+        addBowlerRuns(runs+1);
+        display();
     }else if(runType=='Noball'){
         displayBall(`${runs==0?'':runs}NB`);
         team.extra.noBall += (1+runs);
-        addBatsmanRuns(runs+1);
+        addScore(runs+1);
+        addBatsmanRuns(runs);
+        addBowlerRuns(runs+1);
+        display();
     }else if(runType=='Bye'){
         displayBall(`${runs==0?'':runs}B`);
         team.extra.byes += runs;
-        addBatsmanRuns(runs); 
+        addScore(runs);
+        addBatsmanRuns(0);
+        display();
     }else if(runType=='Legbye'){
         displayBall(`${runs==0?'':runs}B`);
         team.extra.legByes += runs; 
-        addBatsmanRuns(runs); 
+        addScore(runs);
+        addBatsmanRuns(0);
+        display();
     }else{
-        addBatsmanRuns(runs);
         displayBall(runs);
+        team.extra.byes += runs;
+        addScore(runs);
+        display();
     }
-
     
-    addBowlerRuns(runs);
 }
 
 // Function to hide the popup box
@@ -603,6 +627,11 @@ function inningsOver(){
     let team2 = result2.team
     if((team.totalWickets==matchData.noOfPlayers-1)|| (team.completedOvers==matchData.totalOvers)){
         // alert("Match over");
+
+        // remove previous over runs and ball count
+        overBalls.ballCount = 6;
+        overBalls.over = [];
+        localStorage.setItem('over', JSON.stringify(overBalls));
         team.halfInnings = true;
         team.innings = 2;
         team2.innings = 1;
