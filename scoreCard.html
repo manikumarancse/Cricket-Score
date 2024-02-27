@@ -44,11 +44,25 @@
 <h2 id="toss"></h2>
 </div>
 <script>
+    setTimeout(() => (document.location.reload()), 3000);
     const batting=document.getElementById("Batting");
     const bowling=document.getElementById("Bowling");
-    let teamdata=localStorage.getItem("team1")
-    let td=JSON.parse(teamdata)
-    console.log(td);
+    let teamdata1=localStorage.getItem("team1")
+    let t1,t2;
+    let td=JSON.parse(teamdata1)
+    if(td.innings === 1){
+        let a=localStorage.getItem("team1");
+        t1=JSON.parse(a)
+        let b=localStorage.getItem("team2");
+        t2=JSON.parse(b)
+    }
+    else{
+        let a=localStorage.getItem("team1");
+        t2=JSON.parse(a)
+        let b=localStorage.getItem("team2");
+        t1=JSON.parse(b)
+    }
+    console.log(t1);
     batDetails();
     bowlDetails();
     Extras();
@@ -56,15 +70,13 @@
     yetToBat();
     toss();
     function batDetails(){
-        td.player.forEach((data)=>{
+        t1.player.forEach((data)=>{
             // console.log(data)
-            if(data.isbatting){
+            if(data.isBatting){
                 console.log("hi")
-            }
-            else{
                 let name =document.createElement('div');
                 name.classList.add('batsman-name','td');
-                name.innerText=data.playerName;
+                name.innerText=(!data.batsmanOut) ? data.playerName : `${data.playerName+"*"}` ;
                 batting.appendChild(name);
                 
                 let run =document.createElement('div');
@@ -94,12 +106,15 @@
                 strike.innerText=((isNaN(sr))? 0: sr);
                 batting.appendChild(strike);
             }
+            else{
+                console.log("hi")
+            }
         })}
 
         function bowlDetails(){
-            td.player.forEach((data)=>{
+            t2.player.forEach((data)=>{
             // console.log(data)
-            if(data.isBowling){
+            if(!data.isBowling){
                 console.log("hi")
             }
             else{
@@ -140,21 +155,22 @@
         }
         function Extras(){
             const extra=document.getElementById("extra")
-            extra.innerText=`${td.extra.score}   (NB ${td.extra.noBall}, W ${td.extra.wide}, B ${td.extra.byes}, LB ${td.extra.legByes}) `;
+            let totalExtra=t1.extra.noBall+t1.extra.wide+t1.extra.byes+t1.extra.legByes;
+            extra.innerText=`${totalExtra}   (NB ${t1.extra.noBall}, W ${t1.extra.wide}, B ${t1.extra.byes}, LB ${t1.extra.legByes}) `;
         }
         function Runs(){
             const run=document.getElementById("runs")
-            run.innerText=td.totalScore;
+            run.innerText=t1.totalScore;
         }
 
         function yetToBat(){
             const yet=document.getElementById("yet");
             td.player.forEach((data)=>{
-                if(!data.isbatting){
+                console.log(td.player)
+                if(!data.isBatting){
                     let player=document.createElement("li")
                     player.innerText=data.playerName;
                     yet.appendChild(player);
-                    console.log(yet)
                 }
             })
         }
