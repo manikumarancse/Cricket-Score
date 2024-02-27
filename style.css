@@ -25,7 +25,7 @@ input {
     height: 35px;
     font-family: 'Courier';
     font-weight: 900;
-    background-color: rgb(248, 246, 246);
+    background-color: whitesmoke;
     padding-left: 10px;
     font-family: 'Courier';
 }
@@ -109,9 +109,7 @@ input:focus {
     border-radius: 7px;
     outline: none;
 }
-input:active {
-    background-color: whitesmoke;
-}
+
 /* styles add for popup container for getting players name */
 .popteam {
     position: absolute;
@@ -153,6 +151,7 @@ input:active {
     grid-template-columns: 100%;
     width: 100%;
     margin-bottom: 10px;
+    background-color: whitesmoke;
 }
 
 
@@ -169,7 +168,7 @@ input:active {
     .gotots {
         margin: auto 30%;
     }
-    #collectBtn,#goToss{
+    #collectBtn{
         margin:auto 39%;
     }
 }
@@ -196,7 +195,7 @@ input:active {
         grid-template-columns: 50% 50%;
         column-gap: 20px;
     }
-    #collectBtn,#goToss{
+    #collectBtn{
         margin:auto 42%;
     }
     

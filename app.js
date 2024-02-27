@@ -202,7 +202,6 @@ collectBtn.addEventListener('click', function () {
 
   if (valid(1)) {
     if (valid(2)) {
-      const goToss = document.getElementById('goToss'); // Assuming goToss is the correct ID
       const inputs1 = document.querySelectorAll('#team1Input input');
       const inputs2 = document.querySelectorAll('#team2Input input');
       const team1PlayerNames = Array.from(inputs1).map(input => input.value);
@@ -225,11 +224,7 @@ collectBtn.addEventListener('click', function () {
       localStorage.setItem('team2', JSON.stringify(teamTwo));
 
       // Now you can show the goToss element
-      collectBtn.style.display = 'none';
-      closeBtn.style.display = "none";
-      team1Input.style.display = 'none';
-      team2Input.style.display = 'none';
-      goToss.style.display = 'block';
+      window.location.href = "./index-1.html";
     }
   }
 });
