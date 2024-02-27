@@ -11,6 +11,11 @@ function startMatch() {
     noOfPlayers: numPlayers,
     totalOvers: totalOvers
   }
+  const overBalls = {
+    over: [],
+    ballCount: 6,
+}
+localStorage.setItem('over', JSON.stringify(overBalls));
   // Initialize data structures
   const team1Data = {
     teamName: team1Name,
