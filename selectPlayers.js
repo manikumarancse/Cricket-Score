@@ -167,7 +167,10 @@ startBtn.addEventListener('click', ()=>{
 
     if(batsman1==batsman2){
         alert("you cann't select two batsman same player");
-    }else{
+    }else if(batsman1=="" || batsman2==""|| bowler==""){
+        alert("select the player name");
+    }
+    else{
         window.location.href = "scoreInput.html";
     }
 });

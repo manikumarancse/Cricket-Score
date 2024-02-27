@@ -9,6 +9,7 @@
 <body>
     <div id="main">
     <h1 id="teamName">Team 1</h1>
+    <!--This part is used to display the Batting details-->
     <div class="grid-table" id="Batting">
         <div class="th Batsman">Batting</div>
         <div class="th run">Runs</div>
@@ -33,6 +34,7 @@
             <div><ul id="yet">
             </ul></div>
         </div>
+    <!--This part is used to display the Bowling details-->
     <div class="grid-table" id="Bowling">
         <div class="th bowler">Bowling</div>
         <div class="th over">Overs</div>
@@ -41,6 +43,7 @@
         <div class="th wickets">Wickets</div>
         <div class="th economy">Economy</div>
 </div>
+<!--here we display toss details-->
 <h2 id="toss"></h2>
 </div>
 <script>
@@ -70,6 +73,7 @@
     yetToBat();
     toss();
     function batDetails(){
+        //here we check for the batsman played and display his details
         t1.player.forEach((data)=>{
             // console.log(data)
             if(data.isBatting){
@@ -112,6 +116,7 @@
         })}
 
         function bowlDetails(){
+            //here we check for the bowler bowled over and display his details
             t2.player.forEach((data)=>{
             // console.log(data)
             if(!data.isBowling){
@@ -164,6 +169,7 @@
         }
 
         function yetToBat(){
+            //here we display the next players to be played
             const yet=document.getElementById("yet");
             td.player.forEach((data)=>{
                 console.log(td.player)
