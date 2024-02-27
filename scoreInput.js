@@ -1,14 +1,17 @@
 // ball count
-let ballCount = 6;
+// let ballCount = 6;
 let over =0;
 let totalScore = 0;
 let battingTeam;
 let bowlingTeam;
 const team1 =  JSON.parse(localStorage.getItem('team1'));
 const team2 =  JSON.parse(localStorage.getItem('team2'));
+const overBalls = JSON.parse(localStorage.getItem('over'));
 console.log(team1.player);
 console.log(team2);
 
+let ballCount = overBalls.ballCount;
+let localOverRuns = overBalls.over;
 
 document.getElementById('instructions').addEventListener('click', ()=>{
     showPopup();
@@ -91,19 +94,21 @@ const batsman2StrikeRate = document.getElementById('batsman2-strike-rate');
 function displayBatsman(team){    
     // console.log(batsmanId1,batsmanId2);
 
-    batsman1Name.innerText = `${team.player[batsmanId1].playerName}`;
-    batsman1Runs.innerText= `${team.player[batsmanId1].batting.battingRuns}`;
-    batsman1Balls.innerText= `${team.player[batsmanId1].batting.ballsBatted}`;
-    batsman1Four.innerText= `${team.player[batsmanId1].batting.fours}`;
-    batsman1Six.innerText= `${team.player[batsmanId1].batting.sixes}`;
-    batsman1StrikeRate.innerText= `${team.player[batsmanId1].batting.strikeRate}`;
+    // indicate the current batsman with highlight
+    batsman1Name.style.color = batsman1Runs.style.color = batsman1Balls.style.color = batsman1Four.style.color = batsman1Six.style.color = "blue";
 
-    batsman2Name.innerText = `${team.player[batsmanId2].playerName}`;
-    batsman2Runs.innerText= `${team.player[batsmanId2].batting.battingRuns}`;
-    batsman2Balls.innerText= `${team.player[batsmanId2].batting.ballsBatted}`;
-    batsman2Four.innerText= `${team.player[batsmanId2].batting.fours}`;
-    batsman2Six.innerText= `${team.player[batsmanId2].batting.sixes}`;
-    batsman2StrikeRate.innerText= `${team.player[batsmanId2].batting.strikeRate}`;
+
+    batsman1Name.innerText = `${team.player[currentBatsmanId].playerName}**`;
+    batsman1Runs.innerText= `${team.player[currentBatsmanId].batting.battingRuns}`;
+    batsman1Balls.innerText= `${team.player[currentBatsmanId].batting.ballsBatted}`;
+    batsman1Four.innerText= `${team.player[currentBatsmanId].batting.fours}`;
+    batsman1Six.innerText= `${team.player[currentBatsmanId].batting.sixes}`;
+
+    batsman2Name.innerText = `${team.player[secondBatsmanId].playerName}`;
+    batsman2Runs.innerText= `${team.player[secondBatsmanId].batting.battingRuns}`;
+    batsman2Balls.innerText= `${team.player[secondBatsmanId].batting.ballsBatted}`;
+    batsman2Four.innerText= `${team.player[secondBatsmanId].batting.fours}`;
+    batsman2Six.innerText= `${team.player[secondBatsmanId].batting.sixes}`;
 
 }
 const bowlerName = document.getElementById('bowler-name');
@@ -119,7 +124,6 @@ function displaybowler(team) {
     bowlerMaiden.innerText= `${team.player[bowlerId].bowling.maiden}`;
     bowlerRuns.innerText= `${team.player[bowlerId].bowling.bowlRuns}`;
     bowlerWicket.innerText= `${team.player[bowlerId].bowling.wicket}`;
-    bowlerEconomy.innerText= `${team.player[bowlerId].bowling.economy}`;
 }
 
 // initial isbatting  and isbowling true
@@ -174,6 +178,7 @@ document.addEventListener('click', e=>{
             case 'dot':
                 addBatsmanRuns(0);
                 addBowlerRuns(0);
+                localOverRuns.push(0);
                 displayBall(0);
                 overCount();
                 break;
@@ -181,6 +186,7 @@ document.addEventListener('click', e=>{
                 addBatsmanRuns(1);
                 addBowlerRuns(1);
                 addScore(1);
+                localOverRuns.push(1);
                 displayBall(1);
                 overCount();
                 break;
@@ -188,6 +194,7 @@ document.addEventListener('click', e=>{
                 addBatsmanRuns(2);
                 addBowlerRuns(2);
                 addScore(2);
+                localOverRuns.push(2);
                 displayBall(2);
                 overCount();
                 break;
@@ -195,6 +202,7 @@ document.addEventListener('click', e=>{
                 addBatsmanRuns(3);
                 addBowlerRuns(3);
                 addScore(3);
+                localOverRuns.push(3);
                 displayBall(3);
                 overCount();
                 break;
@@ -202,6 +210,7 @@ document.addEventListener('click', e=>{
                 addBatsmanRuns(4,true);
                 addBowlerRuns(4);
                 addScore(4);
+                localOverRuns.push(4);
                 displayBall(4);
                 overCount();
                 break;
@@ -209,29 +218,31 @@ document.addEventListener('click', e=>{
                 addBatsmanRuns(6,true);
                 addBowlerRuns(6);
                 addScore(6);
+                localOverRuns.push(6);
                 displayBall(6);
                 overCount();
                 break;
             case 'wide':
-                addScore(1);
+                // addScore(1);
                 break;
             case 'noball':
-                addScore(1);
+                // addScore(1);
                 break;
             case 'bye':
-                overCount();
+                // overCount();
                 break;
             case 'legbye':
-                overCount();
+                // overCount();
                 break;
             case 'undo':
 
                 break;
             case 'other':
-                addScore(5);
-                overCount();
+                // addScore(5);
+                // overCount();
                 break;
             case 'out':
+                localOverRuns.push('W');
                 displayBall('W');
                 batsmanOut();
                 overCount();
@@ -248,6 +259,12 @@ function displayBall(ball){
     span.innerText = `${ball}`;
     overDisplay.appendChild(span);
 }
+
+// dipaly previous runs
+localOverRuns.forEach(element => {
+    console.log(element);
+    displayBall(element);    
+});
 
 function addBatsmanRuns(run,boundaries=false){
     let result = checkBattingTeam();
@@ -280,12 +297,12 @@ function addBowlerRuns(run){
     let result = checkBowlingTeam();
     let team = result.team;
 
-    let bowlerOver = team.player[bowlerId].bowling.over
-    bowlerOver += .1;
-    bowlerOver = bowlerOver.toFixed(1);
-    bowlerOver = parseFloat(bowlerOver);
+    // team.player[bowlerId].bowling.over += .1;
+    // bowlerOver += .1;
+    // bowlerOver = bowlerOver.toFixed(1);
+    // bowlerOver = parseFloat(bowlerOver);
     team.player[bowlerId].bowling.bowlRuns += run;
-    team.player[bowlerId].bowling.over = bowlerOver;
+    // team.player[bowlerId].bowling.over = bowlerOver;
         
     if(run===0){
         overRuns++;
@@ -315,6 +332,7 @@ function overCount(){
     let team = result.team; 
 
     ballCount--;
+    overBalls.ballCount = ballCount;
     over = team.completedOvers;
     over += .1;
     over = over.toFixed(1);
@@ -323,9 +341,21 @@ function overCount(){
     
     team.completedOvers = over;
     localStorage.setItem(`team${result.number}`, JSON.stringify(team));
+    localStorage.setItem(`over`, JSON.stringify(overBalls));
+    
+    let result2 = checkBowlingTeam();
+    let team2 = result2.team;
+    let bowlerOver = team2.player[bowlerId].bowling.over
+    bowlerOver +=.1;
+    bowlerOver = bowlerOver.toFixed(1);
+    bowlerOver = parseFloat(bowlerOver);
+    
+    team2.player[bowlerId].bowling.over = bowlerOver;
+    
+    localStorage.setItem(`team${result2.number}`, JSON.stringify(team2));
+
     isCheckOver();
     display();
-    let result2 = checkBowlingTeam();
     displaybowler(result2.team);
     displayBatsman(result.team);
 }
@@ -350,7 +380,7 @@ function isCheckOver(){
         let result = checkBattingTeam();
         let team = result.team;
 
-        over = nextOver();
+        over = nextOver(over);
         team.completedOvers = over;
         localStorage.setItem(`team${result.number}`, JSON.stringify(team));
         // console.log(team1)
@@ -358,9 +388,20 @@ function isCheckOver(){
         ballCount=6;
         swapPlayers();
         overRuns = 0;
+
+        overBalls.ballCount = 6;
+        overBalls.over = [];
+        localStorage.setItem('over', JSON.stringify(overBalls));
         console.log("Over over "+overRuns);
 
-        if(!inningsOver()){
+        let result2 = checkBowlingTeam();
+        let team2 = result2.team;
+        team2.player[bowlerId].bowling.over = nextOver(team2.player[bowlerId].bowling.over);
+        console.log(team2.player[bowlerId].bowling.over);
+        localStorage.setItem(`team${result2.number}`, JSON.stringify(team2));
+        
+
+        if(!inningsOver()){  //it run every ball
 
 
             if (checkIfLastBallWicket()) {
@@ -369,6 +410,7 @@ function isCheckOver(){
                 setTimeout(() => {
                     resetDisplayOver();
                 }, 3000);
+                
                 callNextPlayer('select-bowler'); // Select next bowler
             }
         }
@@ -399,7 +441,7 @@ function callNextPlayer(call){
     }
 }
 // increment over EX: 1.6 to 2.0
-function nextOver(){
+function nextOver(over){
     return Math.round(over);
 }
 
@@ -560,18 +602,32 @@ function inningsOver(){
     let team = result.team
     let team2 = result2.team
     if((team.totalWickets==matchData.noOfPlayers-1)|| (team.completedOvers==matchData.totalOvers)){
-        alert("Match over");
+        // alert("Match over");
         team.halfInnings = true;
         team.innings = 2;
         team2.innings = 1;
 
         localStorage.setItem(`team${result.number}`, JSON.stringify(team));  
         localStorage.setItem(`team${result2.number}`, JSON.stringify(team2));  
-
+console.log("Innigns over");
+        innings_popup(team2.teamName,team.totalScore);
         return true;
     }
     return false;
 }
 
+function innings_popup(name, runs) {
+    document.querySelector('.Team-name').innerText = name + " Needs " + (runs + 1) + " Runs In " + matchData.totalOvers * 6 + " Balls"
+    document.querySelector('.pop-up-box').style.visibility = 'visible'
+    document.querySelector('.Innings-Alert').classList.add('active');
+   /*  document.querySelectorAll('.close')[4].addEventListener('click', function () {
+        document.querySelector('.Innings-Alert').classList.remove('active');
+        document.querySelector('.pop-up-box').style.visibility = 'hidden'
+    })*/
+    document.getElementById("nextInnings").addEventListener("click",() => {
+        window.location.href="./selectPlayers.html"
+        sessionStorage.clear();
+    })
+}
 display();
 // comment
