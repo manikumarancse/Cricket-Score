@@ -93,14 +93,35 @@
     font-weight: 600;
 }
 .teambtn button.active {
-    background-color: #3B82F6; /* Active button background color */
+    background: #8B0000;
+    color: #fff; /* Active button background color */
 }
+/* .teambtn:hover{
+    color: #8B0000;
+    background-color: #fff;
+    border-radius: 1px solid #8b0000;
+} */
 #teamName{
     padding: 0;
     margin: 0;
+    
+
     font-size: 2rem;
     font-weight: 700;
-    color: #8B0000;
+    color: #fff;
+    background: #8B0000;
+    display: inline;
+    padding: 0.3rem;
+    /* border: 1px solid #000; */
+
+}
+#teamName:hover{
+    letter-spacing: 0.1rem;
+    background: #1e9bff;
+    border-radius: 10px;
+    box-shadow: 0 0 25px #3B82F6;
+    color: #000;
+    padding: 0.5rem;
 }
 .head-btn button{
     font-size: 20px;
@@ -111,7 +132,8 @@
     font-weight: 600;
 }
 .head-btn button.active {
-    background-color: #3B82F6; /* Active button background color */
+    background: #8B0000;
+    color: #fff; /* Active button background color */
 }
 .td:nth-of-type(2n){
     background-color: #a0202049;
@@ -126,6 +148,11 @@
 #Bowling .th{
     font-size: 12px;
 }
+.teamName{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 #close{
             position: absolute; /* Position the close button absolutely */
             top: 0; /* Align to the top */
@@ -136,6 +163,15 @@
             font-size: 1rem; /* Set the font size */
             cursor: pointer; /* Change cursor to pointer on hover */
    }
+
+   #close:hover{
+    display: inline;
+    background: #ccc;
+    color: red;
+    border-radius: 50%;
+
+   }
+
 
 #btn-bowl, #btn-bat{
             display: flex;
@@ -172,6 +208,19 @@
     font-size: 15px;
 }
 }
+#team-1,#team-2,#btn-bat,#btn-bowl{
+    transition: 0.8s;
+    
+
+}
+#team-1:hover,#team-2:hover,#btn-bat:hover,#btn-bowl:hover{
+    background: #fff;
+    color: #8B0000;
+    border: 1px solid #8B0000;
+    box-shadow: 0 0 15px #3B82F6;
+
+
+}
 
     </style>
 </head>
@@ -187,7 +236,11 @@
                 <button id="team-1" onclick="showTeam1()" class="active">TEAM 1</button>
                 <button id="team-2" onclick="showTeam2()">TEAM 2</button>
             </div>
-            <h1 id="teamName">Team 1</h1>
+            <div class="teamName">
+                <h1 id="teamName">Team 1</h1>
+
+            </div>
+            
             <div class="head-btn">
                 <button id="btn-bat" onclick="showBatting()" class="active">Batting <img src="./batting3.jpg" alt="" width="25px"></button>
                 <button id="btn-bowl" onclick="showBowling()"> Bowling <img src="./bowling1.jpg" alt="" width="25px"></button>

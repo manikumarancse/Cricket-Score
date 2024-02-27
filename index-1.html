@@ -117,6 +117,14 @@
             border-color: #e1e0e1;
             color: #101020; /* Dark gray text color */
         }
+        #flip-button:hover{
+            letter-spacing: 0.1rem;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 25px #3B82F6;
+             color: #8B0000;
+            padding: 0.5rem;
+        }
         /* Styles for the result */
         .result {
             margin-top: 20px;
@@ -139,6 +147,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: 0.8s;
+        }
+        #Batting:hover, #Bowling:hover{
+            letter-spacing: 0.2rem;
+            background: #8B0000;
+
         }
         #teamNameInput{
             width: 15%;
@@ -182,6 +196,7 @@
             </div>
             <!-- Button for flipping the coin -->
             <div class="buttons">
+                <!-- <a href="" id="flip-button" style="--clr:#6eff3e" ><span>Flip Coin</span><i></i></a> -->
                 <button id="flip-button">Flip Coin</button>
             </div>
         </div>
@@ -255,7 +270,7 @@
                     } else {
                         selectedTeam = t1.value;
                     }
-                    tossResult.textContent = "Toss won by " + selectedTeam + ". It's Therir choice !";
+                    tossResult.textContent = "Toss won by " + selectedTeam + ". It's Their choice !";
                     b1.style.display = "block";
                 }, 3000);
             }
