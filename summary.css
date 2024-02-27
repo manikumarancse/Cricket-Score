@@ -23,7 +23,7 @@ body{
     display: grid;
     grid-template-rows: 50% 50%;
     grid-template-columns: 1fr;
-    margin: 0 auto;
+    margin: 5% auto;
     gap: 2rem;
 }
 .teamname{
