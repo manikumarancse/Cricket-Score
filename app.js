@@ -2,7 +2,7 @@ function startMatch() {
   // Get user inputs
   const team1Name = document.getElementById('team1Name').value;
   const team2Name = document.getElementById('team2Name').value;
-  const numPlayers = parseInt(document.getElementById('numPlayers').value);
+  const numPlayers = parseInt(document.getElementById('numPlayers').value); 
   const totalOvers = parseInt(document.getElementById('totalovers').value);
 
   // Validate form fields
@@ -10,8 +10,8 @@ function startMatch() {
     alert('Please fill in all the fields with valid values');
     return;
   }
-  else if (numPlayers <= 0 || numPlayers > 11) {
-    alert('Please Enter the Players upto 11');
+  else if (numPlayers < 3 || numPlayers > 11) {
+    alert('Please Enter no of Players 3 to 11');
     return;
 
   } else if (totalOvers <= 0 || totalOvers > 50) {
@@ -43,13 +43,13 @@ function startMatch() {
       input.required = true;
       if (i == 1) {
         input.name = `team1_player_${i} (Captain)`;
-        input.placeholder = `Player ${i} (Captain)`;
+        input.placeholder = `Team 1 Player ${i} (Captain)`;
       } else if (i == 2) {
         input.name = `team1_player_${i} (Wicketkeeper)`;
-        input.placeholder = `Player ${i}(Wicketkeeper)`;
+        input.placeholder = `Team 1 Player ${i}(Wicketkeeper)`;
       } else {
         input.name = `team1_player_${i}`;
-        input.placeholder = `Player ${i}`;
+        input.placeholder = `Team 1 Player ${i}`;
       }
       team1Input.appendChild(input);
     }
@@ -177,14 +177,14 @@ function generateInputs2() {
       // input.required = true;
       if (i === 1) {
         input.name = `team2_player_${i} (Captain)`;
-        input.placeholder = `Player ${i} (Captain)`;
+        input.placeholder = `Team 2 Player ${i} (Captain)`;
 
       } else if (i === 2) {
         input.name = `team2_player_${i} (Wicketkeeper)`;
-        input.placeholder = `Player ${i} (Wicketkeeper)`;
+        input.placeholder = `Team 2 Player ${i} (Wicketkeeper)`;
       } else {
         input.name = `team2_player_${i}`;
-        input.placeholder = `Player ${i}`;
+        input.placeholder = `Team 2 Player ${i}`;
       }
 
       team2Input.appendChild(input);
@@ -202,7 +202,6 @@ collectBtn.addEventListener('click', function () {
 
   if (valid(1)) {
     if (valid(2)) {
-      const goToss = document.getElementById('goToss'); // Assuming goToss is the correct ID
       const inputs1 = document.querySelectorAll('#team1Input input');
       const inputs2 = document.querySelectorAll('#team2Input input');
       const team1PlayerNames = Array.from(inputs1).map(input => input.value);
@@ -225,11 +224,7 @@ collectBtn.addEventListener('click', function () {
       localStorage.setItem('team2', JSON.stringify(teamTwo));
 
       // Now you can show the goToss element
-      collectBtn.style.display = 'none';
-      closeBtn.style.display = "none";
-      team1Input.style.display = 'none';
-      team2Input.style.display = 'none';
-      goToss.style.display = 'block';
+      window.location.href = "./index-1.html";
     }
   }
 });
