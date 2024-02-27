@@ -117,7 +117,8 @@ batTeam.player.forEach(element => {
 
         strikerEnd.addEventListener('change', (event) => { // Change 'click' to 'change'
             const selectedPlayerId = event.target.value;
-            sessionStorage.setItem('strikerEnd', selectedPlayerId);
+            // sessionStorage.setItem('strikerEnd', selectedPlayerId);
+            sessionStorage.setItem('currentBatsmanId', selectedPlayerId-1);
             console.log(selectedPlayerId); 
         });
     }
@@ -132,7 +133,8 @@ batTeam.player.forEach(element => {
 
         nonStrikerEnd.addEventListener('change', (event) => { // Change 'click' to 'change'
             const selectedPlayerId = event.target.value;
-            sessionStorage.setItem('nonStrikerEnd', selectedPlayerId);
+            // sessionStorage.setItem('nonStrikerEnd', selectedPlayerId);
+            sessionStorage.setItem('secondBatsmanId', selectedPlayerId-1);
             console.log(selectedPlayerId); 
         });
     }
@@ -161,8 +163,8 @@ function displayBowler(){
 
 
 startBtn.addEventListener('click', ()=>{
-    const batsman1 = sessionStorage.getItem('strikerEnd');
-    const batsman2 = sessionStorage.getItem('nonStrikerEnd');
+    const batsman1 = sessionStorage.getItem('currentBatsmanId');
+    const batsman2 = sessionStorage.getItem('secondBatsmanId');
     const bowler = sessionStorage.getItem('bowler');
 
     if(batsman1==batsman2){
@@ -189,7 +191,8 @@ function displayBatsmanAndBowler(){
 
             selectNextNonStriker.addEventListener('change', (event) => { // Change 'click' to 'change'
                 const selectedPlayerId = event.target.value;
-                sessionStorage.setItem('nonStrikerEnd', selectedPlayerId);
+                // sessionStorage.setItem('nonStrikerEnd', selectedPlayerId);
+                sessionStorage.setItem('secondBatsmanId', selectedPlayerId-1);
                 console.log(selectedPlayerId); 
             });
         }

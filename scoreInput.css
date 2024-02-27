@@ -39,7 +39,7 @@
     transition-property: visibility;
 }
 
-.pop-up, .pop-up1{
+.pop-up, .pop-up1,.pop-up2{
     z-index: 9999;
     position: fixed;
     width: 20%;

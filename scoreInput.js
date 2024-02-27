@@ -42,14 +42,14 @@ function showPopup(className='pop-up1') {
 }
 
 // Seesion id
-const batsmanId1 = sessionStorage.getItem('strikerEnd')-1;  
-const batsmanId2 = sessionStorage.getItem('nonStrikerEnd')-1; 
+// const batsmanId1 = sessionStorage.getItem('strikerEnd')-1;  
+// const batsmanId2 = sessionStorage.getItem('nonStrikerEnd')-1; 
 const bowlerId = sessionStorage.getItem('bowler')-1; 
 
-console.log(batsmanId1);
+// console.log(batsmanId1);
 
-let currentBatsmanId = sessionStorage.getItem('currentBatsmanId') || batsmanId1;
-let secondBatsmanId = sessionStorage.getItem('secondBatsmanId') || batsmanId2;
+let currentBatsmanId = sessionStorage.getItem('currentBatsmanId'); // || batsmanId1
+let secondBatsmanId = sessionStorage.getItem('secondBatsmanId'); //|| batsmanId2;
 
 sessionStorage.setItem('currentBatsmanId', currentBatsmanId);
 sessionStorage.setItem('secondBatsmanId', secondBatsmanId);
@@ -134,8 +134,8 @@ function displaybowler(team) {
 
 // initial isbatting  and isbowling true
 function setBatting(team,teamNo){
-    team.player[batsmanId1].isBatting = true;
-    team.player[batsmanId2].isBatting = true;
+    team.player[currentBatsmanId].isBatting = true;
+    team.player[secondBatsmanId].isBatting = true;
 
     localStorage.setItem(`team${teamNo}`, JSON.stringify(team))
 }
@@ -187,6 +187,7 @@ document.addEventListener('click', e=>{
                 localOverRuns.push(0);
                 displayBall(0);
                 overCount();
+                checkWinner()
                 break;
             case 'one':
                 addBatsmanRuns(1);
@@ -195,6 +196,7 @@ document.addEventListener('click', e=>{
                 localOverRuns.push(1);
                 displayBall(1);
                 overCount();
+                checkWinner()
                 break;
             case 'two':
                 addBatsmanRuns(2);
@@ -203,6 +205,7 @@ document.addEventListener('click', e=>{
                 localOverRuns.push(2);
                 displayBall(2);
                 overCount();
+                checkWinner()
                 break;
             case 'three':
                 addBatsmanRuns(3);
@@ -211,6 +214,7 @@ document.addEventListener('click', e=>{
                 localOverRuns.push(3);
                 displayBall(3);
                 overCount();
+                checkWinner()
                 break;
             case 'four':
                 addBatsmanRuns(4,true);
@@ -219,6 +223,7 @@ document.addEventListener('click', e=>{
                 localOverRuns.push(4);
                 displayBall(4);
                 overCount();
+                checkWinner()
                 break;
             case 'six':
                 addBatsmanRuns(6,true);
@@ -227,31 +232,36 @@ document.addEventListener('click', e=>{
                 localOverRuns.push(6);
                 displayBall(6);
                 overCount();
+                checkWinner()
                 break;
             case 'wide':
-                // addScore(1);
+                checkWinner()
                 break;
             case 'noball':
-                // addScore(1);
+                checkWinner()
                 break;
             case 'bye':
-                // overCount();
+                overCount();
+                checkWinner()
                 break;
             case 'legbye':
-                // overCount();
+                overCount();
+                checkWinner()
                 break;
             case 'undo':
 
                 break;
             case 'other':
-                // addScore(5);
-                // overCount();
+                overCount();
+                checkWinner()
                 break;
             case 'out':
                 localOverRuns.push('W');
                 displayBall('W');
                 batsmanOut();
                 overCount();
+                checkWinner()
+                
                 break;
         }
 })
@@ -335,6 +345,7 @@ function addScore(score){
     let result = checkBattingTeam();
     let team = result.team;
     team.totalScore += score;
+    checkWinner();
     localStorage.setItem(`team${result.number}`, JSON.stringify(team));
 }
 
@@ -351,6 +362,9 @@ function overCount(){
     over += .1;
     over = over.toFixed(1);
     over = parseFloat(over);
+    inningsOver()
+    /* checkWinner() */
+    
 
     
     team.completedOvers = over;
@@ -399,6 +413,7 @@ function isCheckOver(){
         localStorage.setItem(`team${result.number}`, JSON.stringify(team));
         // console.log(team1)
         console.log(over);
+        alert("over end")
         ballCount=6;
         swapPlayers();
         overRuns = 0;
@@ -489,6 +504,8 @@ function batsmanOut(){
     let bowlTeam = bowlingTeam.team;
     bowlTeam.player[bowlerId].bowling.wicket += 1; 
     localStorage.setItem(`team${bowlingTeam.number}`, JSON.stringify(bowlTeam));
+    
+    // inningsOver()    
 
     if(!inningsOver()){
 
@@ -536,6 +553,7 @@ document.querySelector('.popup-enter-btn').addEventListener('click', () => {
     
     // This is for check Maiden over
     let extras = document.querySelector('#popup-title').textContent;
+    let invalid = document.getElementById('invalid');
     a= extras;
     console.log(extras);
     // if bowler bowls wide ball or no ball, the maiden over will not credit the bowler's over.
@@ -545,10 +563,12 @@ document.querySelector('.popup-enter-btn').addEventListener('click', () => {
 
 
     // Validate if runs are entered and handle accordingly
-    if (!isNaN(runs)) {
+    if (!isNaN(runs) && runs >= 0) {
+        invalid.style.display = "none";
         handleRuns(runs, extras);
         hidePopup();
     } else {
+        invalid.style.display = "block";
         console.error('Invalid runs entered.');
     }
 });
@@ -578,12 +598,14 @@ function handleRuns(runs , runType) {
     let team = result.team;
     
     if(runType=='Wide'){
+        localOverRuns.push(`${runs==0?'':runs}WD`);
         displayBall(`${runs==0?'':runs}WD`);
         team.extra.wide += (1+runs);
         addScore(runs+1);
         addBowlerRuns(runs+1);
         display();
     }else if(runType=='Noball'){
+        localOverRuns.push(`${runs==0?'':runs}NB`)
         displayBall(`${runs==0?'':runs}NB`);
         team.extra.noBall += (1+runs);
         addScore(runs+1);
@@ -591,18 +613,21 @@ function handleRuns(runs , runType) {
         addBowlerRuns(runs+1);
         display();
     }else if(runType=='Bye'){
+        localOverRuns.push(`${runs==0?'':runs}B`)
         displayBall(`${runs==0?'':runs}B`);
         team.extra.byes += runs;
         addScore(runs);
         addBatsmanRuns(0);
         display();
     }else if(runType=='Legbye'){
+        localOverRuns.push(`${runs==0?'':runs}B`)
         displayBall(`${runs==0?'':runs}B`);
         team.extra.legByes += runs; 
         addScore(runs);
         addBatsmanRuns(0);
         display();
     }else{
+        localOverRuns.push(runs);
         displayBall(runs);
         team.extra.byes += runs;
         addScore(runs);
@@ -619,7 +644,7 @@ function hidePopup() {
 
 // Check if first innings id over
 var matchData = JSON.parse(localStorage.getItem('matchData'));
-
+let i=0
 function inningsOver(){
     let result = checkBattingTeam();
     let result2 = checkBowlingTeam();
@@ -632,20 +657,35 @@ function inningsOver(){
         overBalls.ballCount = 6;
         overBalls.over = [];
         localStorage.setItem('over', JSON.stringify(overBalls));
+        if(!team2.halfInnings){
+            innings_popup(team2.teamName,team.totalScore); 
+            
+           
+
+        }
+
+        /* alert("Match over"); */
         team.halfInnings = true;
         team.innings = 2;
         team2.innings = 1;
 
         localStorage.setItem(`team${result.number}`, JSON.stringify(team));  
-        localStorage.setItem(`team${result2.number}`, JSON.stringify(team2));  
-console.log("Innigns over");
-        innings_popup(team2.teamName,team.totalScore);
+        localStorage.setItem(`team${result2.number}`, JSON.stringify(team2));
+
+        
+       
+        // innings_popup(team, runs)
+
         return true;
     }
     return false;
 }
 
+
+// Innings alert
 function innings_popup(name, runs) {
+
+
     document.querySelector('.Team-name').innerText = name + " Needs " + (runs + 1) + " Runs In " + matchData.totalOvers * 6 + " Balls"
     document.querySelector('.pop-up-box').style.visibility = 'visible'
     document.querySelector('.Innings-Alert').classList.add('active');
@@ -659,4 +699,94 @@ function innings_popup(name, runs) {
     })
 }
 display();
-// comment
+
+
+//winning alert
+
+
+/* 
+function inningsOver1(){
+
+  if (overs1 === totalOvers || wicketsT1 === noOfPlayers - 1) {
+    T1inningover = true;
+    innings_popup(Team1, runs)
+   }
+  
+  if (overs2 === totalOvers || wicketsT2 === noOfPlayers - 1) {
+    T2inningover = true;
+    innings_popup(Team2, runs)
+  }
+} */
+
+function checkWinner() {
+    var team1Data = JSON.parse(localStorage.getItem('team1'));
+var team2Data = JSON.parse(localStorage.getItem('team2'));
+var matchData = JSON.parse(localStorage.getItem('matchData'));
+
+var Team1 =  team1Data.teamName;
+var Team2 =  team2Data.teamName;
+var runsT1 =  team1Data.totalScore;
+var runsT2 =  team2Data.totalScore;
+var T1inningover =team1Data.halfInnings;
+var T2inningover=team2Data.halfInnings;
+// var overs1 =  team1Data.completedOvers;
+// var overs2 =  team2Data.completedOvers;
+// var wicketsT1 =  team1Data.totalWickets;
+// var wicketsT2 = team2Data.totalWickets ;
+// var totalOvers = matchData.totalOvers ;
+// var noOfPlayers =matchData.noOfPlayers;
+var winnerflag = false;
+
+
+
+    var winname = document.querySelector(".winning-team-name");
+    if (T1inningover && T2inningover) {
+        if (runsT1 > runsT2) {
+            alert("Team 1 wins")
+            winname.innerText = `${Team1}  Won The Match`;
+            winnerflag = true;
+            Winner();
+        }
+        
+
+        else if(runsT2 > runsT1) {
+            alert("Team 2 wins")
+            winname.innerText =  `${Team2}  Won The Match`;
+            winnerflag = true;
+            Winner();
+        }
+
+        else if(runsT1 == runsT2) {
+            alert("Team 1 draw")
+            winname.innerText = "Match Draw";
+            winnerflag = true;
+            Winner();
+        }
+       
+    }
+
+    else if (T1inningover && (runsT2 > runsT1)) {
+        alert("Team 2 win")
+        winname.innerText =  `${Team2}  Won The Match`;
+        winnerflag = true;
+
+        Winner();
+    }
+
+    else if (T2inningover && (runsT1 > runsT2)) {
+        alert("Team 1 wns")
+        winname.innerText =  `${Team1}  Won The Match`;
+        winnerflag = true;
+        Winner();
+    }
+}
+
+function Winner() {
+    document.querySelector('.pop-up-box').style.visibility = 'visible'
+    document.querySelector('.Winner-Alert').classList.add('active');
+    document.querySelectorAll('.close')[5].addEventListener('click', function () {
+        document.querySelector('.Winner-Alert').classList.remove('active');
+        document.querySelector('.pop-up-box').style.visibility = 'hidden'
+    })
+
+}
