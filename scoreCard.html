@@ -32,14 +32,14 @@
             <div>Runs:</div>
             <div id="runs"></div>
         </div>
-        <div class="Extras">
+        <!-- <div class="Extras">
             <div>Current Run Rate:</div>
             <div id="Crr"></div>
         </div>
         <div class="Extras">
             <div>Projected Score:</div>
             <div id="Ps"></div>
-        </div>
+        </div> -->
         <div class="Extras">
             <div>Yet to bat:</div>
             <div></div>
@@ -57,9 +57,14 @@
         <div class="th economy" title="economy">Eco</div>
 
     </div>
-<div class="link">
+<!-- <div class="link">
     <a href="" id="back">Back to Over</a>
-</div>
+</div> -->
+<!--here we display toss details-->
+<h2 id="toss"></h2>
+<!-- <div class="link">
+    <a href="./scoreInput.html" id="link">Back</a>
+</div> -->
 
 
 <!-- <h2 id="chart">Batsman Contribution based on runs scored</h2>
@@ -76,9 +81,21 @@
     const teamname=document.getElementById("teamName");
     let battingTeam;
     let bowlingTeam;
-    
+    const link = document.getElementById('link');
     let team1=JSON.parse(localStorage.getItem("team1"))
     let team2=JSON.parse(localStorage.getItem("team2"))
+    
+    const searchParams = new URLSearchParams(window.location.search);
+    let classNameId =  searchParams.get('call');
+
+    if (classNameId==='select-bowler') {
+        link.href = `./selectPlayers.html?call=${classNameId}`;
+        link.innerText = "Next over";
+    }else if (classNameId==='select-batsman-bowler') {
+        link.href = `./selectPlayers.html?call=${classNameId}`;
+        link.innerText = "Next over";
+    }
+
     //At first we declare the team 1 and team2
     //and assign it based on the innings
     if(team1.innings===1){
@@ -143,8 +160,8 @@
     bowlDetails();
     Extras();
     Runs();
-    crr();
-    projectedScore();
+    // crr();
+    // projectedScore();
     yetToBat();
     // toss();
     function batDetails(){
@@ -232,11 +249,12 @@
 
                 let economy =document.createElement('div');
                 economy.classList.add('bowler-economy','td');
-                let eco= ((data.bowling.bowlRuns)/ ((data.bowling.over === 0) ? 0 :(data.bowling.over))).toFixed(2);
-                economy.innerText=(isNaN(eco) || eco === 'Infinity' ) ? parseFloat("0.00") : eco;
-                console.log(eco);
-                console.log(economy.innerText);
-                data.bowling.economy=parseFloat(economy.innerText);
+                // let eco= ((data.bowling.bowlRuns)/ ((data.bowling.over === 0) ? 0 :(data.bowling.over))).toFixed(2);
+                economy.innerText= data.bowling.economy;
+                // console.log(eco);
+                // bowling.appendChild(economy);
+                // console.log(economy.innerText);
+                // data.bowling.economy=parseFloat(economy.innerText);
                 
                 // console.log(data.bowling.economy)
                 // console.log(data)
@@ -260,18 +278,18 @@
             run.innerText=bat.totalScore;
         }
 
-        function crr(){
-            const crr=document.getElementById("Crr");
-            let cr=(bat.totalScore/bat.completedOvers).toFixed(2);
-            crr.innerText=isNaN(cr)? 0:cr;
+        // function crr(){
+        //     const crr=document.getElementById("Crr");
+        //     let cr=(bat.totalScore/bat.completedOvers).toFixed(2);
+        //     crr.innerText=isNaN(cr)? 0:cr;
             
-        }
-        function projectedScore(){
-            const pr=document.getElementById("Ps");
-            const matchData=JSON.parse(localStorage.getItem('matchData'))
-            let tot=Math.round((bat.totalScore/bat.completedOvers) * matchData.totalOvers);
-            pr.innerText=isNaN(tot)? 0: tot;
-        }
+        // }
+        // function projectedScore(){
+        //     const pr=document.getElementById("Ps");
+        //     const matchData=JSON.parse(localStorage.getItem('matchData'))
+        //     let tot=Math.round((bat.totalScore/bat.completedOvers) * matchData.totalOvers);
+        //     pr.innerText=isNaN(tot)? 0: tot;
+        // }
 
         function yetToBat(){
             //here we display the next players to be played

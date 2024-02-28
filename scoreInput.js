@@ -5,22 +5,24 @@ let totalScore = 0;
 let battingTeam;
 let bowlingTeam;
 let a;
+
+// Get Team One, Team Two and Over-Balls data form LocalStorage
 const team1 =  JSON.parse(localStorage.getItem('team1'));
 const team2 =  JSON.parse(localStorage.getItem('team2'));
 const overBalls = JSON.parse(localStorage.getItem('over'));
-console.log(team1.player);
-console.log(team2);
 
-let ballCount = overBalls.ballCount;
-let localOverRuns = overBalls.over;
+// set Over-balls, ball count and over runs(array) in variable 
+let ballCount = overBalls.ballCount;  //ball count six
+let localOverRuns = overBalls.over;   //EX: [ 3 , 4 , 6NB , W , WD , 0 ]
 
+// This Event Listener invoke Instruction Pop up.
 document.getElementById('instructions').addEventListener('click', ()=>{
     showPopup();
 })
-// pop up
+
+// Pop-up function: invoke dynamic pop-ups based on arguments.
 function showPopup(className='pop-up1') {
-    // console.log("Classname "+className);
-    document.querySelector('#popup-runs').value = 0;
+    document.querySelector('#popup-runs').value = 0;                            //this for wide, no ball, byes... inputs. The default input value is 0.
     if(className==='pop-up1'){
         setTimeout(() => {
             document.querySelector('.pop-up-box').style.visibility = 'visible'
@@ -32,7 +34,7 @@ function showPopup(className='pop-up1') {
         document.querySelector(`.${className}`).classList.add('active');
     }
     
-
+    // Set close Pop-up Buttons
     document.querySelectorAll('.close').forEach((closeBtn) => { 
         closeBtn.addEventListener('click', function () {
         document.querySelector(`.${className}`).classList.remove('active');
@@ -41,16 +43,14 @@ function showPopup(className='pop-up1') {
 });
 }
 
-// Seesion id
+// Get session IDs for Striker, Non-Striker, and Bowler
 // const batsmanId1 = sessionStorage.getItem('strikerEnd')-1;  
 // const batsmanId2 = sessionStorage.getItem('nonStrikerEnd')-1; 
-const bowlerId = sessionStorage.getItem('bowler')-1; 
-
-// console.log(batsmanId1);
-
+const bowlerId = sessionStorage.getItem('bowler')-1;
 let currentBatsmanId = sessionStorage.getItem('currentBatsmanId'); // || batsmanId1
 let secondBatsmanId = sessionStorage.getItem('secondBatsmanId'); //|| batsmanId2;
 
+// Set Current batsman Id and Second batsman Id in session.
 sessionStorage.setItem('currentBatsmanId', currentBatsmanId);
 sessionStorage.setItem('secondBatsmanId', secondBatsmanId);
 
@@ -60,14 +60,11 @@ const displayTeamName = document.getElementById('teamName');
 const displayScore = document.getElementById('score');
 const displayExtras = document.getElementById('extras'); 
 
+// Dipaly Team Name, Score, Wicket, Overs and Extras
 function display() {
     let result = checkBattingTeam();
     let team = result.team;
 
-    // let extra= 0;
-    // team.extra.forEach(element => {
-    //     extra+=element;
-    // });
     displayTeamName.innerText = `${team.teamName}`;
     displayScore.innerText = `${team.totalScore}/${team.totalWickets}`;
     displayExtras.innerText = `${(team.extra.byes)+(team.extra.legByes)+(team.extra.wide)+(team.extra.noBall)}`;
@@ -97,8 +94,8 @@ const batsman2Four = document.getElementById('batsman2-fours');
 const batsman2Six = document.getElementById('batsman2-sixs');
 const batsman2StrikeRate = document.getElementById('batsman2-strike-rate');
 
+// Diplay Batsman name, runs, ball faced, fours and six.
 function displayBatsman(team){    
-    // console.log(batsmanId1,batsmanId2);
 
     // indicate the current batsman with highlight
     batsman1Name.style.color = batsman1Runs.style.color = batsman1Balls.style.color = batsman1Four.style.color = batsman1Six.style.color = "blue";
@@ -124,6 +121,7 @@ const bowlerRuns = document.getElementById('bowler-runs');
 const bowlerWicket = document.getElementById('bowler-wicket');
 const bowlerEconomy = document.getElementById('bowler-economy');
 
+// Display the bowler's name, over, runs given, maiden over count, and wickets.
 function displaybowler(team) {
     bowlerName.innerText = `${team.player[bowlerId].playerName}`;
     bowlerOver.innerText= `${team.player[bowlerId].bowling.over}`;
@@ -132,7 +130,7 @@ function displaybowler(team) {
     bowlerWicket.innerText= `${team.player[bowlerId].bowling.wicket}`;
 }
 
-// initial isbatting  and isbowling true
+// initial isbatting and isbowling true.
 function setBatting(team,teamNo){
     team.player[currentBatsmanId].isBatting = true;
     team.player[secondBatsmanId].isBatting = true;
@@ -171,23 +169,23 @@ if(team1.innings===2){
 }
 
 
-
+// Keyboard buttons Event Listener 
 document.addEventListener('click', e=>{
     var attributeNames = e.target.getAttributeNames();
         var dataAttributes = attributeNames.filter(function(name) {
             return name.startsWith('data-');
         });
-        let run = dataAttributes[0].split('-')[1];
-        console.log(run);
-
+        let run = dataAttributes[0].split('-')[1];          //get which button is clicked
+        // console.log(run);
+        a="";
         switch (run) {
             case 'dot':
                 addBatsmanRuns(0);
                 addBowlerRuns(0);
-                localOverRuns.push(0);
+                localOverRuns.push(0);          //push run in over-ball runs(array)
                 displayBall(0);
-                overCount();
                 checkWinner()
+                overCount();
                 break;
             case 'one':
                 addBatsmanRuns(1);
@@ -195,8 +193,8 @@ document.addEventListener('click', e=>{
                 addScore(1);
                 localOverRuns.push(1);
                 displayBall(1);
-                overCount();
                 checkWinner()
+                overCount();
                 break;
             case 'two':
                 addBatsmanRuns(2);
@@ -204,8 +202,8 @@ document.addEventListener('click', e=>{
                 addScore(2);
                 localOverRuns.push(2);
                 displayBall(2);
-                overCount();
                 checkWinner()
+                overCount();
                 break;
             case 'three':
                 addBatsmanRuns(3);
@@ -213,8 +211,8 @@ document.addEventListener('click', e=>{
                 addScore(3);
                 localOverRuns.push(3);
                 displayBall(3);
-                overCount();
                 checkWinner()
+                overCount();
                 break;
             case 'four':
                 addBatsmanRuns(4,true);
@@ -222,8 +220,8 @@ document.addEventListener('click', e=>{
                 addScore(4);
                 localOverRuns.push(4);
                 displayBall(4);
-                overCount();
                 checkWinner()
+                overCount();
                 break;
             case 'six':
                 addBatsmanRuns(6,true);
@@ -231,8 +229,8 @@ document.addEventListener('click', e=>{
                 addScore(6);
                 localOverRuns.push(6);
                 displayBall(6);
-                overCount();
                 checkWinner()
+                overCount();
                 break;
             case 'wide':
                 checkWinner()
@@ -241,62 +239,61 @@ document.addEventListener('click', e=>{
                 checkWinner()
                 break;
             case 'bye':
-                overCount();
                 checkWinner()
                 break;
             case 'legbye':
-                overCount();
+                // overCount();
                 checkWinner()
                 break;
-            case 'undo':
-
-                break;
             case 'other':
-                overCount();
+                // overCount();
                 checkWinner()
                 break;
             case 'out':
                 localOverRuns.push('W');
                 displayBall('W');
                 batsmanOut();
-                overCount();
                 checkWinner()
-                
+                overCount();
                 break;
         }
+        eco();
 })
 
 const overDisplay = document.getElementById('over-input-display');
-// console.log(ball);
+// diplay over-balls runs
 function displayBall(ball){
-    // Create span element
+    // Create a span element, add the 'ball' CSS class, set the inner text, and append.
     const span = document.createElement('span');
     span.classList.add('ball');
     span.innerText = `${ball}`;
     overDisplay.appendChild(span);
 }
 
-// dipaly previous runs
+// dipaly previous over-balls runs 
 localOverRuns.forEach(element => {
     console.log(element);
     displayBall(element);    
 });
 
+// Add score/runs in batsman account
 function addBatsmanRuns(run,boundaries=false){
     let result = checkBattingTeam();
     let team = result.team;
 
-    console.log(a);
+    // Don't add ball count and runs while the ball is wide and no-ball.
     if(a=='Wide' || a=='Noball'){
+        console.log(a);
+        a = "";
         console.log(a);
     }else{
         team.player[currentBatsmanId].batting.ballsBatted += 1;
         team.player[currentBatsmanId].batting.battingRuns += run;
-
+        a = "";
     }
 
     
-
+    // check if it's boundaries.
     if((run===4 || run===6) && boundaries){
         if(run===4){
             team.player[currentBatsmanId].batting.fours += 1; 
@@ -305,18 +302,22 @@ function addBatsmanRuns(run,boundaries=false){
         }
     }
 
-    // Swap
+    // set strike rate in local storage
+    let sr=parseFloat((((team.player[currentBatsmanId].batting.battingRuns)/(team.player[currentBatsmanId].batting.ballsBatted))*100).toFixed(2));
+    // strike.innerText=((isNaN(sr))? 0: sr);
+    team.player[currentBatsmanId].batting.strikeRate = sr;
+    // Swap players, when odd runs are scored.
     if(run%2!=0){
         console.log("currentID: "+currentBatsmanId+" SecondID: "+secondBatsmanId);
         swapPlayers();
         console.log("currentID: "+currentBatsmanId+" SecondID: "+secondBatsmanId);
     }
-
+    // Update all change in localStorage
     localStorage.setItem(`team${result.number}`, JSON.stringify(team));    
 }
 
 let overRuns = 0
-
+// Add over, runs, maiden over count and economy in bowler's account
 function addBowlerRuns(run){
     let result = checkBowlingTeam();
     let team = result.team;
@@ -327,20 +328,50 @@ function addBowlerRuns(run){
     // bowlerOver = parseFloat(bowlerOver);
     team.player[bowlerId].bowling.bowlRuns += run;
     // team.player[bowlerId].bowling.over = bowlerOver;
-        
+       
+    // Increment overRuns, if dot ball
     if(run===0){
         overRuns++;
         console.log("Over Runs"+overRuns);
     }
+    // increment the bowler's maiden over by one if all six balls are dot balls. 
     if(overRuns===6){
         team.player[bowlerId].bowling.maiden += 1;
         overRuns = 0;
         console.log("Maiden"+ overRuns);
     }
     
+    // calculate economy
+    // let overs = team.player[bowlerId].bowling.over;
+    // console.log("Over"+overs); // Example decimal value representing overs
+    // let wholeNumberPart = Math.floor(overs); // Extract the whole number part (1 in this case)
+    // let decimalPart = overs - wholeNumberPart; // Extract the decimal part (0.2 in this case)
+    // let numberOfBalls = wholeNumberPart * 6 + Math.round(decimalPart * 10); // Convert to balls
+    // // console.log(numberOfBalls); // Output: 7
+    // console.log(numberOfBalls);
+    // console.log(team.player[bowlerId].bowling.bowlRuns);
+    // let eco= ((team.player[bowlerId].bowling.bowlRuns / numberOfBalls) * 6).toFixed(2);
+    // team.player[bowlerId].bowling.economy = eco;
+    // // update all change in local storage.
     localStorage.setItem(`team${result.number}`, JSON.stringify(team));    
 }
-
+function eco() {
+    let result = checkBowlingTeam();
+    let team = result.team;
+    let overs = team.player[bowlerId].bowling.over;
+    console.log("Over"+overs); // Example decimal value representing overs
+    let wholeNumberPart = Math.floor(overs); // Extract the whole number part (1 in this case)
+    let decimalPart = overs - wholeNumberPart; // Extract the decimal part (0.2 in this case)
+    let numberOfBalls = wholeNumberPart * 6 + Math.round(decimalPart * 10); // Convert to balls
+    // console.log(numberOfBalls); // Output: 7
+    console.log(numberOfBalls);
+    console.log(team.player[bowlerId].bowling.bowlRuns);
+    let eco= ((team.player[bowlerId].bowling.bowlRuns / numberOfBalls) * 6).toFixed(2);
+    team.player[bowlerId].bowling.economy = eco;
+    // update all change in local storage.
+    localStorage.setItem(`team${result.number}`, JSON.stringify(team));    
+}
+// Add Team Score
 function addScore(score){
     let result = checkBattingTeam();
     let team = result.team;
@@ -350,7 +381,7 @@ function addScore(score){
 }
 
 
-// decrease the ballCount and increase the Over balls. last call isCheckover function
+// decrease the ball count and increase the overballs by 0.1. And the last call isCheckover function.
 function overCount(){
     
     let result = checkBattingTeam();
@@ -362,11 +393,10 @@ function overCount(){
     over += .1;
     over = over.toFixed(1);
     over = parseFloat(over);
-    inningsOver()
+    
     /* checkWinner() */
     
-
-    
+    // update batting team data and over in local storage.
     team.completedOvers = over;
     localStorage.setItem(`team${result.number}`, JSON.stringify(team));
     localStorage.setItem(`over`, JSON.stringify(overBalls));
@@ -379,22 +409,25 @@ function overCount(){
     bowlerOver = parseFloat(bowlerOver);
     
     team2.player[bowlerId].bowling.over = bowlerOver;
-    
+    // update bowling team data in local storage.
     localStorage.setItem(`team${result2.number}`, JSON.stringify(team2));
 
-    isCheckOver();
-    display();
+    inningsOver();
+    // checkWinner();
+    isCheckOver();                  //Check-over is completed for every ball.
+    display();                      //refresh display, batsman, and bowler. because all changes need to be updated on the screen.
     displaybowler(result2.team);
     displayBatsman(result.team);
 }
 
+// Check which Team is batting and return team object and team number
 function checkBattingTeam(){
     if(battingTeam==team1.teamName)
         return { team: team1, number: 1 };
     if(battingTeam==team2.teamName)
         return { team: team2, number: 2 };
 }
-
+// // Check which Team is bowler and return team object and team number
 function checkBowlingTeam(){
     if(bowlingTeam==team1.teamName)
         return { team: team1, number: 1 };
@@ -410,34 +443,47 @@ function isCheckOver(){
 
         over = nextOver(over);
         team.completedOvers = over;
-        localStorage.setItem(`team${result.number}`, JSON.stringify(team));
+        localStorage.setItem(`team${result.number}`, JSON.stringify(team));     //Batting Team
         // console.log(team1)
-        console.log(over);
-        alert("over end")
-        ballCount=6;
-        swapPlayers();
-        overRuns = 0;
+        // console.log(over);
+        // alert("over end")
+        ballCount=6;            //Again, set the ball count to 6 for the next over.
+        swapPlayers();          //Swap Players, because over is completed
+        overRuns = 0;           //set overRuns. This is used to check the maiden over bowled by the bowler's
 
+        // Restate local storage over ball count to six and over runs to [](empty array).
         overBalls.ballCount = 6;
         overBalls.over = [];
         localStorage.setItem('over', JSON.stringify(overBalls));
         console.log("Over over "+overRuns);
 
+        // Bowling team 
         let result2 = checkBowlingTeam();
         let team2 = result2.team;
         team2.player[bowlerId].bowling.over = nextOver(team2.player[bowlerId].bowling.over);
         console.log(team2.player[bowlerId].bowling.over);
         localStorage.setItem(`team${result2.number}`, JSON.stringify(team2));
         
-
-        if(!inningsOver()){  //it run every ball
-
-
+        //this condition, run every ball. It doesn't run if the innings are over.
+        if(!inningsOver()){  
+            
+            
             if (checkIfLastBallWicket()) {
                 sessionStorage.setItem('selectNewBatsmanAndBowler', 'true'); // Set flag to select both batsman and bowler
             } else {
                 setTimeout(() => {
-                    resetDisplayOver();
+                    resetDisplayOver();     //remove all over runs display
+                }, 3000);
+                
+                callNextPlayer('select-bowler'); // Select next bowler
+            }
+        }
+        if (!checkWinner()) {
+            if (checkIfLastBallWicket()) {
+                sessionStorage.setItem('selectNewBatsmanAndBowler', 'true'); // Set flag to select both batsman and bowler
+            } else {
+                setTimeout(() => {
+                    resetDisplayOver();     //remove all over runs display
                 }, 3000);
                 
                 callNextPlayer('select-bowler'); // Select next bowler
@@ -445,13 +491,13 @@ function isCheckOver(){
         }
     }
 }
-
+// Check If over last ball is wicket. because next user need to select next new batsman and bowler  
 function checkIfLastBallWicket() {
     // Check if the current batsman is out
     let currentBatsmanId = sessionStorage.getItem('currentBatsmanId');
     let team = checkBattingTeam().team;
     let currentBatsman = team.player[currentBatsmanId];
-    console.log("Swaping "+currentBatsmanId);
+    // console.log("Swaping "+currentBatsmanId);
     if (currentBatsman.batsmanOut && ballCount === 1) {
         // If the current batsman is out and it's the last ball of the over
         return true; // Last ball resulted in a wicket
@@ -459,7 +505,7 @@ function checkIfLastBallWicket() {
         return false; // Last ball did not result in a wicket
     }
 }
-
+// 
 function callNextPlayer(call){
     let selectNewBatsmanAndBowler = sessionStorage.getItem('selectNewBatsmanAndBowler');
     if (selectNewBatsmanAndBowler === 'true') {
@@ -468,8 +514,14 @@ function callNextPlayer(call){
     } else {
         window.location.href = `./selectPlayers.html?call=${call}`;
     }
+    // if (call === 'select-striker-end') {
+    //     // sessionStorage.removeItem('selectNewBatsmanAndBowler');
+    //     window.location.href = `./selectPlayers.html?call=select-striker-end`;
+    // } else {
+    //     window.location.href = `./scoreCard.html?call=${call}`;
+    // }
 }
-// increment over EX: 1.6 to 2.0
+// round the over EX: 1.6 to 2.0
 function nextOver(over){
     return Math.round(over);
 }
@@ -491,7 +543,7 @@ function swapPlayers(){
 
 // Batsman out and wicket added to bowler's account.
 function batsmanOut(){
-    // change localStorage batsmanOut to true, so again can't play. 
+    // change localStorage batsman Out to true, so again, they can't play.
     let battingTeam = checkBattingTeam();
     let batTeam = battingTeam.team;
     batTeam.player[currentBatsmanId].batsmanOut = true;
@@ -506,17 +558,20 @@ function batsmanOut(){
     localStorage.setItem(`team${bowlingTeam.number}`, JSON.stringify(bowlTeam));
     
     // inningsOver()    
-
+    //If the inning is over, it doesn't call the NextPlayer function to continue.
     if(!inningsOver()){
 
     console.log("next page");
     if (ballCount === 1) {
+        // callNextPlayer('select-batsman-bowler');
         sessionStorage.removeItem('currentBatsmanId');
         sessionStorage.setItem('selectNewBatsmanAndBowler', 'true'); // Set flag to select both batsman and bowler
         console.log("last ball"+ ballCount);
     } else {
+
         callNextPlayer('select-striker-end');
         sessionStorage.removeItem('currentBatsmanId');
+        // window.location.href = `./selectPlayers.html?call=select-striker-end`;
         // setTimeout(() => {
         //     callNextPlayer('select-striker-end'); 
         // }, 1000);
@@ -525,7 +580,7 @@ function batsmanOut(){
 }
 
 
-// Event listener for showing the popup box
+// Event listener for showing the input popup box
 document.querySelectorAll('.keys[data-wide], .keys[data-noball], .keys[data-bye], .keys[data-legbye], .keys[data-other]').forEach(button => {
     button.addEventListener('click', (e) => {
         var attributeNames = e.target.getAttributeNames();
@@ -563,7 +618,7 @@ document.querySelector('.popup-enter-btn').addEventListener('click', () => {
 
 
     // Validate if runs are entered and handle accordingly
-    if (!isNaN(runs) && runs >= 0) {
+    if (!isNaN(runs) && runs >= 0 && runs <=7) {
         invalid.style.display = "none";
         handleRuns(runs, extras);
         hidePopup();
@@ -573,25 +628,10 @@ document.querySelector('.popup-enter-btn').addEventListener('click', () => {
     }
 });
 
-// function extras(runType){
-
-//     let result = checkBattingTeam();
-//     let team = result.team;
-
-//     if(runType=='Wide'){
-//         team.extra.wide += 1;
-//     }else if(runType=='Noball'){
-//         team.extra.noBall += 1; 
-//     }else if(runType=='Bye'){
-//         team.extra.noBall += 1; 
-//     }else if(runType=='Legbye'){
-//         team.extra.noBall += 1; 
-//     }
-// }
 
 // Function to handle the runs entered
 function handleRuns(runs , runType) {
-    // Handle the runs according to the context (wide, no-ball, bye, legbye)
+    // Handle the runs according to the context (wide, no-ball, bye, legbye and other)
     console.log('Runs entered:', runs);
 
     let result = checkBattingTeam();
@@ -618,20 +658,25 @@ function handleRuns(runs , runType) {
         team.extra.byes += runs;
         addScore(runs);
         addBatsmanRuns(0);
-        display();
+        overCount();
+        display();    
     }else if(runType=='Legbye'){
         localOverRuns.push(`${runs==0?'':runs}B`)
         displayBall(`${runs==0?'':runs}B`);
         team.extra.legByes += runs; 
         addScore(runs);
         addBatsmanRuns(0);
+        overCount();
         display();
     }else{
         localOverRuns.push(runs);
         displayBall(runs);
-        team.extra.byes += runs;
+        // team.extra.byes += runs;
         addScore(runs);
-        display();
+        addBatsmanRuns(runs)
+        addBowlerRuns(runs)
+        overCount();
+        display(); 
     }
     
 }
@@ -689,6 +734,10 @@ function innings_popup(name, runs) {
     document.querySelector('.Team-name').innerText = name + " Needs " + (runs + 1) + " Runs In " + matchData.totalOvers * 6 + " Balls"
     document.querySelector('.pop-up-box').style.visibility = 'visible'
     document.querySelector('.Innings-Alert').classList.add('active');
+   /*  document.querySelectorAll('.close')[4].addEventListener('click', function () {
+        document.querySelector('.Innings-Alert').classList.remove('active');
+        document.querySelector('.pop-up-box').style.visibility = 'hidden'
+    })*/
     // button for going nextinnings
 
     document.getElementById("nextInnings").addEventListener("click",() => {
@@ -701,13 +750,12 @@ display();
 
 //winning alert
 
-
+var winnerflag = false;
 // function for winnings alert
 function checkWinner() {
     // getting variables from local storage
     var team1Data = JSON.parse(localStorage.getItem('team1'));
-    var team2Data = JSON.parse(localStorage.getItem('team2'));
-// var matchData = JSON.parse(localStorage.getItem('matchData'));
+var team2Data = JSON.parse(localStorage.getItem('team2'));
 
 var Team1 =  team1Data.teamName;
 var Team2 =  team2Data.teamName;
@@ -715,8 +763,12 @@ var runsT1 =  team1Data.totalScore;
 var runsT2 =  team2Data.totalScore;
 var T1inningover =team1Data.halfInnings;
 var T2inningover=team2Data.halfInnings;
-
-var winnerflag = false;
+// var overs1 =  team1Data.completedOvers;
+// var overs2 =  team2Data.completedOvers;
+// var wicketsT1 =  team1Data.totalWickets;
+// var wicketsT2 = team2Data.totalWickets ;
+// var totalOvers = matchData.totalOvers ;
+// var noOfPlayers =matchData.noOfPlayers;
 
 
 // condition for winner checking
@@ -729,6 +781,7 @@ var winnerflag = false;
             winname.innerText = `${Team1}  Won The Match`;
             winnerflag = true;
             Winner();
+            return true;
         }
 
         // if team2 highest score
@@ -738,6 +791,7 @@ var winnerflag = false;
             winname.innerText =  `${Team2}  Won The Match`;
             winnerflag = true;
             Winner();
+            return true;
         }
         // if both team has same score
         else if(runsT1 == runsT2) {
@@ -745,9 +799,11 @@ var winnerflag = false;
             winname.innerText = "Match Draw";
             winnerflag = true;
             Winner();
+            return true;
         }
-       
+        return false;
     }
+
     // or team1 innings over and team2 chase before innings over
     else if (T1inningover && (runsT2 > runsT1)) {
         alert("Team 2 win")
@@ -755,6 +811,7 @@ var winnerflag = false;
         winnerflag = true;
 
         Winner();
+        return true;
     }
     // or team2 innings over and team1 chase before innings over
 
@@ -763,13 +820,19 @@ var winnerflag = false;
         winname.innerText =  `${Team1}  Won The Match`;
         winnerflag = true;
         Winner();
+        return true;
     }
+    return false;
 }
 
 // function for display winner popup
 function Winner() {
     document.querySelector('.pop-up-box').style.visibility = 'visible'
     document.querySelector('.Winner-Alert').classList.add('active');
+    document.querySelectorAll('.close')[5].addEventListener('click', function () {
+        document.querySelector('.Winner-Alert').classList.remove('active');
+        document.querySelector('.pop-up-box').style.visibility = 'hidden'
+    })
 
 }
 // button for going summary page

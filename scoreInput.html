@@ -14,6 +14,7 @@
 
     <!-- pop up box -->
     <div class="pop-up-box">
+        <!-- Instruction pop up box -->
         <div class="pop-up1 Instructions-Alert">
             <div class="pop-up-name">
                 <h3>Instructions</h3>
@@ -21,13 +22,16 @@
             </div>
             <div class="pop-up-container">
                 <ul>
-                    <li>No Ball - NB</li>
-                    <li>Wide Ball- WD</li>
+                    <li>No Ball - NB (default: 1+runs)</li>
+                    <li>Wide Ball- WD (default: 1+runs)</li>
+                    <li>Byes- B</li>
+                    <li>LegByes- LB</li>
                     <li>Wicket - W</li>
                     <li>Dot Ball - use (0)</li>
                 </ul>
             </div>
         </div>
+        <!--Wide, No Ball, Byes, Legbye, and Other input fields pop up box -->
         <div class="pop-up">
             <div class="pop-up-name">
                 <h3 id="popup-title"></h3>
@@ -77,12 +81,6 @@
         </div>
         <div class="players-section">
             <div class="batsman-score">
-                <!-- <div class="current-batsman">
-                    
-                </div>
-                <div class="-batsman">
-
-                </div> -->
                 <div class="grid-table">
                     <div class="th batter">Batter</div>
                     <div class="th runs">R</div>
@@ -101,6 +99,7 @@
                     <div class="td batsman2-sixs"><span id="batsman2-sixs"></span></div>
                 </div>
             </div>
+            <!-- diplay bowler details -->
             <div class="bowler-runs">
                 <div class="grid-table">
                     <div class="th bowler">Bowler</div>
@@ -128,17 +127,12 @@
                     </div>
                 </div>
                 <div class="over-input-display" id="over-input-display">
-                    <!-- <span class="ball">6NB</span>
-                    <span class="ball">WB</span>
-                    <span class="ball">W</span>
-                    <span class="ball">4s</span>
-                    <span class="ball">6s</span>
-                    <span class="ball">3</span>
-                    <span class="ball">1</span>
-                    <span class="ball">2</span> -->
+                    <!-- Over-ball runs show here. -->
+                    <!-- <span class="ball">6NB</span> -->
                 </div>
             </div>
             <div class="runsInput">
+                <!-- Input Keyboard Layout using grid -->
                 <div class="input-keyboard">
                     <div class="first-input-key-container">
                         <div class="keys dot" data-dot="0">0</div>
@@ -160,6 +154,7 @@
             </div>
         </div>
 
+        <!-- Buttons -->
         <div class="buttons">
             <button id="instructions">Instructions</button>
             <button id="scorecard" onclick="window.location.href='scoreCard.html'">ScoreCard</button>

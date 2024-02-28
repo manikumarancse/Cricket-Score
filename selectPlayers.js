@@ -144,7 +144,7 @@ function displayBowler(){
     let bowlTeam = result2.team;
     bowlTeam.player.forEach(element => {
         if(element.playerId!=sessionStorage.getItem('bowler')){
-            sessionStorage.removeItem('bowler')
+            
             const option = document.createElement('option');
             option.innerText = `${element.playerName}`;
             option.value = element.playerId;
@@ -157,6 +157,7 @@ function displayBowler(){
             });
         }
     });
+    sessionStorage.removeItem('bowler')
 }
 
 
