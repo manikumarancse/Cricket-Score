@@ -1,3 +1,4 @@
+// storing localstorage data in variables
 var team1Data = JSON.parse(localStorage.getItem('team1'));
 var team2Data = JSON.parse(localStorage.getItem('team2'));
 
@@ -10,7 +11,7 @@ var wicketsT2 = team2Data.totalWickets;
 var overs1 = team1Data.completedOvers;
 var overs2 = team2Data.completedOvers;
 
-
+// getting team1 player name,score,balls
 var ts1Name = document.querySelector('#ts1Name');
 var ts1Score = document.querySelector('#ts1Score');
 var ts1Balls = document.querySelector('#ts1Balls');
@@ -21,7 +22,7 @@ var ts3Name = document.querySelector('#ts3Name');
 var ts3Score = document.querySelector('#ts3Score');
 var ts3Balls = document.querySelector('#ts3Balls');
 
-
+// getting team2 player name,score,balls
 var ts11Name = document.querySelector('#ts11Name');
 var ts11Score = document.querySelector('#ts11Score');
 var ts11Balls = document.querySelector('#ts11Balls');
@@ -32,7 +33,7 @@ var ts33Name = document.querySelector('#ts33Name');
 var ts33Score = document.querySelector('#ts33Score');
 var ts33Balls = document.querySelector('#ts33Balls');
 
-
+// getting team1 player name,score,balls,wickets
 var bs1Name = document.querySelector('#bs1Name');
 var bs1Score = document.querySelector('#bs1Score');
 var bs1Balls = document.querySelector('#bs1Balls');
@@ -43,6 +44,7 @@ var bs3Name = document.querySelector('#bs3Name');
 var bs3Score = document.querySelector('#bs3Score');
 var bs3Balls = document.querySelector('#bs3Balls');
 
+// getting team2 player name,score,balls,wickets
 var bs11Name = document.querySelector('#bs11Name');
 var bs11Score = document.querySelector('#bs11Score');
 var bs11Balls = document.querySelector('#bs11Balls');
@@ -54,25 +56,28 @@ var bs33Score = document.querySelector('#bs33Score');
 var bs33Balls = document.querySelector('#bs33Balls');
 
 
-
+// displaying team1 and team2 names
 var teamName1Element = document.querySelector("#team1name");
 teamName1Element.textContent = Team1;
 
 var teamName2Element = document.querySelector('#team2name');
 teamName2Element.textContent = Team2;
 
+// displaying team1 and team2 total runs 
 var team1Runs = document.querySelector("#team1Runs");
 team1Runs.textContent = runsT1;
 
 var team2Runs = document.querySelector("#team2Runs");
 team2Runs.textContent = runsT2;
 
+// displaying team1 and team2 total wickets gone
 var team1Wickets = document.querySelector("#team1Wickets");
 team1Wickets.textContent = wicketsT1;
 
 var team2Wickets = document.querySelector("#team2Wickets");
 team2Wickets.textContent = wicketsT2;
 
+// displaying team1 and team2 total overs they play 
 var team1Overs = document.querySelector("#team1Overs");
 team1Overs.textContent = overs1;
 
@@ -82,10 +87,12 @@ team2Overs.textContent = overs2;
 
 
 //top 3 run scorer
+// getting empty array
 let arr=[]
 let a = team1Data.player
 console.log(a);
 
+//for loop pushing player runs 
 for(let i=0; i<a.length; i++){
      let c = a[i].batting.battingRuns;
      console.log(i);
@@ -96,35 +103,31 @@ for(let i=0; i<a.length; i++){
     //   console.log(arr);
 
 }
-// a.forEach( () => {
-//     let c = a[0].batting[0].battingRuns;
-//     console.log(c);
 
-
-// let arr1 = [15,20,101,4,2,156,66,87,22,1,3]
-
-// let large1 = 0;
-// let large2 = 0;
-// let large3 = 0;
-// let i=0;
-let firstLargest = Number.MIN_SAFE_INTEGER;
+// getting variables to store top3 rums
+    let firstLargest = Number.MIN_SAFE_INTEGER;
     let secondLargest = Number.MIN_SAFE_INTEGER;
     let thirdLargest = Number.MIN_SAFE_INTEGER;
 
     let firstIndex, secondIndex, thirdIndex;
 
+
+// function for top3 run scorer in team1
 function findLargestThreeNumbersWithIndices(arr) {
+    // if total players less then 3 it does not work
     if (arr.length < 3) {
         console.log("Array has less than 3 elements");
         return;
     }
 
     
-
+    // for loop for checkig battingruns for all players in team1 
     for (let i = 0; i < arr.length; i++) {
         let currentNumber = arr[i];
 
+        // if condition for checking current number with firstlargest
         if (currentNumber > firstLargest) {
+            // if it satisfies the all variables will update 
             thirdLargest = secondLargest;
             secondLargest = firstLargest;
             firstLargest = currentNumber;
@@ -132,13 +135,17 @@ function findLargestThreeNumbersWithIndices(arr) {
             thirdIndex = secondIndex;
             secondIndex = firstIndex;
             firstIndex = i;
+        // else if checking current number with secondlargest
         } else if (currentNumber > secondLargest) {
+            // if it satisfies the all variables will update
             thirdLargest = secondLargest;
             secondLargest = currentNumber;
 
             thirdIndex = secondIndex;
             secondIndex = i;
+         // else if checking current number with thiredlargest
         } else if (currentNumber > thirdLargest) {
+             // if it satisfies the all variables will update
             thirdLargest = currentNumber;
             thirdIndex = i;
         }
@@ -146,6 +153,7 @@ function findLargestThreeNumbersWithIndices(arr) {
 
     console.log("Largest 3 numbers and their indices:");
     console.log("1. Number:", firstLargest, "Index:", firstIndex);
+    // display top3 player name,runs and balls batted
     ts1Name.innerText=a[firstIndex].playerName;
     ts1Score.innerText=`${firstLargest}(${a[firstIndex].batting.ballsBatted})`;
    
@@ -156,11 +164,11 @@ function findLargestThreeNumbersWithIndices(arr) {
     ts3Score.innerText=`${thirdLargest}(${a[thirdIndex].batting.ballsBatted})`;
    
 
-    console.log("2. Number:", secondLargest, "Index:", secondIndex);
-    console.log("3. Number:", thirdLargest, "Index:", thirdIndex);
-    console.log(a[firstIndex].playerName,a[firstIndex].batting.ballsBatted)
-    console.log(a[secondIndex].playerName,a[secondIndex].batting.ballsBatted)
-    console.log(a[thirdIndex].playerName,a[thirdIndex].batting.ballsBatted)
+    // console.log("2. Number:", secondLargest, "Index:", secondIndex);
+    // console.log("3. Number:", thirdLargest, "Index:", thirdIndex);
+    // console.log(a[firstIndex].playerName,a[firstIndex].batting.ballsBatted)
+    // console.log(a[secondIndex].playerName,a[secondIndex].batting.ballsBatted)
+    // console.log(a[thirdIndex].playerName,a[thirdIndex].batting.ballsBatted)
 
 }
 
@@ -171,11 +179,11 @@ findLargestThreeNumbersWithIndices(arr);
     
 //  });
 
-
+// getting empty array
 let arr1=[]
 let a1 = team2Data.player
 // console.log(a);
-
+//for loop pushing player runs 
 for(let i=0; i<a1.length; i++){
      let c = a1[i].batting.battingRuns;
      console.log(i);
@@ -186,12 +194,13 @@ for(let i=0; i<a1.length; i++){
     //  console.log(arr);
 
 }
-let firstLargest1 = Number.MIN_SAFE_INTEGER;
+// getting variables to store top3 rums
+    let firstLargest1 = Number.MIN_SAFE_INTEGER;
     let secondLargest1 = Number.MIN_SAFE_INTEGER;
     let thirdLargest1 = Number.MIN_SAFE_INTEGER;
 
     let firstIndex1, secondIndex1, thirdIndex1;
-
+// function for top3 run scorer in team2
 function findLargestThreeNumbersWithIndices1(arr1) {
     if (arr1.length < 3) {
         console.log("Array has less than 3 elements");
@@ -199,11 +208,12 @@ function findLargestThreeNumbersWithIndices1(arr1) {
     }
 
     
-
+    // for loop for checkig battingruns for all players in team2
     for (let i = 0; i < arr1.length; i++) {
         let currentNumber = arr1[i];
-
+         // if condition for checking current number with firstlargest
         if (currentNumber > firstLargest1) {
+            // if it satisfies the all variables will update
             thirdLargest1 = secondLargest1;
             secondLargest1 = firstLargest1;
             firstLargest1 = currentNumber;
@@ -211,13 +221,17 @@ function findLargestThreeNumbersWithIndices1(arr1) {
             thirdIndex1 = secondIndex1;
             secondIndex1 = firstIndex1;
             firstIndex1 = i;
+        // else if checking current number with secondlargest
         } else if (currentNumber > secondLargest1) {
+            // if it satisfies the all variables will update
             thirdLargest1 = secondLargest1;
             secondLargest1 = currentNumber;
 
             thirdIndex1 = secondIndex1;
             secondIndex1 = i;
+         // else if checking current number with thiredlargest
         } else if (currentNumber > thirdLargest1) {
+            // if it satisfies the all variables will update
             thirdLargest1 = currentNumber;
             thirdIndex1 = i;
         }
@@ -225,6 +239,7 @@ function findLargestThreeNumbersWithIndices1(arr1) {
 
     console.log("Largest 3 numbers and their indices:");
     console.log("1. Number:", firstLargest1, "Index:", firstIndex1);
+     // display top3 player name,runs and balls batted in team2
     ts11Name.innerText=a1[firstIndex1].playerName;
     ts11Score.innerText=`${firstLargest1}(${a1[firstIndex1].batting.ballsBatted})`;
    
@@ -244,17 +259,16 @@ function findLargestThreeNumbersWithIndices1(arr1) {
 }
 
 
-
-
 findLargestThreeNumbersWithIndices1(arr1);
 
 
 // Bowling 
 
+// getting empty array
 let arr2=[]
 let a2 = team1Data.player
 // console.log(a);
-
+//for loop pushing player wickets 
 for(let i=0; i<a2.length; i++){
      let c = a2[i].bowling.wicket;
      console.log(i);
@@ -265,24 +279,26 @@ for(let i=0; i<a2.length; i++){
     //  console.log(arr);
 
 }
-let firstLargest2 = Number.MIN_SAFE_INTEGER;
+// getting variables to store top3 wickets
+    let firstLargest2 = Number.MIN_SAFE_INTEGER;
     let secondLargest2 = Number.MIN_SAFE_INTEGER;
     let thirdLargest2 = Number.MIN_SAFE_INTEGER;
 
     let firstIndex2, secondIndex2, thirdIndex2;
-
+// function for top3 wicket-taker in team1
 function findLargestThreeNumbersWithIndices3(arr2) {
     if (arr2.length < 3) {
         console.log("Array has less than 3 elements");
         return;
     }
 
-    
+    // for loop for checkig wickets for all players in team1
 
     for (let i = 0; i < arr2.length; i++) {
         let currentNumber = arr2[i];
-
+         // if condition for checking current number with firstlargest
         if (currentNumber > firstLargest2) {
+            // if it satisfies the all variables will update
             thirdLargest2 = secondLargest2;
             secondLargest2 = firstLargest2;
             firstLargest2 = currentNumber;
@@ -290,13 +306,17 @@ function findLargestThreeNumbersWithIndices3(arr2) {
             thirdIndex2 = secondIndex2;
             secondIndex2 = firstIndex2;
             firstIndex2 = i;
+        // else if checking current number with secondlargest
         } else if (currentNumber > secondLargest2) {
+            // if it satisfies the all variables will update
             thirdLargest2 = secondLargest2;
             secondLargest2 = currentNumber;
 
             thirdIndex2 = secondIndex2;
             secondIndex2 = i;
+         // else if checking current number with thiredlargest
         } else if (currentNumber > thirdLargest2) {
+            // if it satisfies the all variables will update
             thirdLargest2 = currentNumber;
             thirdIndex2 = i;
         }
@@ -304,6 +324,7 @@ function findLargestThreeNumbersWithIndices3(arr2) {
 
     console.log("Largest 3 numbers and their indices:");
     console.log("1. Number:", firstLargest2, "Index:", firstIndex2);
+     // display top3 wicket-taker name,runs and balls boweled and wickets in team1
     bs1Name.innerText=a2[firstIndex2].playerName;
     bs1Score.innerText=firstLargest2;
     bs1Balls.innerText=`${a2[firstIndex2].bowling.bowlRuns}(${a2[firstIndex2].bowling.over})`;
@@ -329,23 +350,11 @@ function findLargestThreeNumbersWithIndices3(arr2) {
 
 findLargestThreeNumbersWithIndices3(arr2);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+// getting empty array
 let arr3=[]
 let a3 = team2Data.player
 // console.log(a);
-
+//for loop pushing player wickets 
 for(let i=0; i<a3.length; i++){
      let c = a3[i].bowling.wicket;
      console.log(i);
@@ -356,24 +365,26 @@ for(let i=0; i<a3.length; i++){
     //  console.log(arr);
 
 }
-let firstLargest3 = Number.MIN_SAFE_INTEGER;
+    // getting variables to store top3 wickets
+    let firstLargest3 = Number.MIN_SAFE_INTEGER;
     let secondLargest3 = Number.MIN_SAFE_INTEGER;
     let thirdLargest3 = Number.MIN_SAFE_INTEGER;
 
     let firstIndex3, secondIndex3, thirdIndex3;
-
+// function for top3 wicket-taker in team2
 function findLargestThreeNumbersWithIndices4(arr3) {
     if (arr3.length < 3) {
         console.log("Array has less than 3 elements");
         return;
     }
 
-    
+    // for loop for checkig wickets for all players in team2
 
     for (let i = 0; i < arr3.length; i++) {
         let currentNumber = arr3[i];
-
+        // if condition for checking current number with firstlargest
         if (currentNumber > firstLargest3) {
+             // if it satisfies the all variables will update
             thirdLargest3 = secondLargest3;
             secondLargest3 = firstLargest3;
             firstLargest3 = currentNumber;
@@ -381,13 +392,17 @@ function findLargestThreeNumbersWithIndices4(arr3) {
             thirdIndex3 = secondIndex3;
             secondIndex3 = firstIndex3;
             firstIndex3 = i;
+        // else if checking current number with secondlargest
         } else if (currentNumber > secondLargest3) {
+             // if it satisfies the all variables will update
             thirdLargest3 = secondLargest3;
             secondLargest3 = currentNumber;
 
             thirdIndex3 = secondIndex3;
             secondIndex3 = i;
+        // else if checking current number with thiredlarges
         } else if (currentNumber > thirdLargest3) {
+             // if it satisfies the all variables will update
             thirdLargest3 = currentNumber;
             thirdIndex3 = i;
         }
@@ -395,6 +410,7 @@ function findLargestThreeNumbersWithIndices4(arr3) {
 
     console.log("Largest 3 numbers and their indices:");
     console.log("1. Number:", firstLargest3, "Index:", firstIndex3);
+     // display top3 wicket-taker name,runs and balls boweled and wickets in team1
     bs11Name.innerText=a3[firstIndex3].playerName;
     bs11Score.innerText=firstLargest3;
     bs11Balls.innerText=`${a3[firstIndex3].bowling.bowlRuns}(${a3[firstIndex3].bowling.over})`;
@@ -420,26 +436,28 @@ function findLargestThreeNumbersWithIndices4(arr3) {
 
 findLargestThreeNumbersWithIndices4(arr3);
 
-
+// button for going next-match
 document.getElementById("newmatch").addEventListener("click", () => {
     window.location.href="index.html"
 
 })
+// button for going overall summary
 document.getElementById("overall").addEventListener("click", () => {
     window.location.href="Finalsummary.html"
 
 })
 
-
+// getting variables to display the winning team name
 var winElement = document.querySelector("#win");
 
+// if team1 has high score it will display
 if(runsT1>runsT2){
     winElement.innerText=`${Team1} won the match`;
 
-
+// if team2 has high score it will display
 }else if(runsT1<runsT2){
     winElement.innerText=`${Team2} won the match`;
-
+// if both team same score it will display
 }else{
     winElement.innerText= "Match Draw";
 

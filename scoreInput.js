@@ -689,6 +689,7 @@ function innings_popup(name, runs) {
     document.querySelector('.Team-name').innerText = name + " Needs " + (runs + 1) + " Runs In " + matchData.totalOvers * 6 + " Balls"
     document.querySelector('.pop-up-box').style.visibility = 'visible'
     document.querySelector('.Innings-Alert').classList.add('active');
+    // button for going nextinnings
 
     document.getElementById("nextInnings").addEventListener("click",() => {
         window.location.href="./selectPlayers.html"
@@ -701,23 +702,11 @@ display();
 //winning alert
 
 
-/* 
-function inningsOver1(){
-
-  if (overs1 === totalOvers || wicketsT1 === noOfPlayers - 1) {
-    T1inningover = true;
-    innings_popup(Team1, runs)
-   }
-  
-  if (overs2 === totalOvers || wicketsT2 === noOfPlayers - 1) {
-    T2inningover = true;
-    innings_popup(Team2, runs)
-  }
-} */
-
+// function for winnings alert
 function checkWinner() {
+    // getting variables from local storage
     var team1Data = JSON.parse(localStorage.getItem('team1'));
-var team2Data = JSON.parse(localStorage.getItem('team2'));
+    var team2Data = JSON.parse(localStorage.getItem('team2'));
 // var matchData = JSON.parse(localStorage.getItem('matchData'));
 
 var Team1 =  team1Data.teamName;
@@ -730,16 +719,19 @@ var T2inningover=team2Data.halfInnings;
 var winnerflag = false;
 
 
-
+// condition for winner checking
     var winname = document.querySelector(".winning-team-name");
+    // team1 & team2 innings over means checking which team has highest score
     if (T1inningover && T2inningover) {
+        //if team1 has highest score 
         if (runsT1 > runsT2) {
             alert("Team 1 wins")
             winname.innerText = `${Team1}  Won The Match`;
             winnerflag = true;
             Winner();
         }
-        
+
+        // if team2 highest score
 
         else if(runsT2 > runsT1) {
             alert("Team 2 wins")
@@ -747,7 +739,7 @@ var winnerflag = false;
             winnerflag = true;
             Winner();
         }
-
+        // if both team has same score
         else if(runsT1 == runsT2) {
             alert("Team 1 draw")
             winname.innerText = "Match Draw";
@@ -756,7 +748,7 @@ var winnerflag = false;
         }
        
     }
-
+    // or team1 innings over and team2 chase before innings over
     else if (T1inningover && (runsT2 > runsT1)) {
         alert("Team 2 win")
         winname.innerText =  `${Team2}  Won The Match`;
@@ -764,6 +756,7 @@ var winnerflag = false;
 
         Winner();
     }
+    // or team2 innings over and team1 chase before innings over
 
     else if (T2inningover && (runsT1 > runsT2)) {
         alert("Team 1 wns")
@@ -773,11 +766,13 @@ var winnerflag = false;
     }
 }
 
+// function for display winner popup
 function Winner() {
     document.querySelector('.pop-up-box').style.visibility = 'visible'
     document.querySelector('.Winner-Alert').classList.add('active');
 
 }
+// button for going summary page
 document.getElementById("summary").addEventListener("click", () => {
     window.location.href="summary.html"
 
