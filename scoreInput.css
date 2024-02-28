@@ -39,7 +39,7 @@
     transition-property: visibility;
 }
 
-.pop-up, .pop-up1{
+.pop-up, .pop-up1,.pop-up2,.pop-up3{
     z-index: 9999;
     position: fixed;
     width: 20%;
@@ -112,6 +112,40 @@
 .close:hover {
     opacity: 1;
 }
+.Team-name{
+    padding: 30px;
+
+}
+.instructions{
+    margin-top: 2%;
+    font-weight: bold;
+}
+/* style only  for pop-up2 , pop-up3 */
+.pop-up2,.pop-up3{
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+}
+/* style for innings alert */
+.Innings-Alert{
+    text-align: center;
+}
+/* style for winnings alert */
+.Winner-Alert{
+    text-align: center;
+}
+/* style for buttons in pop-up2 and pop-up3 */
+#summary , #nextInnings{    
+    text-align: center;
+    font-size: 17px;
+    border: 1px solid #3B82F6;
+    padding: 3px 5px;
+    border-radius: 5px;
+    background-color: #3b83f680;
+    font-weight: 600;
+    margin-bottom: 2%;
+}
+
 
 @media (min-width: 200px) and (max-width: 500px){
 .pop-up, .pop-up1{
@@ -128,7 +162,7 @@
     /* padding: 2rem; */
     height: 100vh;
     display: grid;
-    grid-template-rows: repeat(3, min-content);
+    grid-template-rows: repeat(4, min-content);
     grid-template-columns: 1fr;
     gap: 20px;
     text-align: center;
@@ -181,7 +215,7 @@
 .grid-table{
     display: grid;
     grid-template-rows: repeat(3, min-content);
-    grid-template-columns: 2fr repeat(5, .5fr);
+    grid-template-columns: 2fr repeat(4, .5fr);
     text-align: left;
 }
 
@@ -264,6 +298,38 @@
 .second-input-key-container{
     grid-column: 2/span 1;
 }
+.buttons{
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+.buttons button{
+    background-color: var(--bg-color);
+    color:var(--white);
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 10px;
+    border-radius: 10px;
+}
+.buttons button:hover{
+    background-color: #a80101;
+    letter-spacing: 1px;
+    transition: .1s ease-in;
+}
+
+/* .buttons{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    justify-items: center;
+}
+.buttons button{
+    width: max-content;
+    color: var(--white);
+    background-color: #8b0000d2;
+    padding: .5rem;
+} */
 
 
 /* ----------------------------START---------------------------- */

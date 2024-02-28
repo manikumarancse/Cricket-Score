@@ -93,26 +93,51 @@
     font-weight: 600;
 }
 .teambtn button.active {
-    background-color: #3B82F6; /* Active button background color */
+    background: #8B0000;
+    color: #fff;
+     /* Active button background color */
 }
+/* .teambtn:hover{
+    color: #8B0000;
+    background-color: #fff;
+    border-radius: 1px solid #8b0000;
+} */
 #teamName{
     padding: 0;
     margin: 0;
+    
+
     font-size: 2rem;
     font-weight: 700;
-    color: #8B0000;
+    color: #fff;
+    background: #8B0000;
+    display: inline;
+    padding: 0.3rem;
+    /* border: 1px solid #000; */
+
+}
+#teamName:hover{
+    letter-spacing: 0.1rem;
+    background: #1e9bff;
+    border-radius: 10px;
+    box-shadow: 0 0 25px #3B82F6;
+    color: #000;
+    padding: 0.5rem;
 }
 .head-btn button{
     font-size: 20px;
     border: 1px solid #3B82F6;
     padding: 5px 10px;
     border-radius: 10px;
-    background-color: #3b83f680; /* Default button background color */
+    background-color: #fff ; /* Default button background color */
     font-weight: 600;
 }
 .head-btn button.active {
-    background-color: #3B82F6; /* Active button background color */
+    background: #8B0000;
+    color: #fff; 
+    box-shadow: 0 0 15px #3B82F6;/* Active button background color */
 }
+
 .td:nth-of-type(2n){
     background-color: #a0202049;
 }
@@ -126,6 +151,11 @@
 #Bowling .th{
     font-size: 12px;
 }
+.teamName{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 #close{
             position: absolute; /* Position the close button absolutely */
             top: 0; /* Align to the top */
@@ -136,6 +166,16 @@
             font-size: 1rem; /* Set the font size */
             cursor: pointer; /* Change cursor to pointer on hover */
    }
+
+   #close:hover{
+    display: inline;
+    background: red;
+    color:#fff;
+    border-radius: 20%;
+    margin: 3px;
+
+   }
+
 
 #btn-bowl, #btn-bat{
             display: flex;
@@ -172,6 +212,19 @@
     font-size: 15px;
 }
 }
+#team-1,#team-2,#btn-bat,#btn-bowl{
+    transition: 0.8s;
+    
+
+}
+#team-1:hover,#team-2:hover,#btn-bat:hover,#btn-bowl:hover{
+    background: #fff;
+    color: #8B0000;
+    border: 1px solid #8B0000;
+    box-shadow: 0 0 15px #3B82F6;
+
+
+}
 
     </style>
 </head>
@@ -179,7 +232,7 @@
     <div class="container">
         <div class="header">
             <h1>SUMMARY</h1>
-            <a href="" id="close">X</a>
+            <a href="summary.html" id="close">X</a>
         </div>
         <div id="main">
             
@@ -187,7 +240,11 @@
                 <button id="team-1" onclick="showTeam1()" class="active">TEAM 1</button>
                 <button id="team-2" onclick="showTeam2()">TEAM 2</button>
             </div>
-            <h1 id="teamName">Team 1</h1>
+            <div class="teamName">
+                <h1 id="teamName">Team 1</h1>
+
+            </div>
+            
             <div class="head-btn">
                 <button id="btn-bat" onclick="showBatting()" class="active">Batting <img src="./batting3.jpg" alt="" width="25px"></button>
                 <button id="btn-bowl" onclick="showBowling()"> Bowling <img src="./bowling1.jpg" alt="" width="25px"></button>
@@ -206,7 +263,7 @@
                 <div class="th maiden">Maiden</div>
                 <div class="th runs">Runs</div>
                 <div class="th wickets">Wickets</div>
-                <div class="th economy">Ec</div>
+                <div class="th economy">Eco</div>
             </div>
         </div>
 
@@ -237,13 +294,13 @@
                 <div class="th balls">Balls</div>
                 <div class="th four">4s</div>
                 <div class="th six">6s</div>
-                <div class="th strike-rate">Strike Rate</div>`;
+                <div class="th strike-rate">S/R</div>`;
         bowling.innerHTML = `<div class="th bowler">Bowling</div>
                 <div class="th over">Overs</div>
                 <div class="th maiden">Maiden</div>
                 <div class="th runs">Runs</div>
                 <div class="th wickets">Wickets</div>
-                <div class="th economy">Economy</div>`;
+                <div class="th economy">Eco</div>`;
     }
     
     function showTeam1() {
@@ -266,7 +323,11 @@
             team2Button.classList.add("active");
             team1Button.classList.remove("active");
             teamdata=localStorage.getItem("team2")
-            td=JSON.parse(teamdata)
+            
+            
+            teamdata=localStorage.getItem("team2")
+             td=JSON.parse(teamdata)
+            
             batDetails();
            bowlDetails();
            teamName.innerText=`${td.teamName.toUpperCase()} (${td.totalScore} / ${td.totalWickets}) `;
@@ -292,13 +353,12 @@
         function batDetails(){
         td.player.forEach((data)=>{
             // console.log(data)
-            if(data.isbatting){
-                console.log("hi")
-            }
-            else{
-                let name =document.createElement('div');
+            let name =document.createElement('div');
                 name.classList.add('batsman-name','td');
-                name.innerText=data.playerName;
+                // name.innerText=(data.batsmanOut && !data.isBatting) ? data.playerName : `${data.playerName+"*"}` ;
+                name.innerText = (!data.batsmanOut && data.isBatting) ? `${data.playerName+"*"}`: data.playerName 
+
+                // name.innerText=data.playerName;
                 batting.appendChild(name);
                 
                 let run =document.createElement('div');
@@ -326,17 +386,11 @@
                 strike.classList.add('batsman-strike','td');
                 strike.innerText=data.batting.strikeRate;
                 batting.appendChild(strike);
-
-            }
         })}
         function bowlDetails(){
             td.player.forEach((data)=>{
             // console.log(data)
-            if(data.isBowling){
-                console.log("hi")
-            }
-            else{
-                let name =document.createElement('div');
+            let name =document.createElement('div');
                 name.classList.add('bowler-name','td');
                 name.innerText=data.playerName;
                 bowling.appendChild(name);
@@ -366,8 +420,6 @@
                 economy.classList.add('bowler-economy','td');
                 economy.innerText=data.bowling.economy;
                 bowling.appendChild(economy);
-
-            }
         })
         }
 

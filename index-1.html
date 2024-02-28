@@ -32,19 +32,21 @@
         /* Styles for the header h1 */
         header h1{
             color: #8B0000; /* Maroon color */
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 800;
             margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
+           
         }
+       
         /* Styles for the main container */
         .container {
             background: #ffffff; /* White background */
             width: 70%; /* Adjusted width */
             max-width: 400px; /* Added max-width */
-            padding: 50px;
+            padding: 25px;
             position: relative; /* Removed absolute positioning */
             margin-top: 20px; /* Added margin-top */
             box-shadow: 15px 30px 35px rgba(0, 0, 0, 0.1);
@@ -55,6 +57,9 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
+        }
+        select{
+            height: 30px;
         }
         /* Styles for the coin */
         .coin {
@@ -117,9 +122,21 @@
             border-color: #e1e0e1;
             color: #101020; /* Dark gray text color */
         }
+        #flip-button:hover{
+            letter-spacing: 0.1rem;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 25px #3B82F6;
+             color: #8B0000;
+            padding: 0.5rem;
+        }
         /* Styles for the result */
         .result {
-            margin-top: 20px;
+            margin: 0;
+            padding: 0;
+            color: #8B0000;
+            font-size: 17px;
+            font-weight: 600;
         }
         #tossResult {
             font-size: 25px;
@@ -127,7 +144,7 @@
         /* Styles for the batting and bowling buttons */
         .b1 {
             display: none;
-            flex-direction: column;
+            flex-direction:row;
             margin-top: 20px; /* Added margin-top */
         }
         .b1 button {
@@ -139,6 +156,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: 0.8s;
+        }
+        #Batting:hover, #Bowling:hover{
+            letter-spacing: 0.2rem;
+            background: #8B0000;
+
         }
         #teamNameInput{
             width: 15%;
@@ -154,7 +177,7 @@
 </head>
 <body>
     <header>
-        <h1> <img src="./batting2.jpg" alt="" width="40px">  Cricket Score APP  <img src="./bowling.jpg" alt="" width="30px"></h1>
+        <h1> <img src="./batting2.jpg" alt="" width="40px">  Cricket Score App  <img src="./bowling.jpg" alt="" width="30px"></h1>
     </header>
     
     <div class="main">
@@ -168,7 +191,12 @@
         </div>
        
        
+
         <div class="container">
+             <!-- Result section for displaying the toss result -->
+        <div class="result">
+            <h3 id="tossResult"></h3>
+        </div>
             <!-- Coin container -->
             <div class="coin">
                 <div class="heads">
@@ -182,20 +210,19 @@
             </div>
             <!-- Button for flipping the coin -->
             <div class="buttons">
+                <!-- <a href="" id="flip-button" style="--clr:#6eff3e" ><span>Flip Coin</span><i></i></a> -->
                 <button id="flip-button">Flip Coin</button>
+            </div>
+            <!-- Buttons for batting and bowling -->
+            <div class="buttons b1">
+                <button id="Batting">BATTING <img src="./batting3.jpg" alt="" width="25px"></button>
+                <button id="Bowling">BOWLING  <img src="./bowling1.jpg" alt="" width="25px"></button>
             </div>
         </div>
 
-        <!-- Result section for displaying the toss result -->
-        <div class="result">
-            <h1 id="tossResult"></h1>
-        </div>
-
-        <!-- Buttons for batting and bowling -->
-        <div class="buttons b1">
-            <button id="Batting">BATTING <img src="./batting3.jpg" alt="" width="25px"></button>
-            <button id="Bowling">BOWLING  <img src="./bowling1.jpg" alt="" width="25px"></button>
-        </div>
+       
+        
+        
     </div>
 
     <script>
@@ -255,8 +282,8 @@
                     } else {
                         selectedTeam = t1.value;
                     }
-                    tossResult.textContent = "Toss won by " + selectedTeam + ". It's Therir choice !";
-                    b1.style.display = "block";
+                    tossResult.textContent = "Toss won by " + selectedTeam + ". It's Their choice !";
+                    b1.style.display = "flex";
                 }, 3000);
             }
 
