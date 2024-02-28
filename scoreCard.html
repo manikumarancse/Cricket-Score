@@ -32,14 +32,14 @@
             <div>Runs:</div>
             <div id="runs"></div>
         </div>
-        <div class="Extras">
+        <!-- <div class="Extras">
             <div>Current Run Rate:</div>
             <div id="Crr"></div>
         </div>
         <div class="Extras">
             <div>Projected Score:</div>
             <div id="Ps"></div>
-        </div>
+        </div> -->
         <div class="Extras">
             <div>Yet to bat:</div>
             <div></div>
@@ -160,8 +160,8 @@
     bowlDetails();
     Extras();
     Runs();
-    crr();
-    projectedScore();
+    // crr();
+    // projectedScore();
     yetToBat();
     // toss();
     function batDetails(){
@@ -249,11 +249,12 @@
 
                 let economy =document.createElement('div');
                 economy.classList.add('bowler-economy','td');
-                let eco= ((data.bowling.bowlRuns)/ ((data.bowling.over === 0) ? 0 :(data.bowling.over))).toFixed(2);
-                economy.innerText=(isNaN(eco) || eco === 'Infinity' ) ? parseFloat("0.00") : eco;
-                console.log(eco);
-                console.log(economy.innerText);
-                data.bowling.economy=parseFloat(economy.innerText);
+                // let eco= ((data.bowling.bowlRuns)/ ((data.bowling.over === 0) ? 0 :(data.bowling.over))).toFixed(2);
+                economy.innerText= data.bowling.economy;
+                // console.log(eco);
+                // bowling.appendChild(economy);
+                // console.log(economy.innerText);
+                // data.bowling.economy=parseFloat(economy.innerText);
                 
                 // console.log(data.bowling.economy)
                 // console.log(data)
@@ -277,18 +278,18 @@
             run.innerText=bat.totalScore;
         }
 
-        function crr(){
-            const crr=document.getElementById("Crr");
-            let cr=(bat.totalScore/bat.completedOvers).toFixed(2);
-            crr.innerText=isNaN(cr)? 0:cr;
+        // function crr(){
+        //     const crr=document.getElementById("Crr");
+        //     let cr=(bat.totalScore/bat.completedOvers).toFixed(2);
+        //     crr.innerText=isNaN(cr)? 0:cr;
             
-        }
-        function projectedScore(){
-            const pr=document.getElementById("Ps");
-            const matchData=JSON.parse(localStorage.getItem('matchData'))
-            let tot=Math.round((bat.totalScore/bat.completedOvers) * matchData.totalOvers);
-            pr.innerText=isNaN(tot)? 0: tot;
-        }
+        // }
+        // function projectedScore(){
+        //     const pr=document.getElementById("Ps");
+        //     const matchData=JSON.parse(localStorage.getItem('matchData'))
+        //     let tot=Math.round((bat.totalScore/bat.completedOvers) * matchData.totalOvers);
+        //     pr.innerText=isNaN(tot)? 0: tot;
+        // }
 
         function yetToBat(){
             //here we display the next players to be played
