@@ -315,6 +315,19 @@
     transition: .1s ease-in;
 }
 
+/* .buttons{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    justify-items: center;
+}
+.buttons button{
+    width: max-content;
+    color: var(--white);
+    background-color: #8b0000d2;
+    padding: .5rem;
+} */
+
 
 /* ----------------------------START---------------------------- */
 /* --------------------selectPlayers.html---------------------- */
