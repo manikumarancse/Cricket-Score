@@ -6,6 +6,7 @@
     <title>ScoreCard</title>
     <link rel="stylesheet" href="./scoreCard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 </head>
 <body>
     <div id="main">
@@ -24,12 +25,20 @@
     </div>
         <div class="bat-det">
         <div class="Extras">
-            <div>Extra:</div>
-            <div id="extra">23</div>
+            <div>Extras:</div>
+            <div id="extra"></div>
         </div>
         <div class="Extras">
             <div>Runs:</div>
             <div id="runs"></div>
+        </div>
+        <div class="Extras">
+            <div>Current Run Rate:</div>
+            <div id="Crr"></div>
+        </div>
+        <div class="Extras">
+            <div>Projected Score:</div>
+            <div id="Ps"></div>
         </div>
         <div class="Extras">
             <div>Yet to bat:</div>
@@ -46,11 +55,22 @@
         <div class="th runs" title="runs">R</div>
         <div class="th wickets" title="wickets">W</div>
         <div class="th economy" title="economy">Eco</div>
+
+    </div>
+<div class="link">
+    <a href="" id="back">Back to Over</a>
 </div>
-<!--here we display toss details-->
-<h2 id="toss"></h2>
+
+
+<!-- <h2 id="chart">Batsman Contribution based on runs scored</h2>
+<div id="pie-chart"></div> -->
 </div>
 <script>
+    const close=document.getElementById("close")
+    close.addEventListener('click',()=>{
+        window.history.back();
+    });
+    const batsmanDetails=[];
     const batting=document.getElementById("Batting");
     const bowling=document.getElementById("Bowling");
     const teamname=document.getElementById("teamName");
@@ -59,7 +79,8 @@
     
     let team1=JSON.parse(localStorage.getItem("team1"))
     let team2=JSON.parse(localStorage.getItem("team2"))
-    
+    //At first we declare the team 1 and team2
+    //and assign it based on the innings
     if(team1.innings===1){
     battingTeam=team1.teamName;
     console.log("Team1 batting");
@@ -109,6 +130,7 @@
     //     let b=localStorage.getItem("team2");
     //     t1=JSON.parse(b)
     // }
+    //here we assign the bat and bowl team
         let result = checkBattingTeam();
         let bat = result.team;
 
@@ -119,8 +141,10 @@
     // console.log(t1);
     batDetails();
     bowlDetails();
-    // Extras();
+    Extras();
     Runs();
+    crr();
+    projectedScore();
     yetToBat();
     // toss();
     function batDetails(){
@@ -161,6 +185,8 @@
                 strike.innerText=((isNaN(sr))? 0: sr);
                 data.batting.strikeRate=parseFloat(strike.innerText);
                 batting.appendChild(strike);
+                let det={ name: data.playerName, runs: data.batting.battingRuns, oversPlayed: data.batting.ballsBatted };
+                batsmanDetails.push(det);
             }
             else{
                 console.log("hi")
@@ -177,6 +203,7 @@
                 console.log("hi")
             }
             else{
+                
                 let name =document.createElement('div');
                 name.classList.add('bowler-name','td');
                 name.innerText=data.playerName;
@@ -219,14 +246,31 @@
         })
         localStorage.setItem(`team${result2.number}`, JSON.stringify(bowl)); 
         }
-        // function Extras(){
-        //     const extra=document.getElementById("extra")
-        //     let totalExtra=t1.extra.noBall+t1.extra.wide+t1.extra.byes+t1.extra.legByes;
-        //     extra.innerText=`${totalExtra}   (NB ${t1.extra.noBall}, W ${t1.extra.wide}, B ${t1.extra.byes}, LB ${t1.extra.legByes}) `;
-        // }
+        //team extras will be calculated and stored in local storage
+        function Extras(){
+            const extra=document.getElementById("extra")
+            let totalExtra=bat.extra.noBall+bat.extra.wide+bat.extra.byes+bat.extra.legByes;
+            bat.extra.score=totalExtra;
+            localStorage.setItem(`team${result.number}`, JSON.stringify(bat)); 
+            extra.innerText=`${totalExtra}   (NB ${bat.extra.noBall}, W ${bat.extra.wide}, B ${bat.extra.byes}, LB ${bat.extra.legByes}) `;
+        }
+        //team total score is displayed
         function Runs(){
             const run=document.getElementById("runs")
             run.innerText=bat.totalScore;
+        }
+
+        function crr(){
+            const crr=document.getElementById("Crr");
+            let cr=(bat.totalScore/bat.completedOvers).toFixed(2);
+            crr.innerText=isNaN(cr)? 0:cr;
+            
+        }
+        function projectedScore(){
+            const pr=document.getElementById("Ps");
+            const matchData=JSON.parse(localStorage.getItem('matchData'))
+            let tot=Math.round((bat.totalScore/bat.completedOvers) * matchData.totalOvers);
+            pr.innerText=isNaN(tot)? 0: tot;
         }
 
         function yetToBat(){
@@ -245,6 +289,65 @@
         //     const toss=document.getElementById("toss");
         //     toss.innerHTML=(td.innings==1) ? `${td.teamName} won the toss and choose to bat`: `${td.teamName} won the toss and choose to bowl`;
         // }
+
+        // // Calculate total runs
+        // const totalRuns = batsmanDetails.reduce((acc, curr) => acc + curr.runs, 0);
+
+        // // Calculate percentage of team total runs for each player
+        // const data = batsmanDetails.map(player => ({
+        //     name: player.name,
+        //     percentage: (player.runs / totalRuns) * 100
+        // }));
+
+        // // Set up dimensions for the pie chart
+        // const width = 300;
+        // const height = 300;
+        // const radius = Math.min(width, height) / 2;
+
+        // // Set up color scale
+        // const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+        // // Create SVG element
+        // const svg = d3.select("#pie-chart")
+        //     .append("svg")
+        //     .attr("width", width)
+        //     .attr("height", height)
+        //     .append("g")
+        //     .attr("transform", `translate(${width / 2}, ${height / 2})`);
+
+        // // Generate pie chart
+        // const pie = d3.pie().value(d => d.percentage);
+        // const path = d3.arc().outerRadius(radius - 10).innerRadius(0);
+
+        // const arc = svg.selectAll("arc")
+        //     .data(pie(data))
+        //     .enter()
+        //     .append("g");
+
+        // arc.append("path")
+        //     .attr("d", path)
+        //     .attr("fill", (d, i) => color(i));
+
+        // const legend = svg.selectAll(".legend")
+        //     .data(data)
+        //     .enter()
+        //     .append("g")
+        //     .attr("class", "legend")
+        //     .attr("transform", (d, i) => `translate(-${width / 2},${i * 20 - height / 2})`);
+
+        // legend.append("rect")
+        //     .attr("x", width-24)
+        //     .attr("width", 18)
+        //     .attr("height", 18)
+        //     .style("fill", (d, i) => color(i));
+
+        // legend.append("text")
+        //     .attr("x", width - 24)
+        //     .attr("y", 9)
+        //     .attr("dy", ".35em")
+        //     .style("text-anchor", "end")
+        //     .text(d => `${d.name} (${d.percentage.toFixed(2)}%)`);
+
 </script>
 </body>
 </html>

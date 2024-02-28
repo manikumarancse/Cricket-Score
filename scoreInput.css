@@ -299,6 +299,21 @@
     grid-column: 2/span 1;
 }
 
+.buttons{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+#instructions,#scorecard{
+    min-width: 100px;
+    min-height: 10%;
+    max-height: 30%;
+    margin-left: 35px ;
+    background-color: #8b0000d2;
+    color: aliceblue;
+    border: none;
+}
+
 
 /* ----------------------------START---------------------------- */
 /* --------------------selectPlayers.html---------------------- */
