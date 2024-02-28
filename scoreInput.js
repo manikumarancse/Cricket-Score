@@ -478,17 +478,17 @@ function isCheckOver(){
                 callNextPlayer('select-bowler'); // Select next bowler
             }
         }
-        if (!checkWinner()) {
-            if (checkIfLastBallWicket()) {
-                sessionStorage.setItem('selectNewBatsmanAndBowler', 'true'); // Set flag to select both batsman and bowler
-            } else {
-                setTimeout(() => {
-                    resetDisplayOver();     //remove all over runs display
-                }, 3000);
+        // if (!checkWinner()) {
+        //     if (checkIfLastBallWicket()) {
+        //         sessionStorage.setItem('selectNewBatsmanAndBowler', 'true'); // Set flag to select both batsman and bowler
+        //     } else {
+        //         setTimeout(() => {
+        //             resetDisplayOver();     //remove all over runs display
+        //         }, 3000);
                 
-                callNextPlayer('select-bowler'); // Select next bowler
-            }
-        }
+        //         callNextPlayer('select-bowler'); // Select next bowler
+        //     }
+        // }
     }
 }
 // Check If over last ball is wicket. because next user need to select next new batsman and bowler  
