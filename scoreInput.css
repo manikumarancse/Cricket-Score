@@ -120,18 +120,21 @@
     margin-top: 2%;
     font-weight: bold;
 }
+/* style only  for pop-up2 , pop-up3 */
 .pop-up2,.pop-up3{
     display: flex;
     flex-direction: column;
     width: 50vw;
 }
+/* style for innings alert */
 .Innings-Alert{
     text-align: center;
 }
+/* style for winnings alert */
 .Winner-Alert{
     text-align: center;
 }
-
+/* style for buttons in pop-up2 and pop-up3 */
 #summary , #nextInnings{    
     text-align: center;
     font-size: 17px;
