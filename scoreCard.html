@@ -49,6 +49,9 @@
 </div>
 <!--here we display toss details-->
 <h2 id="toss"></h2>
+<div class="link">
+    <a href="./scoreInput.html" id="link">Back</a>
+</div>
 </div>
 <script>
     const batting=document.getElementById("Batting");
@@ -56,10 +59,21 @@
     const teamname=document.getElementById("teamName");
     let battingTeam;
     let bowlingTeam;
-    
+    const link = document.getElementById('link');
     let team1=JSON.parse(localStorage.getItem("team1"))
     let team2=JSON.parse(localStorage.getItem("team2"))
     
+    const searchParams = new URLSearchParams(window.location.search);
+    let classNameId =  searchParams.get('call');
+
+    if (classNameId==='select-bowler') {
+        link.href = `./selectPlayers.html?call=${classNameId}`;
+        link.innerText = "Next over";
+    }else if (classNameId==='select-batsman-bowler') {
+        link.href = `./selectPlayers.html?call=${classNameId}`;
+        link.innerText = "Next over";
+    }
+
     if(team1.innings===1){
     battingTeam=team1.teamName;
     console.log("Team1 batting");
