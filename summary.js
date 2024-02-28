@@ -5,10 +5,10 @@ var Team1 = team1Data.teamName;
 var Team2 = team2Data.teamName;
 var runsT1 = team1Data.totalScore;
 var runsT2 = team2Data.totalScore;
-var wicketsT1 = /* team1Data.totalWickets */4 ;
-var wicketsT2 = /* team2Data.totalWickets */ 10;
-var overs1 = /* team1Data.completedOvers */20 ;
-var overs2 = /* team2Data.completedOvers */18 ;
+var wicketsT1 = team1Data.totalWickets4 ;
+var wicketsT2 = team2Data.totalWickets;
+var overs1 = team1Data.completedOvers;
+var overs2 = team2Data.completedOvers;
 
 
 var ts1Name = document.querySelector('#ts1Name');
@@ -84,16 +84,16 @@ team2Overs.textContent = overs2;
 //top 3 run scorer
 let arr=[]
 let a = team1Data.player
-// console.log(a);
+console.log(a);
 
 for(let i=0; i<a.length; i++){
-     let c = a[i].batting[0].battingRuns;
+     let c = a[i].batting.battingRuns;
      console.log(i);
      console.log(c);
      arr.push(c);
      console.log(arr);
     //  arr.append(c);
-    //  console.log(arr);
+    //   console.log(arr);
 
 }
 // a.forEach( () => {
@@ -147,27 +147,26 @@ function findLargestThreeNumbersWithIndices(arr) {
     console.log("Largest 3 numbers and their indices:");
     console.log("1. Number:", firstLargest, "Index:", firstIndex);
     ts1Name.innerText=a[firstIndex].playerName;
-    ts1Score.innerText=`${firstLargest}(${a[firstIndex].batting[0].ballsBatted})`;
+    ts1Score.innerText=`${firstLargest}(${a[firstIndex].batting.ballsBatted})`;
    
     ts2Name.innerText=a[secondIndex].playerName;
-    ts2Score.innerText=`${secondLargest}(${a[secondIndex].batting[0].ballsBatted})`;
+    ts2Score.innerText=`${secondLargest}(${a[secondIndex].batting.ballsBatted})`;
     
     ts3Name.innerText=a[thirdIndex].playerName;
-    ts3Score.innerText=`${thirdLargest}(${a[thirdIndex].batting[0].ballsBatted})`;
+    ts3Score.innerText=`${thirdLargest}(${a[thirdIndex].batting.ballsBatted})`;
    
 
     console.log("2. Number:", secondLargest, "Index:", secondIndex);
     console.log("3. Number:", thirdLargest, "Index:", thirdIndex);
-    console.log(a[firstIndex].playerName,a[firstIndex].batting[0].ballsBatted)
-    console.log(a[secondIndex].playerName,a[secondIndex].batting[0].ballsBatted)
-    console.log(a[thirdIndex].playerName,a[thirdIndex].batting[0].ballsBatted)
+    console.log(a[firstIndex].playerName,a[firstIndex].batting.ballsBatted)
+    console.log(a[secondIndex].playerName,a[secondIndex].batting.ballsBatted)
+    console.log(a[thirdIndex].playerName,a[thirdIndex].batting.ballsBatted)
 
 }
 
-// Example array
-let numbers1 = [10, 5, 8, 20, 15, 25, 18, 30];
 
-findLargestThreeNumbersWithIndices(numbers1);
+
+findLargestThreeNumbersWithIndices(arr);
 
     
 //  });
@@ -178,7 +177,7 @@ let a1 = team2Data.player
 // console.log(a);
 
 for(let i=0; i<a1.length; i++){
-     let c = a1[i].batting[0].battingRuns;
+     let c = a1[i].batting.battingRuns;
      console.log(i);
      console.log(c);
      arr1.push(c);
@@ -227,27 +226,27 @@ function findLargestThreeNumbersWithIndices1(arr1) {
     console.log("Largest 3 numbers and their indices:");
     console.log("1. Number:", firstLargest1, "Index:", firstIndex1);
     ts11Name.innerText=a1[firstIndex1].playerName;
-    ts11Score.innerText=`${firstLargest1}(${a1[firstIndex1].batting[0].ballsBatted})`;
+    ts11Score.innerText=`${firstLargest1}(${a1[firstIndex1].batting.ballsBatted})`;
    
     ts22Name.innerText=a1[secondIndex1].playerName;
-    ts22Score.innerText=`${secondLargest1}(${a1[secondIndex1].batting[0].ballsBatted})`;
+    ts22Score.innerText=`${secondLargest1}(${a1[secondIndex1].batting.ballsBatted})`;
     
     ts33Name.innerText=a1[thirdIndex1].playerName;
-    ts33Score.innerText=`${thirdLargest1}(${a1[thirdIndex1].batting[0].ballsBatted})`;
+    ts33Score.innerText=`${thirdLargest1}(${a1[thirdIndex1].batting.ballsBatted})`;
    
 
     console.log("2. Number:", secondLargest1, "Index:", secondIndex1);
     console.log("3. Number:", thirdLargest1, "Index:", thirdIndex1);
-    console.log(a[firstIndex1].playerName,a[firstIndex1].batting[0].ballsBatted)
-    console.log(a[secondIndex1].playerName,a[secondIndex1].batting[0].ballsBatted)
-    console.log(a[thirdIndex1].playerName,a[thirdIndex1].batting[0].ballsBatted)
+    console.log(a[firstIndex1].playerName,a[firstIndex1].batting.ballsBatted)
+    console.log(a[secondIndex1].playerName,a[secondIndex1].batting.ballsBatted)
+    console.log(a[thirdIndex1].playerName,a[thirdIndex1].batting.ballsBatted)
 
 }
 
-// Example array
-let numbers = [100,200,1,3,4,66,44,23,34,21,1000];
 
-findLargestThreeNumbersWithIndices1(numbers);
+
+
+findLargestThreeNumbersWithIndices1(arr1);
 
 
 // Bowling 
@@ -257,7 +256,7 @@ let a2 = team1Data.player
 // console.log(a);
 
 for(let i=0; i<a2.length; i++){
-     let c = a2[i].bowling[0].wicket;
+     let c = a2[i].bowling.wicket;
      console.log(i);
      console.log(c);
      arr2.push(c);
@@ -307,15 +306,15 @@ function findLargestThreeNumbersWithIndices3(arr2) {
     console.log("1. Number:", firstLargest2, "Index:", firstIndex2);
     bs1Name.innerText=a2[firstIndex2].playerName;
     bs1Score.innerText=firstLargest2;
-    bs1Balls.innerText=`${a2[firstIndex2].bowling[0].bowlRuns}(${a2[firstIndex2].bowling[0].over})`;
+    bs1Balls.innerText=`${a2[firstIndex2].bowling.bowlRuns}(${a2[firstIndex2].bowling.over})`;
    
     bs2Name.innerText=a2[secondIndex2].playerName;
     bs2Score.innerText=secondLargest2;
-    bs2Balls.innerText=`${a2[secondIndex2].bowling[0].bowlRuns}(${a2[secondIndex2].bowling[0].over})`;
+    bs2Balls.innerText=`${a2[secondIndex2].bowling.bowlRuns}(${a2[secondIndex2].bowling.over})`;
     
     bs3Name.innerText=a2[thirdIndex2].playerName;
     bs3Score.innerText=thirdLargest2;
-    bs3Balls.innerText=`${a2[thirdIndex2].bowling[0].bowlRuns}(${a2[thirdIndex2].bowling[0].over})`;
+    bs3Balls.innerText=`${a2[thirdIndex2].bowling.bowlRuns}(${a2[thirdIndex2].bowling.over})`;
    
 
     // console.log("2. Number:", secondLargest, "Index:", secondIndex);
@@ -326,10 +325,9 @@ function findLargestThreeNumbersWithIndices3(arr2) {
 
 }
 
-// Example array
-let numbers2 = [10, 5, 8, 20, 15, 25, 18, 30];
 
-findLargestThreeNumbersWithIndices3(numbers2);
+
+findLargestThreeNumbersWithIndices3(arr2);
 
 
 
@@ -345,11 +343,11 @@ findLargestThreeNumbersWithIndices3(numbers2);
 
 
 let arr3=[]
-let a3 = team1Data.player
+let a3 = team2Data.player
 // console.log(a);
 
 for(let i=0; i<a3.length; i++){
-     let c = a3[i].bowling[0].wicket;
+     let c = a3[i].bowling.wicket;
      console.log(i);
      console.log(c);
      arr3.push(c);
@@ -399,15 +397,15 @@ function findLargestThreeNumbersWithIndices4(arr3) {
     console.log("1. Number:", firstLargest3, "Index:", firstIndex3);
     bs11Name.innerText=a3[firstIndex3].playerName;
     bs11Score.innerText=firstLargest3;
-    bs11Balls.innerText=`${a3[firstIndex3].bowling[0].bowlRuns}(${a3[firstIndex3].bowling[0].over})`;
+    bs11Balls.innerText=`${a3[firstIndex3].bowling.bowlRuns}(${a3[firstIndex3].bowling.over})`;
    
     bs22Name.innerText=a3[secondIndex3].playerName;
     bs22Score.innerText=secondLargest3;
-    bs22Balls.innerText=`${a3[secondIndex3].bowling[0].bowlRuns}(${a3[secondIndex3].bowling[0].over})`;
+    bs22Balls.innerText=`${a3[secondIndex3].bowling.bowlRuns}(${a3[secondIndex3].bowling.over})`;
     
     bs33Name.innerText=a3[thirdIndex3].playerName;
     bs33Score.innerText=thirdLargest3;
-    bs33Balls.innerText=`${a3[thirdIndex3].bowling[0].bowlRuns}(${a3[thirdIndex3].bowling[0].over})`;
+    bs33Balls.innerText=`${a3[thirdIndex3].bowling.bowlRuns}(${a3[thirdIndex3].bowling.over})`;
    
 
     // console.log("2. Number:", secondLargest, "Index:", secondIndex);
@@ -418,7 +416,31 @@ function findLargestThreeNumbersWithIndices4(arr3) {
 
 }
 
-// Example array
-let numbers3 = [0, 5, 0, 0, 1, 2, 1, 0];
 
-findLargestThreeNumbersWithIndices4(numbers3);
+
+findLargestThreeNumbersWithIndices4(arr3);
+
+
+document.getElementById("newmatch").addEventListener("click", () => {
+    window.location.href="index.html"
+
+})
+document.getElementById("overall").addEventListener("click", () => {
+    window.location.href="Finalsummary.html"
+
+})
+
+
+var winElement = document.querySelector("#win");
+
+if(runsT1>runsT2){
+    winElement.innerText=`${Team1} won the match`;
+
+
+}else if(runsT1<runsT2){
+    winElement.innerText=`${Team2} won the match`;
+
+}else{
+    winElement.innerText= "Match Draw";
+
+}
