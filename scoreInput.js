@@ -661,7 +661,7 @@ function handleRuns(runs , runType) {
         overCount();
         display();    
     }else if(runType=='Legbye'){
-        localOverRuns.push(`${runs==0?'':runs}B`)
+        localOverRuns.push(`${runs==0?'':runs}LB`)
         displayBall(`${runs==0?'':runs}B`);
         team.extra.legByes += runs; 
         addScore(runs);
